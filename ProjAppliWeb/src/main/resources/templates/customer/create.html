@@ -6,6 +6,7 @@
 </head>
 <body>
 	<div th:switch="${customer.id}">
+	
 		<h1 th:case="0">Create a new customer</h1>
 		<h1 th:case="*">Edit an existing customer</h1>
 	</div>

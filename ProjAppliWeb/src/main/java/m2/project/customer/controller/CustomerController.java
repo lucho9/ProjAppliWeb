@@ -7,7 +7,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import m2.project.customer.model.Customer;
 import m2.project.customer.repository.CustomerRepository;
@@ -32,7 +31,7 @@ public class CustomerController {
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customersList(Model model) {
 		model.addAttribute("customers", customerRepository.findAll());
-		return "customer/list";
+		return "/customer/list";
 	}
 
 	@RequestMapping(value = "/customer/delete", method = RequestMethod.GET)
