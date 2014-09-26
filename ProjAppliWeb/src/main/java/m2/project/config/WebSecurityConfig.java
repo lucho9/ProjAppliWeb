@@ -12,7 +12,7 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().antMatchers("/", "/home", "/customer", "/customer/create")
+		http.authorizeRequests().antMatchers("/", "/home", "/customer", "/customer/create", "/resources", "/resources/scripts")
 				.permitAll().anyRequest().authenticated();
 		http.formLogin().loginPage("/login").usernameParameter("login")
 				.passwordParameter("pwd").permitAll() // redéfinition des input names de login.html

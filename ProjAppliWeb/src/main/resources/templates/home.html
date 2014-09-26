@@ -5,25 +5,26 @@
 </head>
 
 <body>
-	<div th:include="fragments/menu :: [//div[@id='menu']]"></div>
+	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
 	
-	<div class="container">
-		<div class="panel panel-default">
- 			<div class="panel-body">
-    			   			
-    			
-    			
-    			
-    			
-  			</div>
-			<div th:include="fragments/common :: [//div[@id='footer']]"></div>
-		</div>
-	</div>
+	<!-- Begin page content -->
+    <div class="container">
+      <div class="page-header">
+        <h1>
+        	Home
+        	<small>Comment</small>
+        </h1>
+      </div>
+      <p>This is a sample text.This is a sample text</p>
+    </div>
+	<!-- End page content -->
+
+	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+	<script th:replace="fragments/common :: [//script]"></script>
+
+	<script type="text/javascript" th:src="@{/resources/scripts/home.js}"></script>
+	
+	
+	
 </body>
-
-<script type="text/javascript">
-$( document ).ready(function() {
-});
-</script>
-
 </html>
