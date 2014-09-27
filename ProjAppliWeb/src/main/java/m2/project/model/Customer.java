@@ -1,4 +1,4 @@
-package m2.project.customer.model;
+package m2.project.model;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;

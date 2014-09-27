@@ -1,4 +1,4 @@
-package m2.project.customer.controller;
+package m2.project.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import m2.project.customer.model.Customer;
-import m2.project.customer.repository.CustomerRepository;
+import m2.project.model.Customer;
+import m2.project.repository.CustomerRepository;
 
 @Controller
 public class CustomerController {
