@@ -38,6 +38,7 @@ public class CustomerController {
 	public String deleteCustomer(@RequestParam("id") Long id) {
 		customerRepository.delete(id);
 		
+		
 		return "redirect:/customer";
 	}
 
