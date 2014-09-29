@@ -10,9 +10,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class CustomerController {
@@ -41,15 +41,15 @@ public class CustomerController {
 		return "redirect:/customer";
 	}
 
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET)
-	public String editCustomerForm(@RequestParam("id") Long id, Model model) {
+	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.GET)
+	public String editCustomerForm(@PathVariable("id") Long id, Model model) {
 
 		model.addAttribute("customer", customerRepository.findOne(id));
 		return "/customer/create";
 	}
 
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.POST)
-	public String submitEditCustomerForm(@Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) {
+	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.POST)
+	public String submitEditCustomerForm(@PathVariable("id") Long id, @Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("customer", customer);
 			return "/customer/create";
@@ -59,8 +59,8 @@ public class CustomerController {
 		return "redirect:/customer";
 	}
 
-	@RequestMapping(value = "/customer/delete", method = RequestMethod.GET)
-	public String deleteCustomer(@RequestParam("id") Long id) {
+	@RequestMapping(value = "/customer/delete/{id}", method = RequestMethod.GET)
+	public String deleteCustomer(@PathVariable("id") Long id) {
 		customerRepository.delete(id);
 		return "redirect:/customer";
 	}

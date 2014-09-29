@@ -21,8 +21,8 @@
 				<li th:each="customer : ${customers}">
 					<span th:text="${customer.lastName}"></span>
 					<span th:text="${customer.firstName}"></span>
-					<a th:href="@{/customer/edit(id=${customer.id})}">Editer</a>
-					<a th:href="@{/customer/delete(id=${customer.id})}">Supprimer</a>
+					<a th:href="@{'/customer/edit/' + ${customer.id}}">Editer</a>
+					<a th:href="@{'/customer/delete/' + ${customer.id}}">Supprimer</a>
 				</li>
 			</ul>
 		</p>
