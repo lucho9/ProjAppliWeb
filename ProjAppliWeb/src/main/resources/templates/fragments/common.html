@@ -7,13 +7,13 @@
     <!--<link rel="icon" href="../../favicon.ico" />-->
     
 	<!-- Latest compiled and minified CSS -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" th:href="@{/theme/css/bootstrap.min.css}" />
 	
 	<!-- Optional theme -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css" />
+	<link rel="stylesheet" th:href="@{/theme/css/bootstrap-theme.min.css}" />
 
 	<!-- Custom styles -->
-    <link rel="stylesheet" href="http://getbootstrap.com/examples/sticky-footer-navbar/sticky-footer-navbar.css" />
+    <link rel="stylesheet" th:href="@{/theme/css/sticky-footer.css}" />
 </head>
 
 <div class="footer">
@@ -25,5 +25,5 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+<script th:src="@{/js/jquery-1.11.1.min.js}"></script>
+<script th:src="@{/theme/js/bootstrap.min.js}"></script>
