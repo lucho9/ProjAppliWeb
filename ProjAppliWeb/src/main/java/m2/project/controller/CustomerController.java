@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Controller
-public class CustomerController extends WebMvcConfigurerAdapter {
+public class CustomerController {
 	@Autowired
 	private CustomerRepository customerRepository;
 
@@ -35,7 +34,7 @@ public class CustomerController extends WebMvcConfigurerAdapter {
 	@RequestMapping(value = "/customer/create", method = RequestMethod.POST)
 	public String submitCreateCustomerForm(@Valid @ModelAttribute Customer customer, BindingResult bindingResult) {
 		if (bindingResult.hasErrors()) {
-			return "redirect:/customer/create";
+			return "/customer/create";
 		}
 
 		customerRepository.save(customer);
