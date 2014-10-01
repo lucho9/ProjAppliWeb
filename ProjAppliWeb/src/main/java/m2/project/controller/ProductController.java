@@ -22,40 +22,47 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public String productsList(Model model,@ModelAttribute Product product) {
-		System.out.println(product.getName());
+	public String productsList(Model model,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch) {
+		//System.out.println(product.getName());
+	//	System.out.println(rch);
+		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
+			//if(rch=="case1"){
+		//model.addAttribute("products", productRepository.findById(product.getId()));
+			//}else{
+				if(rch.equals("case2")){
+					System.out.println(product.getName());
+		model.addAttribute("products", productRepository.findByName(product.getName()));
+			}else{model.addAttribute("products", productRepository.findByCategory(product.getName()));
+			System.out.println("categopry");
+			}
+				
+		//	}
+		}
+		else{
+			model.addAttribute("products", productRepository.findAll());
+			System.out.println("else");
+		}
 		//if(product.getName()!=""){
 	//	model.addAttribute("products", productRepository.findByName(product.getName()));
 		//}
 		//else
-			model.addAttribute("products", productRepository.findAll());
+			//model.addAttribute("products", productRepository.findAll());
 		return "/product/listproduct";
 	}
 	
 	@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productsListBis(Model model,@ModelAttribute Product product) {
-		//if(RequestMethod.POST.name()=="form2"){
-		System.out.println(product.getName());
-		if(product.getName()!=""){
-		model.addAttribute("products", productRepository.findByName(product.getName()));
-		}
-		else{
-			model.addAttribute("products", productRepository.findAll());
-		}
-		//}
-		//else
-		//{
-			//model.addAttribute("product", new Product());
-			productRepository.save(product);
-		//}
-		return "/product/listproduct";
+		model.addAttribute("product", new Product());
+		productRepository.save(product);
+		
+		return "redirect:/product/listproduct";
 	}
 	
-	@RequestMapping(value = "/product/create", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/product/create", method = RequestMethod.GET)
 	public String createProductForm(Model model) {
 		model.addAttribute("product", new Product());
 		return "/product/create";
-	}
+	}*/
 
 	@RequestMapping(value = "/product/create", method = RequestMethod.POST)
 	public String submitCreateProductForm(@ModelAttribute Product product) {

@@ -15,6 +15,20 @@ public class Product {
 	private int prix;
 	private String category;
 	
+	
+	
+	
+	public Product() {
+		super();
+	}
+
+	public Product(String name, int prix, String category) {
+		super();
+		this.name = name;
+		this.prix = prix;
+		this.category = category;
+	}
+
 	public Long getId(){
 		return Id;
 	}
