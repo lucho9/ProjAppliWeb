@@ -16,15 +16,21 @@
         	</h1>
       	</div>
 		<p>
-			<a href="/customer/create">Créer un client</a>
-			<ul>
-				<li th:each="customer : ${customers}">
-					<span th:text="${customer.lastName}"></span>
-					<span th:text="${customer.firstName}"></span>
-					<a th:href="@{'/customer/edit/' + ${customer.id}}">Editer</a>
-					<a th:href="@{'/customer/delete/' + ${customer.id}}">Supprimer</a>
-				</li>
-			</ul>
+			<a th:href="@{/customer/create}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Créer un client</a>
+			<table class="table">
+				<tr>
+					<th>Nom</th>
+					<th>Prénom</th>
+					<th>Editer</th>
+					<th>Supprimer</th>
+				</tr>
+				<tr th:each="customer : ${customers}">
+					<td class="table-cell" th:text="${customer.lastName}"></td>
+					<td class="table-cell" th:text="${customer.firstName}"></td>
+					<td class="table-cell"><a th:href="@{'/customer/edit/' + ${customer.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a></td>
+					<td class="table-cell"><a th:href="@{'/customer/delete/' + ${customer.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a></td>
+				</tr>
+			</table>
 		</p>
     </div>
 	<!-- End page content -->
