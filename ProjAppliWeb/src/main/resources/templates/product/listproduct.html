@@ -18,8 +18,8 @@
         </h1>
       </div>
       
-       <div class="row">
-  <div class="col-md-9 col-md-offset-4">
+      
+ 
   <!-- 
 <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal"> 
   Ajouter un nouveau produit
@@ -49,15 +49,27 @@
     </div>
   </div>
 </div> -->
-  
-    <a href="/product/create">Ajouter un nouveau produit</a>
+  <div class="form-group">
+  <a type="button" href="/product/create" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-plus"></span> Ajouter un produit
+</a>
+   <!--   <a href="/product/create" class="glyphicon glyphicon-plus"></a>-->
 
-       <form name="form2" action="#" th:object="${product}" method="post">
-        <span>Rechercher: <input type="text" th:field="*{name}" /></span>
-        <span><input type="submit" value="Rechercher" /> </span>
+       <form class="navbar-form navbar-right" role="search" name="form2" action="#" th:object="${product}" method="post">
+        
+        <input type="text" placeholder="Recherche" th:field="*{name}" />
+        
+    
+    <select class="form-control">
+  <option>Par ref</option>
+  <option>Par nom</option>
+  <option>Par categorie</option>
+</select>
+    <button class="glyphicon glyphicon-search" type="submit" value="Rechercher" /> 
     </form>
     </div>
-      </div>
+    
+    
    <ul>
      <table class="table table-striped">
         <thead>
