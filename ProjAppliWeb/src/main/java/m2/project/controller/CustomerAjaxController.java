@@ -30,7 +30,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class CustomerAjaxController {
-	@RequestMapping(value = "/userAjaxBootstrap.json", method = RequestMethod.POST)
+	@RequestMapping(value = "/customer", method = RequestMethod.POST)
 	public @ResponseBody ValidationResponse processFormAjaxJson(Model model, @ModelAttribute(value = "customer") @Valid Customer customer, BindingResult result) {
 		ValidationResponse res = new ValidationResponse();
 		if (!result.hasErrors()) {
@@ -40,21 +40,20 @@ public class CustomerAjaxController {
 			List<FieldError> allErrors = result.getFieldErrors();
 			List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
 			for (FieldError objectError : allErrors) {
-				errorMesages.add(new ErrorMessage(objectError.getField(),
-						objectError.getField() + " "
-								+ objectError.getDefaultMessage()));
+				errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getField() + " " + objectError.getDefaultMessage()));
 			}
 			res.setErrorMessageList(errorMesages);
 		}
 		return res;
 	}
 
+	/*
 	@RequestMapping(value = "/userAjaxBootstrap", method = RequestMethod.GET)
 	public String showFormBootstrap(Model model) {
 		model.addAttribute("customer", new Customer());
 		return "/customer/formcustomer";
-	}
-
+	}*/
+	
 	/*
 	@RequestMapping(value = "/userAjaxBootstrap.htm", method = RequestMethod.POST)
 	public String processFormBootstrap(
