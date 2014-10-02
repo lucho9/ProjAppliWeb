@@ -22,9 +22,11 @@ public class CustomerController {
 	@RequestMapping(value = "/customer", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String customersList(Model model) {
 		model.addAttribute("customers", customerRepository.findAll());
+		model.addAttribute("customer", new Customer());
 		return "/customer/list";
 	}
 
+	/*
 	@RequestMapping(value = "/customer/create", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
 	public String createCustomerForm(Model model) {
 		model.addAttribute("customer", new Customer());
@@ -40,6 +42,7 @@ public class CustomerController {
 		customerRepository.save(customer);
 		return "redirect:/customer";
 	}
+	*/
 
 	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.GET)
 	public String editCustomerForm(@PathVariable("id") Long id, Model model) {

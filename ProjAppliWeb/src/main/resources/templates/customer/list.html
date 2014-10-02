@@ -6,33 +6,49 @@
 
 <body>
 	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
-	
+
 	<!-- Begin page content -->
-    <div class="container">
-    	<div class="page-header">
-        	<h1>
-        		Client
-        		<small>Gestion des clients</small>
-        	</h1>
-      	</div>
-		<p>
-			<a th:href="@{/customer/create}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Créer un client</a>
-			<table class="table">
-				<tr>
-					<th>Nom</th>
-					<th>Prénom</th>
-					<th>Editer</th>
-					<th>Supprimer</th>
-				</tr>
-				<tr th:each="customer : ${customers}">
-					<td class="table-cell" th:text="${customer.lastName}"></td>
-					<td class="table-cell" th:text="${customer.firstName}"></td>
-					<td class="table-cell"><a th:href="@{'/customer/edit/' + ${customer.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-pencil"></i></a></td>
-					<td class="table-cell"><a th:href="@{'/customer/delete/' + ${customer.id}}" class="btn btn-default btn-xs"><i class="glyphicon glyphicon-trash"></i></a></td>
-				</tr>
-			</table>
-		</p>
-    </div>
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				Client <small>Gestion des clients</small>
+			</h1>
+		</div>
+		
+		<!--
+		<a th:href="@{/customer/create}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Créer un client</a>
+		-->
+		
+		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#formCustomer">
+		  Créer un client
+		</button>
+		
+		<table class="table">
+			<tr>
+				<th>Nom</th>
+				<th>Prénom</th>
+				<th>Editer</th>
+				<th>Supprimer</th>
+			</tr>
+			<tr th:each="customer : ${customers}">
+				<td class="table-cell" th:text="${customer.lastName}"></td>
+				<td class="table-cell" th:text="${customer.firstName}"></td>
+				<td class="table-cell"><a
+					th:href="@{'/customer/edit/' + ${customer.id}}"
+					class="btn btn-default btn-xs"><i
+						class="glyphicon glyphicon-pencil"></i></a></td>
+				<td class="table-cell"><a
+					th:href="@{'/customer/delete/' + ${customer.id}}"
+					class="btn btn-default btn-xs"><i
+						class="glyphicon glyphicon-trash"></i></a></td>
+			</tr>
+		</table>
+
+		
+	</div>
+	
+	<div th:substituteby="customer/formcustomer :: [//div]"></div>
+	
 	<!-- End page content -->
 
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>

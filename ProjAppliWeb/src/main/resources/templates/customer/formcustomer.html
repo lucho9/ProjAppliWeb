@@ -1,0 +1,44 @@
+<div class="modal fade" id="formCustomer" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<span aria-hidden="true">&times;</span><span class="sr-only">Close</span>
+				</button>
+				<h4 class="modal-title">Modal title</h4>
+			</div>
+			<div class="modal-body">
+				<form id="formCreateCustomer" th:object="${customer}" class="form-horizontal" role="form">
+					<div class="form-group">
+		    			<label for="lastName" class="col-sm-2 control-label">Nom</label>
+		    			<div class="col-sm-10">
+			    			<input type="text" th:field="*{lastName}" placeholder="Nom"/>
+			    			<span th:if="${#fields.hasErrors('lastName')}" th:errors="*{lastName}">LastName Error</span>
+			    		</div>
+		    		</div>
+		
+		    		<div class="form-group">
+		    			<label for="firstName" class="col-sm-2 control-label">Prénom</label>
+		    			<div class="col-sm-10">
+			    			<input type="text" th:field="*{firstName}" placeholder="Prénom"/>
+			    			<span th:if="${#fields.hasErrors('firstName')}" th:errors="*{firstName}">FirstName Error</span>
+			    		</div>
+		    		</div>
+		    		<div class="form-group">
+		    			<div class="col-sm-offset-2 col-sm-10">
+		   					<button type="submit" class="btn btn-success"><span class="glyphicon glyphicon-ok"></span> Valider</button>
+		    				<a th:href="@{/customer}" class="btn btn-danger"><i class="glyphicon glyphicon-remove"></i> Annuler</a>
+		    			</div>
+		    		</div>
+		    	</form>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+		<!-- /.modal-content -->
+	</div>
+	<!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
