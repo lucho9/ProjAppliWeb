@@ -58,6 +58,15 @@ public class CustomerController {
 		return res;
 	}
 
+	/*
+	 * Bootstrap modal data-toggle TEST
+	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.GET, produces={"application/json"})
+	public String ajaxEditCustomer(Model model, @PathVariable("id") Long id) {
+		model.addAttribute("customer", customerRepository.findOne(id));
+		return "/customer/customerform";
+	}
+	*/
+	
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET, produces={"application/json"})
 	public @ResponseBody Customer ajaxEditCustomer(@RequestParam("id") Long id) {
 		//return new ResponseEntity<Customer>(customer, HttpStatus.OK);
@@ -65,26 +74,25 @@ public class CustomerController {
 		// Can't return a ModelAndView with ajax
 		//ModelAndView mav = new ModelAndView("/customer/customerform", "customer", customerRepository.findOne(id));
 		
-		/*
-		 * Can't get the view resolver
-		Map<String, Customer> m = new HashMap<String, Customer>();
-		m.put("customer", customerRepository.findOne(id));
-		try {
-			InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-	        resolver.setPrefix("/templates/customer/");
-	        resolver.setSuffix(".html");
-			View resolvedView = resolver.resolveViewName("customerform", request.getLocale());
-			MockHttpServletResponse mockResp = new MockHttpServletResponse();
-			resolvedView.render(m, request, mockResp);
-			System.out.println("rendered html : " + mockResp.getContentAsString());
-			
-		    return mockResp.getContentAsString();
-		}
-		catch(Exception e) {
-			System.out.println(e.getMessage());
-		}
-		 */	
 		
+		// Can't get the view resolver
+		//Map<String, Customer> m = new HashMap<String, Customer>();
+		//m.put("customer", customerRepository.findOne(id));
+		//try {
+		//	InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+	    //    resolver.setPrefix("/templates/customer/");
+	    //    resolver.setSuffix(".html");
+		//	View resolvedView = resolver.resolveViewName("customerform", request.getLocale());
+		//	MockHttpServletResponse mockResp = new MockHttpServletResponse();
+		//	resolvedView.render(m, request, mockResp);
+		//	System.out.println("rendered html : " + mockResp.getContentAsString());
+			
+		//    return mockResp.getContentAsString();
+		//}
+		//catch(Exception e) {
+		//	System.out.println(e.getMessage());
+		//}
+				
 		return customerRepository.findOne(id);
 	}
 	
