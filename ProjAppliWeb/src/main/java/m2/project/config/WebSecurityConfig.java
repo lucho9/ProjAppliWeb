@@ -12,10 +12,9 @@ import org.springframework.security.config.annotation.web.servlet.configuration.
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		
 		http.csrf().disable();
 		/*
-		http.authorizeRequests().antMatchers("/", "/home", "/customer", "/customer/create", "/resources", "/resources/scripts")
+		http.authorizeRequests().antMatchers("/", "/home", "/customer**", "/product**", "/employee**", "/resources**")
 				.permitAll().anyRequest().authenticated();
 		http.formLogin().loginPage("/login").usernameParameter("login")
 				.passwordParameter("pwd").permitAll() // redéfinition des input names de login.html
@@ -23,6 +22,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.permitAll();
 		 */
 		http.authorizeRequests().antMatchers("/**").permitAll();
+		http.csrf().disable();
 	}
 
 	@Configuration

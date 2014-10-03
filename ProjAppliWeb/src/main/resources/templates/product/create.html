@@ -7,29 +7,38 @@
 <body>
 	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
 	
+	
+	
+	
 	<!-- Begin page content -->
     <div class="container">
       <div class="page-header">
         <h1>
-        	Home
-        	<small>Bienvenue</small>
+        	Créer des produits
         </h1>
       </div>
-      <p>This is a sample text.This is a sample text</p>
+      
+           <form action="#" th:object="${product}" method="post">
+        <p>Nom du produit: <input type="text" th:field="*{name}" /></p>
+        <p>Prix du produit: <input type="text" th:field="*{prix}" /></p>
+        <p>Categorie: <input type="text" th:field="*{category}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>
+    
+      
       
 
     </div>
-    
-    
-    
-
 	<!-- End page content -->
+
+
+
+
 
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	<script th:replace="fragments/common :: [//script]"></script>
 
-	<script type="text/javascript" th:src="@{/js/common.js}"></script>
-	<script type="text/javascript" th:src="@{/js/home.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/scripts/home.js}"></script>
 	
 	
 	
