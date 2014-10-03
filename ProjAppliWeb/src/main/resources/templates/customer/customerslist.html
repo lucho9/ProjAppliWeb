@@ -19,7 +19,7 @@
 		<a th:href="@{/customer/create}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Créer un client</a>
 		-->
 		
-		<button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#formCustomer">
+		<button id="buttoncreatecustomer" class="btn btn-primary btn-lg" data-toggle="modal">
 		  Créer un client
 		</button>
 		
@@ -34,28 +34,30 @@
 			<tr th:each="customer : ${customers}">
 				<td class="table-cell" th:text="${customer.lastName}"></td>
 				<td class="table-cell" th:text="${customer.firstName}"></td>
-				<td class="table-cell" th:text="${customer.group.name}"></td>
-				<td class="table-cell"><a
-					th:href="@{'/customer/edit/' + ${customer.id}}"
-					class="btn btn-default btn-xs"><i
-						class="glyphicon glyphicon-pencil"></i></a></td>
-				<td class="table-cell"><a
-					th:href="@{'/customer/delete/' + ${customer.id}}"
-					class="btn btn-default btn-xs"><i
-						class="glyphicon glyphicon-trash"></i></a></td>
+				<td class="table-cell" th:text="${customer.customerGroup.name}"></td>
+				<td class="table-cell">
+					<button th:onclick="@{'javascript:editCustomer(\'/customer/edit\', ' + ${customer.id} + '); return false;'}" class="btn btn-default btn-xs">
+						<i class="glyphicon glyphicon-pencil"></i>
+					</button>
+				</td>
+				<td class="table-cell">
+					<a th:href="@{'/customer/delete/' + ${customer.id}}" class="btn btn-default btn-xs">
+						<i class="glyphicon glyphicon-trash"></i>
+					</a>
+				</td>
 			</tr>
 		</table>
 
 		
 	</div>
 	
-	<div th:substituteby="customer/formcustomer :: [//div]"></div>
+	<div th:substituteby="customer/customerform :: [//div]"></div>
 	
 	<!-- End page content -->
 
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	<script th:replace="fragments/common :: [//script]"></script>
 	<script type="text/javascript" th:src="@{/js/common.js}"></script>
-	<script type="text/javascript" th:src="@{/js/customer.js}"></script>
+	<script type="text/javascript" th:src="@{/js/customerslist.js}"></script>
 </body>
 </html>

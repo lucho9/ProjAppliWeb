@@ -4,12 +4,15 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class CustomerGroup implements Serializable {
@@ -23,7 +26,7 @@ public class CustomerGroup implements Serializable {
 	@Size(min = 2, max = 30)
 	private String name;
 	
-	@OneToMany(mappedBy="group")
+	@OneToMany(mappedBy="customerGroup", fetch=FetchType.LAZY)
 	private Collection<Customer> customers;
 	
 	public CustomerGroup() {
@@ -49,6 +52,7 @@ public class CustomerGroup implements Serializable {
 		this.name = name;
 	}
 
+	@JsonIgnore
 	public Collection<Customer> getCustomers() {
 		return customers;
 	}

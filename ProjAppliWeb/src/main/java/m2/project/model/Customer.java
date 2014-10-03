@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 @Entity
@@ -30,8 +31,9 @@ public class Customer implements Serializable {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
+	@NotNull
 	@ManyToOne
-	private CustomerGroup group;
+	private CustomerGroup customerGroup;
 	
 	public Customer() {
 	}
@@ -39,13 +41,13 @@ public class Customer implements Serializable {
 	public Customer(String firstName, String lastName) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.group = null;
+		this.customerGroup = null;
 	}
 
 	public Customer(String firstName, String lastName, CustomerGroup group) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.group = group;
+		this.customerGroup = group;
 	}
 
 	
@@ -67,11 +69,11 @@ public class Customer implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public CustomerGroup getGroup() {
-		return group;
+	public CustomerGroup getCustomerGroup() {
+		return customerGroup;
 	}
-	public void setGroup(CustomerGroup group) {
-		this.group = group;
+	public void setCustomerGroup(CustomerGroup group) {
+		this.customerGroup = group;
 	}
 	
 	@Override

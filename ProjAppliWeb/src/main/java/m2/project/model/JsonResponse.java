@@ -2,7 +2,7 @@ package m2.project.model;
 
 import java.util.List;
 
-public class ValidationResponse {
+public class JsonResponse {
 	private String status;
 	private List<ErrorMessage> errorMessageList;
 
