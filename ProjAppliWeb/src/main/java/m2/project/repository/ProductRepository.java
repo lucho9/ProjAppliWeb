@@ -1,6 +1,7 @@
 package m2.project.repository;
 
 import java.util.List;
+import java.util.Locale.Category;
 
 import m2.project.model.Customer;
 import m2.project.model.Product;
@@ -11,5 +12,5 @@ public interface ProductRepository extends CrudRepository<Product, Long> {
 
 	List<Product> findByName(String name);
 	//List<Product> findById(Long Id);
-	List<Product> findByCategory(String category);
+	List<Category> findByCategory(String category);
 }

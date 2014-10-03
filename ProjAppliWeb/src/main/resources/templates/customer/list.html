@@ -1,20 +1,41 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <title>Customers</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<head th:include="fragments/common :: [//head]">
 </head>
+
 <body>
-	<h1>Customers list</h1>
+	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
 	
-    <a href="/create">Create a new customer</a>
-    <ul>
-    	<li th:each="customer : ${customers}">
-    		<span th:text="${customer.lastname}"></span>
-    		<span th:text="${customer.firstname}"></span>
-    		<a th:href="@{/edit(id=${customer.id})}">edit</a>
-    		<a th:href="@{/delete(id=${customer.id})}">delete</a>
-    	</li>
-    </ul>
+	<!-- Begin page content -->
+    <div class="container">
+    	<div class="page-header">
+        	<h1>
+        		Client
+        		<small>Gestion des clients</small>
+        	</h1>
+      	</div>
+		<p>
+			<a href="/customer/create">Créer un client</a>
+			<ul>
+				<li th:each="customer : ${customers}">
+					<span th:text="${customer.lastName}"></span>
+					<span th:text="${customer.firstName}"></span>
+					<a th:href="@{/customer/edit(id=${customer.id})}">Editer</a>
+					<a th:href="@{/customer/delete(id=${customer.id})}">Supprimer</a>
+				</li>
+			</ul>
+		</p>
+    </div>
+	<!-- End page content -->
+
+	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+	<script th:replace="fragments/common :: [//script]"></script>
+
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/customer.js}"></script>
+	
+	
+	
 </body>
 </html>
