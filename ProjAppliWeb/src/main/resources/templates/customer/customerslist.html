@@ -34,7 +34,9 @@
 			<tr th:each="customer : ${customers}">
 				<td class="table-cell" th:text="${customer.lastName}"></td>
 				<td class="table-cell" th:text="${customer.firstName}"></td>
-				<td class="table-cell" th:text="${customer.customerGroup.name}"></td>
+				<td class="table-cell">
+					<div th:each="customerGroup : ${customer.customerGroups}" th:text="${customerGroup.name}"></div>
+				</td>
 				<td class="table-cell">
 					<button th:onclick="@{'javascript:editCustomer(\'/customer/edit\', ' + ${customer.id} + '); return false;'}" class="btn btn-default btn-xs">
 						<i class="glyphicon glyphicon-pencil"></i>

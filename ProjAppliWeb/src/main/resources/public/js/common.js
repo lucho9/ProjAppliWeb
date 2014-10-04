@@ -8,12 +8,3 @@ $(document).ready(function () {
 	}
 
 });
-
-function collectFormData(fields) {
-	var data = {};
-	for (var i = 0; i < fields.length; i++) {
-		var $item = $(fields[i]);
-		data[$item.attr('name')] = $item.val();
-	}
-	return data;
-}

@@ -9,7 +9,7 @@ function clearCustomerFormInputs() {
 	$('#formcustomer #id').val(0);
 	$('#formcustomer #lastName').val("");
 	$('#formcustomer #firstName').val("");
-	$('#formcustomer #customerGroup option[value=""]').prop('selected', true);
+	$('#formcustomer #customerGroups option').prop('selected', false);
 }
 
 function editCustomer(action, id) {
@@ -26,8 +26,9 @@ function editCustomer(action, id) {
 	    	$('#formcustomer #id').val(data.id);
 	    	$('#formcustomer #lastName').val(data.lastName);
 	    	$('#formcustomer #firstName').val(data.firstName);
-	    	$('#formcustomer #customerGroup option[value="' + data.customerGroup.id + '"]').prop('selected', true);
-	    	
+	    	$.each(data.customerGroups, function(i, item) {
+	    		$('#formcustomer #customerGroups option[value="' + item.id + '"]').prop('selected', true);
+	    	});
 	    	$('#divformcustomer .modal-title').html("Editer");
 	    	$('#divformcustomer').modal('show');
 
@@ -51,10 +52,7 @@ $(document).ready(function() {
 	});
 	
 	$form.bind('submit', function(e) {
-		// Ajax validation
-		var $inputs = $form.find('input, select');
-		var data = collectFormData($inputs);
-		
+		var data = $form.serialize();
 		$.post($form.action, data, function(response) {
 			if (response.status == 'FAIL') {
 				for (var i = 0; i < response.errorMessageList.length; i++) {

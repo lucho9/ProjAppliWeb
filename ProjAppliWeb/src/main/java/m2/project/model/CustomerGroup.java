@@ -1,14 +1,14 @@
 package m2.project.model;
 
 import java.io.Serializable;
-import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -23,11 +23,11 @@ public class CustomerGroup implements Serializable {
 	private long id;
 
 	@NotNull
-	@Size(min = 2, max = 30)
+	@Size(min = 2, max = 40)
 	private String name;
 	
-	@OneToMany(mappedBy="customerGroup", fetch=FetchType.LAZY)
-	private Collection<Customer> customers;
+	@ManyToMany(mappedBy="customerGroups", fetch=FetchType.LAZY)
+	private List<Customer> customers;
 	
 	public CustomerGroup() {
 	}
@@ -53,11 +53,11 @@ public class CustomerGroup implements Serializable {
 	}
 
 	@JsonIgnore
-	public Collection<Customer> getCustomers() {
+	public List<Customer> getCustomers() {
 		return customers;
 	}
 
-	public void setCustomers(Collection<Customer> customers) {
+	public void setCustomers(List<Customer> customers) {
 		this.customers = customers;
 	}
 }

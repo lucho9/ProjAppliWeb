@@ -1,22 +1,19 @@
 package m2.project.model;
 
 import java.io.Serializable;
+import java.util.Collection;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.ManyToMany;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Null;
 import javax.validation.constraints.Size;
 
 @Entity
 public class Customer implements Serializable {
-
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@Id
@@ -31,23 +28,20 @@ public class Customer implements Serializable {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
-	@NotNull
-	@ManyToOne
-	private CustomerGroup customerGroup;
+	@ManyToMany
+	private List<CustomerGroup> customerGroups;
 	
 	public Customer() {
 	}
 
 	public Customer(String firstName, String lastName) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.customerGroup = null;
+		this(firstName, lastName, null);
 	}
 
-	public Customer(String firstName, String lastName, CustomerGroup group) {
+	public Customer(String firstName, String lastName, List<CustomerGroup> customerGroups) {
 		this.firstName = firstName;
 		this.lastName = lastName;
-		this.customerGroup = group;
+		this.customerGroups = customerGroups;
 	}
 
 	
@@ -69,11 +63,11 @@ public class Customer implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
-	public CustomerGroup getCustomerGroup() {
-		return customerGroup;
+	public List<CustomerGroup> getCustomerGroups() {
+		return customerGroups;
 	}
-	public void setCustomerGroup(CustomerGroup group) {
-		this.customerGroup = group;
+	public void setCustomerGroups(List<CustomerGroup> customerGroups) {
+		this.customerGroups = customerGroups;
 	}
 	
 	@Override

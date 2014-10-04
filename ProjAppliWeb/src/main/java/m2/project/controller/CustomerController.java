@@ -9,7 +9,7 @@ import m2.project.model.Customer;
 import m2.project.model.ErrorMessage;
 import m2.project.model.JsonResponse;
 import m2.project.repository.CustomerGroupRepository;
-import m2.project.repository.CustomerRepository;
+import m2.project.service.CustomerService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -26,23 +26,52 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class CustomerController {
 	@Autowired
-	private CustomerRepository customerRepository;
+	private CustomerService customerService;
 	@Autowired
 	private CustomerGroupRepository customerGroupRepository;
 
+	/*
+	@InitBinder
+	protected void initBinder(WebDataBinder binder) {
+       binder.registerCustomEditor(List.class, "customerGroups", new CustomCollectionEditor(List.class) {
+    	   @Override
+           protected Object convertElement(Object element) {
+    		   Long id = null;
+
+               if(element instanceof String && !((String)element).equals("")){
+            	   // from the html, 'element' will be a String
+            	   try {
+            		   id = Long.parseLong((String) element);
+                   }
+                   catch (NumberFormatException e) {
+                	   System.out.println("Element was " + ((String) element));
+                	   e.printStackTrace();
+                   }
+               }
+               else if(element instanceof Long) {
+            	   // from the database, 'element' will be a Long
+            	   id = (Long) element;
+               }
+
+               return id != null ? customerGroupRepository.findOne(id) : null;
+    	   }
+       });
+	}*/
+	
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customersList(Model model) {
-		model.addAttribute("customers", customerRepository.findAll());
+		model.addAttribute("customers", customerService.getAll());
 		model.addAttribute("customer", new Customer());
-		model.addAttribute("customerGroups", customerGroupRepository.findAll());
+		model.addAttribute("custGroups", customerGroupRepository.findAll());
 		return "/customer/customerslist";
 	}
 	
-	@RequestMapping(value = "/customer", method = RequestMethod.POST)
-	public @ResponseBody JsonResponse ajaxSubmitCustomer(Model model, @ModelAttribute(value = "customer") @Valid Customer customer, BindingResult result) {
+	@RequestMapping(value = "/customer", method = RequestMethod.POST, produces={"application/json"})
+	@ResponseBody
+	public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "customer") @Valid Customer customer, BindingResult result) {
 		JsonResponse res = new JsonResponse();
 		if (!result.hasErrors()) {
-			customerRepository.save(customer);
+			customerService.save(customer);
 			res.setStatus("SUCCESS");
 		}
 		else {
@@ -68,7 +97,7 @@ public class CustomerController {
 	*/
 	
 	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET, produces={"application/json"})
-	public @ResponseBody Customer ajaxEditCustomer(@RequestParam("id") Long id) {
+	public @ResponseBody Customer ajaxEditCustomerForm(@RequestParam("id") Long id) {
 		//return new ResponseEntity<Customer>(customer, HttpStatus.OK);
 		
 		// Can't return a ModelAndView with ajax
@@ -93,7 +122,7 @@ public class CustomerController {
 		//	System.out.println(e.getMessage());
 		//}
 				
-		return customerRepository.findOne(id);
+		return customerService.get(id);
 	}
 	
 	// No ajax method
@@ -135,7 +164,7 @@ public class CustomerController {
 
 	@RequestMapping(value = "/customer/delete/{id}", method = RequestMethod.GET)
 	public String deleteCustomer(@PathVariable("id") Long id) {
-		customerRepository.delete(id);
+		customerService.delete(id);
 		return "redirect:/customer";
 	}
 }
