@@ -48,6 +48,16 @@ public class Application {
 		customerGroupsList.add(g2);
 		customerRepository.save(new Customer("David", "Palmer", customerGroupsList));
 		customerRepository.save(new Customer("Michelle", "Dessler", customerGroupsList));
+		customerRepository.save(new Customer("Johnny", "Cash", null));
+		customerGroupsList.clear();
+		customerGroupsList.add(g);
+		customerRepository.save(new Customer("Pam", "Anderson", customerGroupsList));
+		customerRepository.save(new Customer("Powell", "Peralta", customerGroupsList));
+		customerGroupsList.clear();
+		customerGroupsList.add(g);
+		customerGroupsList.add(g2);
+		customerRepository.save(new Customer("Titty", "Twister", customerGroupsList));
+		customerRepository.save(new Customer("Remundo", "Do", customerGroupsList));
         
         // products
 		productRepository.save(new Product("pomme",1, ""));

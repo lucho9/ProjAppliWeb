@@ -36,5 +36,23 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		}
 
 	}
+	
+	/*
+	@Autowired
+	UserRepository userRepository;
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		http.authorizeRequests().antMatchers("/**").permitAll();
+		http.formLogin().loginPage("/login").permitAll().and().logout().logoutSuccessUrl("/").permitAll();
+	}
+	@Override
+	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		auth.userDetailsService(userDetailsService()).passwordEncoder(new PlaintextPasswordEncoder());
+	}
+	@Bean
+	protected UserDetailsService userDetailsService() {
+		return new SpringOverflowUserDetailsService(this.userRepository);
+	}
+	 */
 
 }

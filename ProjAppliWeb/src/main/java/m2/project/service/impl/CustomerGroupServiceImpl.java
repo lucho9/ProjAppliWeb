@@ -19,11 +19,11 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
 	@Autowired
 	CustomerGroupRepository customerGroupRepository;
 	
-	public CustomerGroup get(long id) {
+	public CustomerGroup findOne(long id) {
 		return customerGroupRepository.findOne(id);
 	}
 	
-	public List<CustomerGroup> getAll() {
+	public List<CustomerGroup> findAll() {
 		return customerGroupRepository.findAll();
 	}
 	

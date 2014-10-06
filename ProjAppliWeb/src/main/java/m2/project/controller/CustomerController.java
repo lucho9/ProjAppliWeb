@@ -8,10 +8,15 @@ import javax.validation.Valid;
 import m2.project.model.Customer;
 import m2.project.model.ErrorMessage;
 import m2.project.model.JsonResponse;
-import m2.project.repository.CustomerGroupRepository;
+import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
+import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,44 +33,56 @@ public class CustomerController {
 	@Autowired
 	private CustomerService customerService;
 	@Autowired
-	private CustomerGroupRepository customerGroupRepository;
+	private CustomerGroupService customerGroupService;
 
-	/*
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) {
-       binder.registerCustomEditor(List.class, "customerGroups", new CustomCollectionEditor(List.class) {
-    	   @Override
-           protected Object convertElement(Object element) {
-    		   Long id = null;
-
-               if(element instanceof String && !((String)element).equals("")){
-            	   // from the html, 'element' will be a String
-            	   try {
-            		   id = Long.parseLong((String) element);
-                   }
-                   catch (NumberFormatException e) {
-                	   System.out.println("Element was " + ((String) element));
-                	   e.printStackTrace();
-                   }
-               }
-               else if(element instanceof Long) {
-            	   // from the database, 'element' will be a Long
-            	   id = (Long) element;
-               }
-
-               return id != null ? customerGroupRepository.findOne(id) : null;
-    	   }
-       });
-	}*/
-	
+	// Customers list / Create customer form - not Ajax
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
-	public String customersList(Model model) {
-		model.addAttribute("customers", customerService.getAll());
+	public String customersList(Model model, Pageable pageable) {
+
+		// for the customers list
+		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "lastName");
+		
+		Page<Customer> curPage = customerService.findAll(pageRequest);
+		PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
+		model.addAttribute("page", page);
+		
+		// for the customer form create
 		model.addAttribute("customer", new Customer());
-		model.addAttribute("custGroups", customerGroupRepository.findAll());
+		model.addAttribute("custGroups", customerGroupService.findAll());
+		
 		return "/customer/customerslist";
 	}
 	
+	// Edit customer form - Ajax
+	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET, produces={"application/json"})
+	public @ResponseBody Customer ajaxEditCustomerForm(@RequestParam("id") Long id) {
+		//return new ResponseEntity<Customer>(customer, HttpStatus.OK);
+		
+		// Can't return a ModelAndView with ajax
+		//ModelAndView mav = new ModelAndView("/customer/customerform", "customer", customerRepository.findOne(id));
+		
+		// Can't get the view resolver
+		//Map<String, Customer> m = new HashMap<String, Customer>();
+		//m.put("customer", customerRepository.findOne(id));
+		//try {
+		//	InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+	    //    resolver.setPrefix("/templates/customer/");
+	    //    resolver.setSuffix(".html");
+		//	View resolvedView = resolver.resolveViewName("customerform", request.getLocale());
+		//	MockHttpServletResponse mockResp = new MockHttpServletResponse();
+		//	resolvedView.render(m, request, mockResp);
+		//	System.out.println("rendered html : " + mockResp.getContentAsString());
+			
+		//    return mockResp.getContentAsString();
+		//}
+		//catch(Exception e) {
+		//	System.out.println(e.getMessage());
+		//}
+				
+		return customerService.findOne(id);
+	}
+	
+	// Submit create / edit customer form - Ajax 
 	@RequestMapping(value = "/customer", method = RequestMethod.POST, produces={"application/json"})
 	@ResponseBody
 	public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "customer") @Valid Customer customer, BindingResult result) {
@@ -96,72 +113,7 @@ public class CustomerController {
 	}
 	*/
 	
-	@RequestMapping(value = "/customer/edit", method = RequestMethod.GET, produces={"application/json"})
-	public @ResponseBody Customer ajaxEditCustomerForm(@RequestParam("id") Long id) {
-		//return new ResponseEntity<Customer>(customer, HttpStatus.OK);
-		
-		// Can't return a ModelAndView with ajax
-		//ModelAndView mav = new ModelAndView("/customer/customerform", "customer", customerRepository.findOne(id));
-		
-		
-		// Can't get the view resolver
-		//Map<String, Customer> m = new HashMap<String, Customer>();
-		//m.put("customer", customerRepository.findOne(id));
-		//try {
-		//	InternalResourceViewResolver resolver = new InternalResourceViewResolver();
-	    //    resolver.setPrefix("/templates/customer/");
-	    //    resolver.setSuffix(".html");
-		//	View resolvedView = resolver.resolveViewName("customerform", request.getLocale());
-		//	MockHttpServletResponse mockResp = new MockHttpServletResponse();
-		//	resolvedView.render(m, request, mockResp);
-		//	System.out.println("rendered html : " + mockResp.getContentAsString());
-			
-		//    return mockResp.getContentAsString();
-		//}
-		//catch(Exception e) {
-		//	System.out.println(e.getMessage());
-		//}
-				
-		return customerService.get(id);
-	}
-	
-	// No ajax method
-	/*
-	@RequestMapping(value = "/customer/create", method = RequestMethod.GET, produces = "text/plain;charset=UTF-8")
-	public String createCustomerForm(Model model) {
-		model.addAttribute("customer", new Customer());
-		return "/customer/create";
-	}
-
-	@RequestMapping(value = "/customer/create", method = RequestMethod.POST)
-	public String submitCreateCustomerForm(@Valid @ModelAttribute Customer customer, BindingResult bindingResult) {
-		if (bindingResult.hasErrors()) {
-			return "/customer/create";
-		}
-
-		customerRepository.save(customer);
-		return "redirect:/customer";
-	}
-
-	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.GET)
-	public String editCustomerForm(@PathVariable("id") Long id, Model model) {
-
-		model.addAttribute("customer", customerRepository.findOne(id));
-		return "/customer/create";
-	}
-	
-	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.POST)
-	public String submitEditCustomerForm(@PathVariable("id") Long id, @Valid @ModelAttribute Customer customer, BindingResult bindingResult, Model model) {
-		if (bindingResult.hasErrors()) {
-			model.addAttribute("customer", customer);
-			return "/customer/create";
-		}
-
-		customerRepository.save(customer);
-		return "redirect:/customer";
-	}
-	 */
-
+	// Delete customer - not Ajax
 	@RequestMapping(value = "/customer/delete/{id}", method = RequestMethod.GET)
 	public String deleteCustomer(@PathVariable("id") Long id) {
 		customerService.delete(id);
