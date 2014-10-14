@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -40,7 +41,13 @@ public class CustomerController {
 	public String customersList(Model model, Pageable pageable) {
 
 		// for the customers list
-		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "lastName");
+		Sort sort;
+		if (pageable.getSort() == null)
+			sort = new Sort(Direction.ASC, "lastName");
+		else
+			sort = pageable.getSort();
+		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, sort);
+		
 		
 		Page<Customer> curPage = customerService.findAll(pageRequest);
 		PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");

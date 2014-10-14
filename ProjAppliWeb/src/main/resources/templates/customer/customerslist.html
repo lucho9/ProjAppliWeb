@@ -36,7 +36,7 @@
 			<tbody>
 				<tr th:each="customer : ${page.content}">
 					<td class="table-cell" th:text="${customer.lastName}"></td>
-					<td class="table-cell" th:text="${customer.firstName}"></td>
+					<td class="table-cell" th:text="${customer.firstName}" th:href='@{${page.url}(sort.direction=Direction.asc, sort.properties="firstName")}'></td>
 					<td class="table-cell">
 						<div th:each="customerGroup : ${customer.customerGroups}" th:text="${customerGroup.name}"></div>
 					</td>
