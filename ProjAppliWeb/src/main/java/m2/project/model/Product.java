@@ -1,36 +1,82 @@
 package m2.project.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
-public class Product {
+public class Product implements Serializable {
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	
-	private Long Id;
+	private long id;
+	@NotNull
+	@Size(min=2, max=20)
 	private String name;
+	@NotNull
+	@Min(1)
 	private int prix;
-	private String category;
+	@NotNull
+	@Min(1)
+	private int stock;
 	
 	
 	
 	
-	public Product() {
-		super();
+	@ManyToOne
+	private Category category ;
+	
+
+	
+	
+
+
+	public int getStock() {
+		return stock;
 	}
 
-	public Product(String name, int prix, String category) {
-		super();
-		this.name = name;
-		this.prix = prix;
+	public void setStock(int stock) {
+		this.stock = stock;
+	}
+
+	public Category getCategory() {
+		return category;
+	}
+
+	public void setCategory(Category category) {
 		this.category = category;
 	}
 
+	public Product() {
+
+	}
+
+	public Product(String name, int prix) {
+
+		this.name = name;
+		this.prix = prix;
+	
+	}
+	
+	
+	public Product(String name, int prix,int stock) {
+		
+		this.name = name;
+		this.prix = prix;
+		this.stock = stock;
+	
+	}
+	
+
 	public Long getId(){
-		return Id;
+		return id;
 	}
 
 	public String getName() {
@@ -49,16 +95,9 @@ public class Product {
 		this.prix = prix;
 	}
 
-	public String getCategory() {
-		return category;
-	}
-
-	public void setCategory(String Category) {
-		category = Category;
-	}
-
+	
 	public void setId(Long id) {
-		Id = id;
+		this.id = id;
 	}
 	
 	

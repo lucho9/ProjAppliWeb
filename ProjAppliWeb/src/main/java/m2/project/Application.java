@@ -4,8 +4,10 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import m2.project.model.Category;
 import m2.project.model.Customer;
 import m2.project.model.CustomerGroup;
+import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
 import m2.project.repository.CustomerGroupRepository;
 import m2.project.model.Product;
@@ -28,6 +30,7 @@ public class Application {
 		CustomerGroupRepository customerGroupRepository = context.getBean(CustomerGroupRepository.class);		
 		CustomerRepository customerRepository = context.getBean(CustomerRepository.class);
 		ProductRepository productRepository = context.getBean(ProductRepository.class);
+		CategoryRepository categoryRepository = context.getBean(CategoryRepository.class);
 		
 		// customer groups
 		CustomerGroup g = new CustomerGroup("Metro");
@@ -59,11 +62,41 @@ public class Application {
 		customerRepository.save(new Customer("Titty", "Twister", customerGroupsList));
 		customerRepository.save(new Customer("Remundo", "Do", customerGroupsList));
         
-        // products
-		productRepository.save(new Product("pomme",1, ""));
-		productRepository.save(new Product("poire",1, "fruit"));
-		productRepository.save(new Product("banane",1, "fruit"));
-		productRepository.save(new Product("kiwi",1, "fruit"));
-		productRepository.save(new Product("courgette",1, "legume"));
+       
+	       	
+	       
+	        //création des produits
+	        Product p1= new Product("pomme golden",1,100);
+	        Product p2= new Product("TV Samsung",250,50);
+	        Product p3= new Product("TV Sony",200,20);
+	        
+	        
+	        
+	        Category c1=new Category("fruit");
+	        Category c2=new Category("TV");
+
+	        
+	        //g.setId((long) 111);
+	        
+	        categoryRepository.save(c1);
+	        categoryRepository.save(c2);
+	        
+
+	        //g.setStock(s);
+	     
+	        
+	        //Set collec = new HashSet();
+	        
+	        p1.setCategory(c1);
+	        p2.setCategory(c1);
+	        p3.setCategory(c2);
+	        
+	 
+	        
+	        
+	        productRepository.save(p1);
+	        productRepository.save(p2);
+	        productRepository.save(p3);
+	     
     }
 }

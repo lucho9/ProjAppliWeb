@@ -12,18 +12,62 @@
 	
 	<!-- Begin page content -->
     <div class="container">
-      <div class="page-header">
-        <h1>
-        	Créer des produits
-        </h1>
+      <div class="page-header" th:switch="${product.id}">
+      	
+	  <h1 th:case="0">Creer un produit</h1>
+	  <h1 th:case="*">Editer un produit</h1>
+	
       </div>
       
-           <form action="#" th:object="${product}" method="post">
+      
+        <form name="form1" action="#" th:object="${product}" method="post">
+        <div class="row">
+  <div class="col-md-2">Nom du produit:</div>
+  <div class="col-md-4"><input type="text" class="form-control" th:field="*{name}" /></div>
+  <div class="col-md-6"> <td th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name Error</td></div>
+</div>
+        
+        
+               <div class="row">
+  <div class="col-md-2">Prix du produit:</div>
+  <div class="col-md-4"><input type="text" class="form-control" th:field="*{prix}" /></div>
+   <div class="col-md-6"><td th:if="${#fields.hasErrors('prix')}" th:errors="*{prix}">Prix Error</td></div>
+</div>
+
+           <div class="row">
+  <div class="col-md-2">Stock du produit:</div>
+  <div class="col-md-4"><input type="text" class="form-control" th:field="*{stock}" /></div>
+   <div class="col-md-6"><td th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}">Stock Error</td></div>
+</div>
+
+       <div class="row">
+  <div class="col-md-2">Categorie:</div>
+  <div class="col-md-2">
+   <select class="form-control" th:field="*{category}">
+     
+  <option  th:each="cat : ${cats}"  th:value="${cat.id}" th:field="*{category}" th:text="${cat.name}"></option>
+  
+
+</select>
+</div></div>
+
+
+
+      
+      
+  
+     <br/><br/>
+        <p>
+        <input  class="btn btn-primary" type="submit" value="Submit" /> <input type="reset" class="btn btn" value="Reset" /></p>
+          
+         
+          </form>
+          <!-- <form action="#" th:object="${product}" method="post">
         <p>Nom du produit: <input type="text" th:field="*{name}" /></p>
         <p>Prix du produit: <input type="text" th:field="*{prix}" /></p>
         <p>Categorie: <input type="text" th:field="*{category}" /></p>
         <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
-    </form>
+    </form>  -->
     
       
       
