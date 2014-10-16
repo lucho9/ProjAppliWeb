@@ -113,4 +113,11 @@ public class CustomerController {
 		customerService.delete(id);
 		return "redirect:/customer";
 	}
+	
+	@RequestMapping(value = "/customer/grouppopover", method = RequestMethod.GET, produces={"application/json"})
+	public @ResponseBody String ajaxGroupPopover(@RequestParam("id") Long id) {
+		
+				
+		return "Zzz";
+	}
 }

@@ -41,6 +41,7 @@ function editCustomer(action, id) {
 }
 
 $(document).ready(function() {
+	// to activate bootstrap popovers
 	$("body").popover({ selector: '[data-toggle=popover]' });
 	
 	
@@ -84,7 +85,12 @@ $(document).ready(function() {
 		alert("hide=" + $(this).attr('id') );
 	});
 	$('.customerGroup').on('show.bs.popover', function () {
-		alert("show=" + $(this).attr('id') );
+		alert($(this).attr('action'));
+		/*
+		$.get($(this).attr('data-action'), function(d) {
+			$(this).popover({content: d}).popover('show');
+		});*/
+		
 	});
 	
 	

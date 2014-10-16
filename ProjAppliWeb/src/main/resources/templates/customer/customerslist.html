@@ -35,7 +35,7 @@
 					<td class="table-cell" th:text="${customer.lastName}"></td>
 					<td class="table-cell" th:text="${customer.firstName}"></td>
 					<td class="table-cell">
-						<a href="#" th:each="customerGroup : ${customer.customerGroups}" class="customerGroup" th:id="${customer.id}" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">
+						<a href="#" th:each="customerGroup : ${customer.customerGroups}" class="customerGroup" th:id="${customerGroup.id}" th:action="@{/customer/grouppopover}" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">
 							<span th:text="${customerGroup.name}"></span>
 						</a>
 					</td>
