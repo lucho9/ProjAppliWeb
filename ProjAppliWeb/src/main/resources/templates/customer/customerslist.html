@@ -15,10 +15,6 @@
 			</h1>
 		</div>
 		
-		<!--
-		<a th:href="@{/customer/create}" class="btn btn-default"><i class="glyphicon glyphicon-plus"></i> Créer un client</a>
-		-->
-		
 		<button id="buttoncreatecustomer" class="btn btn-primary btn-lg" data-toggle="modal">
 		  Créer un client
 		</button>
@@ -34,11 +30,14 @@
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="customer : ${page.content}">
+				<!--<tr th:each="customer : ${page.content}">-->
+				<tr th:each="customer : ${customers}">
 					<td class="table-cell" th:text="${customer.lastName}"></td>
-					<td class="table-cell" th:text="${customer.firstName}" th:href='@{${page.url}(sort.direction=Direction.asc, sort.properties="firstName")}'></td>
+					<td class="table-cell" th:text="${customer.firstName}"></td>
 					<td class="table-cell">
-						<div th:each="customerGroup : ${customer.customerGroups}" th:text="${customerGroup.name}"></div>
+						<a href="#" th:each="customerGroup : ${customer.customerGroups}" class="customerGroup" th:id="${customer.id}" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And here's some amazing content. It's very engaging. Right?">
+							<span th:text="${customerGroup.name}"></span>
+						</a>
 					</td>
 					<td class="table-cell">
 						<button th:onclick="@{'javascript:editCustomer(\'/customer/edit\', ' + ${customer.id} + '); return false;'}" class="btn btn-default btn-xs">
@@ -53,8 +52,9 @@
 				</tr>
 			</tbody>
 		</table>
-		
+		<!--
 		<div th:include="fragments/paginationbar :: paginationbar"></div>
+		-->
 	</div>
 	
 	<div th:substituteby="customer/customerform :: [//div]"></div>

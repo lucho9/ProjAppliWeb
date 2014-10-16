@@ -41,6 +41,9 @@ function editCustomer(action, id) {
 }
 
 $(document).ready(function() {
+	$("body").popover({ selector: '[data-toggle=popover]' });
+	
+	
 	var $form = $('#formcustomer');
 	var $buttoncreatecustomer = $('#buttoncreatecustomer');
 
@@ -76,6 +79,13 @@ $(document).ready(function() {
 		return false;
 	});
 	
+	
+	$('.customerGroup').on('hide.bs.popover', function () {
+		alert("hide=" + $(this).attr('id') );
+	});
+	$('.customerGroup').on('show.bs.popover', function () {
+		alert("show=" + $(this).attr('id') );
+	});
 	
 	
 	/*

@@ -25,6 +25,8 @@ public class CustomerGroup implements Serializable {
 	@NotNull
 	@Size(min = 2, max = 40)
 	private String name;
+
+	private double discount = 0;
 	
 	@ManyToMany(mappedBy="customerGroups", fetch=FetchType.LAZY)
 	private List<Customer> customers;
@@ -32,8 +34,9 @@ public class CustomerGroup implements Serializable {
 	public CustomerGroup() {
 	}
 	
-	public CustomerGroup(String name) {
+	public CustomerGroup(String name, double discount) {
 		this.name = name;
+		this.discount = discount;
 	}
 	
 	public long getId() {
@@ -52,6 +55,14 @@ public class CustomerGroup implements Serializable {
 		this.name = name;
 	}
 
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+	
 	@JsonIgnore
 	public List<Customer> getCustomers() {
 		return customers;

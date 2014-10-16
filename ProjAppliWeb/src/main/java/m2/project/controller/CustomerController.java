@@ -10,14 +10,9 @@ import m2.project.model.ErrorMessage;
 import m2.project.model.JsonResponse;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
-import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -40,18 +35,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customersList(Model model, Pageable pageable) {
 
-		// for the customers list
-		Sort sort;
-		if (pageable.getSort() == null)
-			sort = new Sort(Direction.ASC, "lastName");
-		else
-			sort = pageable.getSort();
-		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, sort);
-		
-		
-		Page<Customer> curPage = customerService.findAll(pageRequest);
-		PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
-		model.addAttribute("page", page);
+		//Page<Customer> curPage = customerService.findAll(pageRequest);
+		//PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
+		//model.addAttribute("page", page);
+		model.addAttribute("customers", customerService.findAll());
 		
 		// for the customer form create
 		model.addAttribute("customer", new Customer());
