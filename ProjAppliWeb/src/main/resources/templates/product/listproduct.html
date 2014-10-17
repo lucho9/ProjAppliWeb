@@ -18,13 +18,13 @@
         </h1>
       </div>
       
-      
+      <!--glyphicon glyphicon-plus-->
  
 
   <div class="form-group">
 
-<button id="buttoncreateproduct" class="btn btn-primary btn-lg" data-toggle="modal">
-		  <span class="glyphicon glyphicon-plus"></span>
+		<button id="buttoncreateproduct" class="btn btn-primary btn-lg glyphicon glyphicon-plus" data-toggle="modal">
+		
 		</button>
 
        <form class="navbar-form navbar-right" role="search" name="form2" action="#" th:object="${product}" method="get">
@@ -67,9 +67,9 @@
                   <td><button  id="${product.id}" class="btn btn-default btn-xs" th:onclick="@{'javascript:editProduct(\'/product/edit\', ' + ${product.id} + '); return false;'}" >
                   <i class="glyphicon glyphicon-pencil"></i></button></td>
                   
-              <!--   <td><a type="button" th:href="@{/edit(id=${product.id})}" class="btn btn-default btn-xs">-->
+              <!--   <td><a type="button" th:href="@{/edit(id=${product.id})}" class="btn btn-default btn-xs">
   <span class="glyphicon glyphicon-pencil"></span>
-</a>
+</a>-->
 <!-- <a th:href="@{/edit(id=${product.id})}">Editer</a>_</td>-->
                 <td><a type="button" th:href="@{/delete(id=${product.id})}" class="btn btn-default btn-xs">
   <span class="glyphicon glyphicon-remove"></span>
@@ -84,6 +84,9 @@
     </ul>
 
     </div>
+    
+    
+    <div th:substituteby="product/productForm :: [//div]"></div>
 	<!-- End page content -->
 
 
@@ -91,10 +94,10 @@
 
 
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+	
 	<script th:replace="fragments/common :: [//script]"></script>
-<script type="text/javascript" th:src="@{/js/myjs.js}"></script>
-<script type="text/javascript" th:src="@{/js/common.js}"></script>
-<script type="text/javascript" th:src="@{/js/productlist.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/productlist.js}"></script>
 	
 	
 	

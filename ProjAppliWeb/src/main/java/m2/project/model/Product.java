@@ -11,12 +11,15 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	
 	private long id;
+	
 	@NotNull
 	@Size(min=2, max=20)
 	private String name;
@@ -45,7 +48,7 @@ public class Product implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-
+	
 	public Category getCategory() {
 		return category;
 	}

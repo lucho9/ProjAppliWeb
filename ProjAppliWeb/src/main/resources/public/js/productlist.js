@@ -3,6 +3,8 @@ function clearProductFormInputs() {
 	$('#err-name').html("");
 	$('#stock').removeClass('error');
 	$('#err-stock').html("");
+	$('#prix').removeClass('error');
+	$('#err-prix').html("");
 	$('#category').removeClass('error');
 	$('#err-category').html("");
 	
@@ -14,6 +16,7 @@ function clearProductFormInputs() {
 }
 
 function editProduct(action, id) {
+	//alert("erreur");
 	$.ajax({
 	    url: action,
 	    type: 'GET',
@@ -49,12 +52,14 @@ $(document).ready(function() {
 	$buttoncreateproduct.bind('click', function(e) {
 		clearProductFormInputs();
 		
-		$('#divformproduct .modal-title').html("Créer");
+		$('#divformproduct .modal-title').html("Créer un produit");
 		$('#divformproduct').modal('show');
+	
 	});
 	
 	$form.bind('submit', function(e) {
 		var data = $form.serialize();
+		
 		$.post($form.action, data, function(response) {
 			if (response.status == 'FAIL') {
 				for (var i = 0; i < response.errorMessageList.length; i++) {

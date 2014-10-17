@@ -8,6 +8,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 
 
 @Entity
@@ -58,7 +60,7 @@ public class Category {
 	public void setName(String name) {
 		this.name = name;
 	}
-
+	@JsonIgnore
 	public Collection<Product> getProducts() {
 		return products;
 	}

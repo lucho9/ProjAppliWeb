@@ -50,24 +50,51 @@ public class ProductController {
 				if(rch.equals("case2")){
 					System.out.println(product.getName());
 		model.addAttribute("products", productRepository.findByName(product.getName()));
+		return "/product/listproduct";
 			}
 		}
 		else{
 			model.addAttribute("products", productRepository.findAll());
-			
+			model.addAttribute("cats", categoryRepository.findAll());
+			return "/product/listproduct";
 		}
-	
+		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("cats", categoryRepository.findAll());
 		return "/product/listproduct";
+	
+		
 	}
 	
-	@RequestMapping(value = "/product", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productsListBis(Model model,@ModelAttribute Product product) {
 		model.addAttribute("product", new Product());
 		productRepository.save(product);
 		
 		return "redirect:/product";
-	}
+	}*/
 	
+	// Submit create / edit product form - Ajax 
+			@RequestMapping(value = "/product", method = RequestMethod.POST, produces={"application/json"})
+			@ResponseBody
+			public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
+				JsonResponse res = new JsonResponse();
+				if (!result.hasErrors()) {
+					productRepository.save(product);
+					res.setStatus("SUCCESS");
+				}
+				else {
+					res.setStatus("FAIL");
+					List<FieldError> allErrors = result.getFieldErrors();
+					List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
+					for (FieldError objectError : allErrors) {
+						errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
+					}
+					res.setErrorMessageList(errorMesages);
+				}
+				
+				return res;
+			}
+	/*
 	@RequestMapping(value = "/product/create", method = RequestMethod.GET)
 	public String createProductForm(Model model) {
 		model.addAttribute("product", new Product());
@@ -90,8 +117,8 @@ public class ProductController {
 	}
 
 	
-	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET, produces={"application/json"})
+	*/
+	@RequestMapping(value = "/product/edit", method = RequestMethod.GET, produces={"application/json"})
 	public @ResponseBody Product ajaxEditCustomerForm(@RequestParam("id") Long id) {
 	
 		
@@ -102,7 +129,7 @@ public class ProductController {
 	
 		return productRepository.findOne(id);
 	}
-	
+	/*
 	// Submit create / edit product form - Ajax 
 		@RequestMapping(value = "/edit", method = RequestMethod.POST, produces={"application/json"})
 		@ResponseBody
@@ -123,7 +150,7 @@ public class ProductController {
 			}
 			
 			return res;
-		}
+		}*/
 	
 /*	@RequestMapping(value = "/edit", method = RequestMethod.POST)
 	public String checkProductInfo(@Valid Product product,BindingResult bindingResult, Model model) {
