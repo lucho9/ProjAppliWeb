@@ -1,7 +1,9 @@
 package m2.project.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -106,21 +108,67 @@ public class ProductController {
 		return "/product/caisse";
 	}
 	
+	
+	public Map<Long, Product> getPanier(HttpSession session)
+	{
+		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
+		if(panier == null)
+			panier = new HashMap<Long, Product>();
+		
+		return panier;
+	}
+	public Map<Long, Integer> getQty(HttpSession session)
+	{
+		Map<Long, Integer> qty = (Map<Long, Integer>)session.getAttribute("qty");
+		if(qty == null)
+			qty = new HashMap<Long, Integer>();
+		
+		return qty;
+	}
+	
 	@RequestMapping(value = "/caissee", method = RequestMethod.GET)
 	public String editForm(@RequestParam("id") Long id, Model model, HttpSession session) {
 		
 		Product product;
 		product = productRepository.findOne(id);
 		//model.addAttribute("product", productRrepository.findOne(id));
-		List<Product> panier = (List<Product>)session.getAttribute("panier");
-		if(panier == null)
-			panier = new ArrayList<Product>();
 		
-		panier.add(product);
+		double total = 0;
+		Map<Long, Integer> qty = getQty(session);
+		Map<Long, Product> panier = getPanier(session);
+		
+		if (!qty.containsKey(product.getId())) {
+			panier.put(product.getId(), product);
+			qty.put(product.getId(), 1);
+			
+		}
+		else {
+			qty.put(product.getId(), qty.get(product.getId()) + 1);
+		}
+		
 		session.setAttribute("panier", panier);
+		session.setAttribute("qty", qty);
+		
+		total = total + product.getPrix();
+		session.setAttribute("prixTotal", total);
 		return "redirect:/caisse";
 	}
 	
-	
+	@RequestMapping(value = "/deletePanier", method = RequestMethod.GET)
+	public String deletePanier(@RequestParam("id") Long id, Model model, HttpSession session) {
+		
+		Map<Long, Integer> qty = getQty(session);
+		if (qty.containsKey(id))
+			qty.remove(id);
+		Map<Long, Product> panier = getPanier(session);
+		if (panier.containsKey(id))
+			panier.remove(id);
+		
+		session.setAttribute("panier", panier);
+		session.setAttribute("qty", qty);
+		
+		//panier.remove();
+		return "redirect:/caisse";
+	}
 	
 }

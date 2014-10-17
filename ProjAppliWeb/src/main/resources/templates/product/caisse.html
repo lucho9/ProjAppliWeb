@@ -124,14 +124,27 @@
         </thead>
         <tbody>
             <tr th:each="product : ${session.panier}" > 
-            <td th:text="${product.id}"></td>
-                <td th:text="${product.name}"></td>
-               <td th:text="${product.prix}"></td>
+            <td th:text="${product.value.id}"></td>
+                <td th:text="${product.value.name}"></td>
+               <td th:text="${product.value.prix}"></td>
+               <td th:text="${session.qty[product.value.id]}"></td>
+               <td><a th:href="@{/deletePanier(id=${product.value.id})}">Supprimer</a></td>
+               
             </tr>
            
         </tbody>
     </table>
     <!--	<li th:each="product : ${session.panier}" th:text="${product.name}"></li> -->
+    <br/>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Prix total</td>
+                 <td><span th:text = "${session.prixTotal}"></span></td>
+            </tr>
+        </thead>
+    
+    </table>
     
 </div>   
 </div>
