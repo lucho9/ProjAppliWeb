@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/common :: [//head]">
+</head>
+
+<body>
+<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
+
+<div class="container">
+<div class="row">
+  <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+    <div class="page-header">
+        <h1>
+        	Panier
+        </h1>
+      </div>
+  
+  
+   <ul>
+    	<li th:each="product : ${session.panier}" th:text="${product.name}"></li>
+    </ul>
+
+  
+
+  
+</div>
+
+  <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
+    <div class="page-header">
+        <h1>
+        	Magasin
+        </h1>
+      </div>
+      <ul>
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ref produit</th>
+                 <th>Categorie</th>
+               
+                <th>Nom Produit</th>
+                <th>Stock</th>
+                <th>Prix</th>
+               
+            </tr>
+        </thead>
+        <tbody>
+          
+          <tr th:each="product : ${products}" >
+            <td th:text="${product.id}"></td>
+             <td th:text="${product.category.name}"></td>
+                <td th:text="${product.name}"></td>
+                <td th:text="${product.stock}"></td>
+                <td th:text="${product.prix}"></td>
+                
+                <!--  <td><button  id="${product.id}" th:onclick="@{'openDialog(' + ${product.id} + '); return false;'}">Editer</button></td>-->
+                <td><a  th:href="@{/panier/add(id=${product.id})}"  class="btn btn-default btn-xs">
+  <span class="glyphicon glyphicon-plus"></span>
+</a>
+</td>
+               
+            </tr>
+           
+        </tbody>
+    </table>
+    
+    </ul>
+ <!--   <form action="#"  th:object="${product}" method="post">
+        <p>Nom: <input type="text" th:field="*{name}" /></p>
+        <p><input type="submit" value="Submit" /> <input type="reset" value="Reset" /></p>
+    </form>-->
+  </div>
+  
+</div>
+</div>
+<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+	<script th:replace="fragments/common :: [//script]"></script>
+
+
+	
+	
+	
+</body>
+</html>
