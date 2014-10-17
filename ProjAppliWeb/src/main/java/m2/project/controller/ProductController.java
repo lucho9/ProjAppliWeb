@@ -1,5 +1,10 @@
 package m2.project.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.servlet.http.HttpSession;
+
 import m2.project.model.Customer;
 import m2.project.model.Product;
 import m2.project.repository.CustomerRepository;
@@ -92,6 +97,30 @@ public class ProductController {
 		
 		return "redirect:/product";
 	}
+	
+	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
+	public String listProducts(Model model) {
+		
+		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("product", new Product());
+		return "/product/caisse";
+	}
+	
+	@RequestMapping(value = "/caissee", method = RequestMethod.GET)
+	public String editForm(@RequestParam("id") Long id, Model model, HttpSession session) {
+		
+		Product product;
+		product = productRepository.findOne(id);
+		//model.addAttribute("product", productRrepository.findOne(id));
+		List<Product> panier = (List<Product>)session.getAttribute("panier");
+		if(panier == null)
+			panier = new ArrayList<Product>();
+		
+		panier.add(product);
+		session.setAttribute("panier", panier);
+		return "redirect:/caisse";
+	}
+	
 	
 	
 }
