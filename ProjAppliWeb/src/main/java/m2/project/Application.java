@@ -1,7 +1,6 @@
 package m2.project;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import m2.project.model.Customer;
@@ -30,8 +29,8 @@ public class Application {
 		ProductRepository productRepository = context.getBean(ProductRepository.class);
 		
 		// customer groups
-		CustomerGroup g = new CustomerGroup("Metro");
-		CustomerGroup g2 = new CustomerGroup("Association des pêcheurs de Illzach");
+		CustomerGroup g = new CustomerGroup("Metro", 10);
+		CustomerGroup g2 = new CustomerGroup("Association des pêcheurs de Illzach", 5);
 		customerGroupRepository.save(g);
 		customerGroupRepository.save(g2);
 		

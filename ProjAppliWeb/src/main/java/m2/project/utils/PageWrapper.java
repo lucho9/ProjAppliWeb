@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
 
 public class PageWrapper<T> {
@@ -12,7 +14,9 @@ public class PageWrapper<T> {
 	private List<PageItem> items;
 	private int currentNumber;
 	private String url;
+	private Sort sort;
 
+	
 	public String getUrl() {
 		return url;
 	}
@@ -85,6 +89,14 @@ public class PageWrapper<T> {
 
 	public Order getOrderFor(String property) {
 		return page.getSort().getOrderFor(property);
+	}
+	
+	public Sort getSort() {
+		return sort;
+	}
+	
+	public void setSort(Direction direction, String properties) {
+		sort = new Sort(direction, properties);
 	}
 	
 	public class PageItem {

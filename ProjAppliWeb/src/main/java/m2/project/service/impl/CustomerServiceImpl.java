@@ -1,8 +1,13 @@
 package m2.project.service.impl;
 
+import java.util.List;
+
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +44,9 @@ public class CustomerServiceImpl implements CustomerService {
 	
 	public void delete(Customer customer) {
 		customerRepository.delete(customer);
+	}
+	
+	public List<Customer> findAll() {
+		return customerRepository.findAll(new Sort(new Order(Direction.ASC, "lastName"), new Order(Direction.ASC, "firstName")));
 	}
 }
