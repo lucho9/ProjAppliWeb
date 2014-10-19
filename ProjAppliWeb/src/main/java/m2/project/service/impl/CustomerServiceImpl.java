@@ -2,6 +2,7 @@ package m2.project.service.impl;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,6 +47,6 @@ public class CustomerServiceImpl implements CustomerService {
 	}
 	
 	public List<Customer> findAll() {
-		return customerRepository.findAll(new Sort(Direction.ASC, "lastName"));
+		return customerRepository.findAll(new Sort(new Order(Direction.ASC, "lastName"), new Order(Direction.ASC, "firstName")));
 	}
 }

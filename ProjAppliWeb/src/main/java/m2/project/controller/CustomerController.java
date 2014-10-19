@@ -114,10 +114,8 @@ public class CustomerController {
 		return "redirect:/customer";
 	}
 	
-	@RequestMapping(value = "/customer/grouppopover", method = RequestMethod.GET, produces={"application/json"})
+	@RequestMapping(value = "/customer/grouppopover", method = RequestMethod.GET, produces={"application/json; charset=utf-8"})
 	public @ResponseBody String ajaxGroupPopover(@RequestParam("id") Long id) {
-		
-				
-		return "Zzz";
+		return customerGroupService.getGroupInfos(id);
 	}
 }

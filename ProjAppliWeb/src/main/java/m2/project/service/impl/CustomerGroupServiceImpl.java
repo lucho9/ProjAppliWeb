@@ -2,15 +2,14 @@ package m2.project.service.impl;
 
 import java.util.List;
 
+import m2.project.model.Customer;
+import m2.project.model.CustomerGroup;
+import m2.project.repository.CustomerGroupRepository;
+import m2.project.service.CustomerGroupService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import m2.project.model.CustomerGroup;
-import m2.project.repository.CustomerGroupRepository;
-import m2.project.repository.CustomerRepository;
-import m2.project.service.CustomerGroupService;
-import m2.project.service.CustomerService;
 
 @Service
 @Transactional
@@ -38,4 +37,20 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
 	public void delete(CustomerGroup customerGroup) {
 		customerGroupRepository.delete(customerGroup);
 	}
+	
+	public String getGroupInfos(long id) {
+		CustomerGroup g = findOne(id);
+		StringBuilder sb = new StringBuilder();
+		sb.append("{");
+		sb.append("\"title\":\"" + g.getName() + "\"");
+		sb.append(", \"discount\":\"" + g.getDiscount() + "\"");
+		sb.append(", \"customers\":\"");
+		for (Customer c : g.getCustomers()) {
+			sb.append(c.getLastName()).append(" ").append(c.getFirstName()).append("<br />");
+		}
+		sb.append("\"");
+		sb.append("}");
+		return sb.toString();
+	}
+	
 }

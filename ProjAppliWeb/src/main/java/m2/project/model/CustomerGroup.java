@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OrderBy;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -29,6 +30,7 @@ public class CustomerGroup implements Serializable {
 	private double discount = 0;
 	
 	@ManyToMany(mappedBy="customerGroups", fetch=FetchType.LAZY)
+	@OrderBy("lastName ASC, firstName ASC")
 	private List<Customer> customers;
 	
 	public CustomerGroup() {

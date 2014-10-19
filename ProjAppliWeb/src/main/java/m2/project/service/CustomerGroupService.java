@@ -10,4 +10,5 @@ public interface CustomerGroupService {
 	public void save(CustomerGroup customerGroup);
 	public void delete(long id);
 	public void delete(CustomerGroup customerGroup);
+	public String getGroupInfos(long id);
 }
