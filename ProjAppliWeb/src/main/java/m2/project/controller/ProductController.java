@@ -14,7 +14,10 @@ import m2.project.model.JsonResponse;
 import m2.project.model.Product;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
+import m2.project.repository.ProductPredicates;
 import m2.project.repository.ProductRepository;
+import m2.project.service.CustomerGroupService;
+import m2.project.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +30,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.mysema.query.types.Predicate;
+
 
 
 
@@ -35,6 +40,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductRepository productRepository;
+
+	@Autowired
+	private ProductService productService;
 
 	
 	@Autowired
@@ -49,8 +57,11 @@ public class ProductController {
 			
 				if(rch.equals("case2")){
 					System.out.println(product.getName());
-		model.addAttribute("products", productRepository.findByName(product.getName()));
-		return "/product/listproduct";
+					//Predicate predicate = ProductPredicates.nameIsLike(product.getName());
+					//String predicateAsString = predicate.toString();
+					model.addAttribute("products", productService.search(product.getName()));
+					//model.addAttribute("products", productRepository.findAll());//findByName(product.getName()));
+					return "/product/listproduct";
 			}
 		}
 		else{
