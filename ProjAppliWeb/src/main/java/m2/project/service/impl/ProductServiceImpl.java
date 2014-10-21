@@ -5,12 +5,16 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import m2.project.model.Customer;
+import m2.project.model.CustomerGroup;
 import m2.project.model.Product;
 import m2.project.repository.ProductRepository;
 import m2.project.service.ProductService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,5 +47,14 @@ public class ProductServiceImpl implements ProductService{
 	        }
 	        return list;
 	    }
+	    
+	    public List<Product> findAll() {
+			return productRepository.findAll();
+		}
+	    
+	    public Page<Product> findAll(Pageable pageable) {
+			return productRepository.findAll(pageable);
+		}
+		
 	
 }

@@ -12,6 +12,6 @@ public class ProductPredicates {
  
     public static Predicate nameIsLike(final String searchTerm) {
         QProduct product = QProduct.product;
-        return product.name.startsWithIgnoreCase(searchTerm);
+        return product.name.contains(searchTerm);
     }
 }

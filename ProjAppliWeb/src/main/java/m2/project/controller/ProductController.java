@@ -18,8 +18,13 @@ import m2.project.repository.ProductPredicates;
 import m2.project.repository.ProductRepository;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.ProductService;
+import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -51,8 +56,13 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public String productsList(Model model,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch) {
-	
+	public String productsList(Model model,Pageable pageable,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch) {
+		// for the customers list
+		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
+		
+		Page<Product> curPage = productService.findAll(pageRequest);
+		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
+		model.addAttribute("page", page);
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
 			
 				if(rch.equals("case2")){
@@ -60,6 +70,7 @@ public class ProductController {
 					//Predicate predicate = ProductPredicates.nameIsLike(product.getName());
 					//String predicateAsString = predicate.toString();
 					model.addAttribute("products", productService.search(product.getName()));
+					model.addAttribute("cats", categoryRepository.findAll());
 					//model.addAttribute("products", productRepository.findAll());//findByName(product.getName()));
 					return "/product/listproduct";
 			}
