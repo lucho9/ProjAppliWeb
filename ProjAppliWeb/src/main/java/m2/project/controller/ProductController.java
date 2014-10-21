@@ -26,7 +26,7 @@ public class ProductController {
 
 	@Autowired
 	private ProductRepository productRepository;
-	
+	double total = 0;
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String productsList(Model model,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch) {
@@ -133,23 +133,25 @@ public class ProductController {
 		product = productRepository.findOne(id);
 		//model.addAttribute("product", productRrepository.findOne(id));
 		
-		double total = 0;
+		
 		Map<Long, Integer> qty = getQty(session);
 		Map<Long, Product> panier = getPanier(session);
 		
 		if (!qty.containsKey(product.getId())) {
 			panier.put(product.getId(), product);
 			qty.put(product.getId(), 1);
+			total = total + product.getPrix();
 			
 		}
 		else {
 			qty.put(product.getId(), qty.get(product.getId()) + 1);
+			total = total + product.getPrix();
 		}
 		
 		session.setAttribute("panier", panier);
 		session.setAttribute("qty", qty);
 		
-		total = total + product.getPrix();
+		
 		session.setAttribute("prixTotal", total);
 		return "redirect:/caisse";
 	}
@@ -158,15 +160,17 @@ public class ProductController {
 	public String deletePanier(@RequestParam("id") Long id, Model model, HttpSession session) {
 		
 		Map<Long, Integer> qty = getQty(session);
+		Map<Long, Product> panier = getPanier(session);
+		total = total - (qty.get(id) * panier.get(id).getPrix());
 		if (qty.containsKey(id))
 			qty.remove(id);
-		Map<Long, Product> panier = getPanier(session);
+		
 		if (panier.containsKey(id))
 			panier.remove(id);
 		
 		session.setAttribute("panier", panier);
 		session.setAttribute("qty", qty);
-		
+		session.setAttribute("prixTotal", total);
 		//panier.remove();
 		return "redirect:/caisse";
 	}

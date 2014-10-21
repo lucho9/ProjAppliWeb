@@ -60,10 +60,11 @@ public class Application {
 		customerRepository.save(new Customer("Remundo", "Do", customerGroupsList));
         
         // products
-		productRepository.save(new Product("pomme",1, ""));
-		productRepository.save(new Product("poire",1, "fruit"));
-		productRepository.save(new Product("banane",1, "fruit"));
-		productRepository.save(new Product("kiwi",1, "fruit"));
-		productRepository.save(new Product("courgette",1, "legume"));
+		productRepository.save(new Product("pomme",2, ""));
+		productRepository.save(new Product("poire",7, "fruit"));
+		productRepository.save(new Product("banane",9, "fruit"));
+		productRepository.save(new Product("kiwi",15, "fruit"));
+		productRepository.save(new Product("courgette",3, "legume"));
+		productRepository.save(new Product("carotte",5, "legume"));
     }
 }

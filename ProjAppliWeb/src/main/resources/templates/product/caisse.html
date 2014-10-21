@@ -17,8 +17,8 @@
     	margin: 20px;
     }
 .button-container {
-    width: 520px;
-    background: white;
+  
+    
     overflow-y: auto;
 }
 
@@ -29,11 +29,7 @@
     background: lightgray;   
     margin: 15px;
 }
-.btn_taille_egale{
-   width:137px;
-   height:100px;
-  }
-  .div-main{
+.div-main{
  
     width: 600px;
     height: 400px;
@@ -46,20 +42,96 @@
 
   
   }
-  
-  .div-left{
- float:left;
-    width:100px;
-    padding:40px;
-    padding-left:30px;
-    padding-top:20px;
-    padding-right:30px
+
+.btn_taille_egale{
+   width:137px;
+   height:100px;
   }
+
   
   .div-right{
   float:right;
     width:100px;
   }
+  
+ .div-right{
+  float:right;
+    width:100px;
+  }
+   
+.css_right{
+
+display: inline-block;
+vertical-align: top;
+
+border: 3px #000000 solid;
+}   
+   
+
+
+.myButton {
+	-moz-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #f29c93;
+	box-shadow:inset 0px 1px 0px 0px #f29c93;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #fe1a00), color-stop(1, #ce0100));
+	background:-moz-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+	background:-webkit-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+	background:-o-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+	background:-ms-linear-gradient(top, #fe1a00 5%, #ce0100 100%);
+	background:linear-gradient(to bottom, #fe1a00 5%, #ce0100 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fe1a00', endColorstr='#ce0100',GradientType=0);
+	background-color:#fe1a00;
+	-moz-border-radius:17px;
+	-webkit-border-radius:17px;
+	border-radius:17px;
+	border:1px solid #d83526;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:0px 5px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #b23e35;
+}
+.myButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ce0100), color-stop(1, #fe1a00));
+	background:-moz-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+	background:-webkit-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+	background:-o-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+	background:-ms-linear-gradient(top, #ce0100 5%, #fe1a00 100%);
+	background:linear-gradient(to bottom, #ce0100 5%, #fe1a00 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce0100', endColorstr='#fe1a00',GradientType=0);
+	background-color:#ce0100;
+}
+.myButton:active {
+	position:relative;
+	top:1px;
+}
+
+   
+   
+.css_div{
+
+width: 691px;
+height: 500px;
+
+-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=91)";
+filter: alpha(opacity=91);
+-moz-opacity: 0.91;
+-khtml-opacity: 0.91;
+opacity: 0.91;
+border: 3px #000000 solid;
+
+-webkit-border-radius: 0px 0px 0px 0px;
+-moz-border-radius: 0px 0px 0px 0px;
+border-radius: 0px 0px 0px 0px;
+
+float : "left";
+display: inline-block;
+}
+
 </style>
 
 </head>
@@ -78,28 +150,28 @@
         </h1>
       </div>
       
-  <div class="div-main">
+
  
+<div class="css_div">
 
 
-<div class="div-right">
 <div class="menu-container">
     <div class="button-container">
-  <fieldset>
+  
      <!--    <form action="/product" th:action="@{/product}" th:object="${product}"  method="get"> -->
        	<td><span><a  th:href="@{/caissee(id=${product.id})}" th:each="product : ${products}"  ><button class = "btn_taille_egale" th:text="${product.name}"></button></a></span></td>
    	  <!--</form>  --> 
-  </fieldset>
+  
     </div>
 </div>
  
   
         
-           
+</div>       
         
       
 
-</div>
+
 <script th:inline="javascript">
 //$( "button" ).click(function() {
  // var htmlString = $( this ).html();
@@ -112,14 +184,22 @@
 //});
 </script>
 
-<div class = "div-left">
 
-    <table class="table">
-        <thead>
+
+ 
+    <!--	<li th:each="product : ${session.panier}" th:text="${product.name}"></li> -->
+ 
+ <div class="css_right">
+     <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Mon panier</div>
+  <table class="table">
+    <thead>
             <tr>
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Prix</th>
+                <th>Qté</th>
             </tr>
         </thead>
         <tbody>
@@ -128,14 +208,13 @@
                 <td th:text="${product.value.name}"></td>
                <td th:text="${product.value.prix}"></td>
                <td th:text="${session.qty[product.value.id]}"></td>
-               <td><a th:href="@{/deletePanier(id=${product.value.id})}">Supprimer</a></td>
+               <td><a th:href="@{/deletePanier(id=${product.value.id})}"><button class = "myButton">x</button></a></td>
                
             </tr>
            
         </tbody>
-    </table>
-    <!--	<li th:each="product : ${session.panier}" th:text="${product.name}"></li> -->
-    <br/>
+  </table>
+  <br/>
     <table class="table">
         <thead>
             <tr>
@@ -145,10 +224,18 @@
         </thead>
     
     </table>
+   
+	</div>
+	</div>
+	
+	 
+   
     
-</div>   
+    
+  
 </div>
-</div>
+
+
 <div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	<script th:replace="fragments/common :: [//script]"></script>
 
