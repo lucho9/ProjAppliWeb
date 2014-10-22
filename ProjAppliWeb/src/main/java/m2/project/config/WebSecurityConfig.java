@@ -6,22 +6,29 @@ import org.springframework.security.config.annotation.authentication.configurers
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 @EnableWebMvcSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		/*
-		http.authorizeRequests().antMatchers("/", "/home", "/customer**", "/product**", "/employee**", "/resources**")
-				.permitAll().anyRequest().authenticated();
-		http.formLogin().loginPage("/login").usernameParameter("login")
-				.passwordParameter("pwd").permitAll() // redéfinition des input names de login.html
-				.and().logout().logoutUrl("/bye").logoutSuccessUrl("/") // redéfinition pas de logout
-				.permitAll();
-		 */
-		http.authorizeRequests().antMatchers("/**").permitAll();
-		http.csrf().disable();
+		
+		http.authorizeRequests().antMatchers("/", "/home", "/errors/**", "/templates/fragments/**", "/theme/**", "/js/**").permitAll();
+		http.authorizeRequests().antMatchers("/customer/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/product/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/employee/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/caisse/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		
+		http.formLogin().loginPage("/login")
+				.usernameParameter("login").passwordParameter("pwd").permitAll(); // redéfinition des input names de login.html
+				//.and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
+		
+		// avec l'instruction logoutUrl, la requête est en post -> logoutRequestMatcher fait du get
+		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
+		
+		//http.authorizeRequests().antMatchers("/**").permitAll();
+		//http.csrf().disable();
 	}
 
 	@Configuration
@@ -30,9 +37,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
 		@Override
 		public void init(AuthenticationManagerBuilder auth) throws Exception {
-			auth.inMemoryAuthentication().withUser("user").password("password")
-					.roles("USER").and().withUser("toto").password("toto")
-					.roles("ADMIN");
+			auth.inMemoryAuthentication()
+				.withUser("user").password("user").roles("USER")
+				.and().withUser("admin").password("admin").roles("ADMIN");
 		}
 
 	}

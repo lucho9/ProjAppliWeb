@@ -1,5 +1,6 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tag">
 
 <head th:include="fragments/common :: [//head]">
 </head>
@@ -11,17 +12,28 @@
     <div class="container">
       <div class="page-header">
         <h1>
-        	Home
+        	Accueil
         	<small>Bienvenue</small>
         </h1>
       </div>
-      <p>This is a sample text.This is a sample text</p>
-      
+      <p>Appli Miage Online Store</p>
 
+<div sec:authorize="hasRole('ROLE_ADMIN')">
+	<div>Bonjour Chef <span sec:authentication="principal.username"></span></div>
+  	<div>Vous êtes connecté en rôle <span sec:authentication="principal.authorities"></span></div>
+</div>
+<div sec:authorize="hasRole('ROLE_USER')">
+	<div>Bonjour <span sec:authentication="principal.username"></span></div>
+  	<div>Vous êtes connecté en rôle <span sec:authentication="principal.authorities"></span></div>
+</div>
+<div sec:authorize="hasRole('ROLE_ANONYMOUS')">
+  Vous n'êtes pas connecté
+  <div><a th:href="@{/login}">S'authentifier</a></div>
+</div>  
+
+
+    
     </div>
-    
-    
-    
 
 	<!-- End page content -->
 
