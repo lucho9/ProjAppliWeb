@@ -8,10 +8,20 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import m2.project.model.serialization.CustomerSerializer;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
 @Entity
+@Table(
+	uniqueConstraints={@UniqueConstraint(columnNames={"firstName", "lastName"})}
+)
+@JsonSerialize(using = CustomerSerializer.class)
 public class Customer implements Serializable {
 	private static final long serialVersionUID = 1L;
 
