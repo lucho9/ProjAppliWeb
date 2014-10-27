@@ -10,8 +10,10 @@ import m2.project.model.ErrorMessage;
 import m2.project.model.JsonResponse;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
+import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,10 +37,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customersList(Model model, Pageable pageable) {
 
-		//Page<Customer> curPage = customerService.findAll(pageRequest);
-		//PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
-		//model.addAttribute("page", page);
-		model.addAttribute("customers", customerService.findAll());
+		Page<Customer> curPage = customerService.findAll(pageable);
+		PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
+		model.addAttribute("page", page);
+		//model.addAttribute("customers", customerService.findAll());
 		
 		// for the customer form create
 		model.addAttribute("customer", new Customer());
@@ -79,7 +81,7 @@ public class CustomerController {
 	// Submit create / edit customer form - Ajax 
 	@RequestMapping(value = "/customer", method = RequestMethod.POST, produces={"application/json"})
 	@ResponseBody
-	public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "customer") @Valid Customer customer, BindingResult result) {
+	public JsonResponse ajaxSubmitCustomerForm(@ModelAttribute(value = "customer") @Valid Customer customer, BindingResult result) {
 		JsonResponse res = new JsonResponse();
 		if (!result.hasErrors()) {
 			customerService.save(customer);
@@ -98,15 +100,6 @@ public class CustomerController {
 		return res;
 	}
 
-	/*
-	 * Bootstrap modal data-toggle TEST
-	@RequestMapping(value = "/customer/edit/{id}", method = RequestMethod.GET, produces={"application/json"})
-	public String ajaxEditCustomer(Model model, @PathVariable("id") Long id) {
-		model.addAttribute("customer", customerRepository.findOne(id));
-		return "/customer/customerform";
-	}
-	*/
-	
 	// Delete customer - not Ajax
 	@RequestMapping(value = "/customer/delete/{id}", method = RequestMethod.GET)
 	public String deleteCustomer(@PathVariable("id") Long id) {
