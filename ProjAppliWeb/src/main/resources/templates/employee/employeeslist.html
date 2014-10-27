@@ -12,12 +12,12 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>
-				Client <small>Gestion des clients</small>
+				Employé <small>Gestion des employés</small>
 			</h1>
 		</div>
 		
-		<button id="buttoncreatecustomer" class="btn btn-primary btn-lg" data-toggle="modal">
-		  Créer un client
+		<button id="buttoncreateemployee" class="btn btn-primary btn-lg" data-toggle="modal">
+		  Créer un employé
 		</button>
 		
 		<br />
@@ -29,7 +29,8 @@
         		<tr>
 					<th>Nom</th>
 					<th>Prénom</th>
-					<th class="filter-false sorter-false">Groupe</th>
+					<th>Compte</th>
+					<th class="filter-false sorter-false">Rôle</th>
 					<th class="filter-false sorter-false">Editer</th>
 					<th class="filter-false sorter-false">Supprimer</th>
 				</tr>
@@ -56,24 +57,19 @@
 		    </tfoot>
 		    -->
 			<tbody>
-				<tr th:each="customer : ${page.content}">
-				<!--<tr th:each="customer : ${customers}">-->
-					<td class="table-cell" th:text="${customer.lastName}"></td>
-					<td class="table-cell" th:text="${customer.firstName}"></td>
+				<tr th:each="employee : ${page.content}">
+				<!--<tr th:each="employee : ${employees}">-->
+					<td class="table-cell" th:text="${employee.lastName}"></td>
+					<td class="table-cell" th:text="${employee.firstName}"></td>
+					<td class="table-cell" th:text="${employee.login}"></td>
+					<td class="table-cell" th:text="${employee.role.label}"></td>
 					<td class="table-cell">
-						<div th:each="customerGroup : ${customer.customerGroups}">
-							<a class="customerGroup" th:id="${customerGroup.id}" th:action="@{/customer/grouppopover}">
-								<span th:text="${customerGroup.name}"></span>
-							</a>
-						</div>
-					</td>
-					<td class="table-cell">
-						<button th:onclick="@{'javascript:editCustomer(\'' + @{/customer/edit} + '\', ' + ${customer.id} + '); return false;'}" class="btn btn-default btn-xs">
+						<button th:onclick="@{'javascript:editEmployee(\'' + @{/employee/edit} + '\', ' + ${employee.id} + '); return false;'}" class="btn btn-default btn-xs">
 							<i class="glyphicon glyphicon-pencil"></i>
 						</button>
 					</td>
 					<td class="table-cell">
-						<a th:href="@{'/customer/delete/' + ${customer.id}}" class="btn btn-default btn-xs">
+						<a th:href="@{'/employee/delete/' + ${employee.id}}" class="btn btn-default btn-xs">
 							<i class="glyphicon glyphicon-trash"></i>
 						</a>
 					</td>
@@ -83,13 +79,13 @@
 		<div th:include="fragments/paginationbar :: paginationbar"></div>
 	</div>
 	
-	<div th:substituteby="customer/customerform :: [//div]"></div>
+	<div th:substituteby="employee/employeeform :: [//div]"></div>
 	
 	<!-- End page content -->
 
 	<script th:replace="fragments/common :: [//script]"></script>
 	<script type="text/javascript" th:src="@{/js/common.js}"></script>
-	<script type="text/javascript" th:src="@{/js/customerslist.js}"></script>	
+	<script type="text/javascript" th:src="@{/js/employeeslist.js}"></script>	
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	
 </body>
