@@ -1,5 +1,7 @@
 package m2.project.config;
 
+import m2.project.security.SecurityUserDetailsService;
+
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,9 +13,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.annotation.web.servlet.configuration.EnableWebMvcSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.RememberMeServices;
 import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
@@ -23,24 +23,20 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableGlobalMethodSecurity(securedEnabled=true, prePostEnabled=true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	
-	@Autowired private UserDetailsService userDetailService;
+	@Autowired private SecurityUserDetailsService userDetailsService;
     @Autowired private DataSource dataSource;
 	
+    //@Bean(name = "myAuthenticationManager")
     @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
          return super.authenticationManagerBean();
     }
     
-    @Bean
-    public UserDetailsService userDetailService() {
-        return new SecurityUserDetailService();
-    }
-    
 	@Bean
     public RememberMeServices rememberMeServices() {
         // Key must be equal to rememberMe().key() 
-        TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices("your_key", userDetailService);
+        TokenBasedRememberMeServices rememberMeServices = new TokenBasedRememberMeServices("your_key", userDetailsService);
         rememberMeServices.setCookieName("rememberme_cookie");
         rememberMeServices.setParameter("rememberme");
         rememberMeServices.setTokenValiditySeconds(10); // 1month
@@ -54,14 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    public void configure(AuthenticationManagerBuilder auth) throws Exception {
-        PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        auth
-          .jdbcAuthentication()
-              .dataSource(dataSource)
-              .usersByUsernameQuery(getUserQuery())
-              .authoritiesByUsernameQuery(getAuthoritiesQuery())
-              .passwordEncoder(passwordEncoder);
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
     
 	@Override
@@ -84,25 +74,50 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// avec l'instruction logoutUrl, la requête est en post -> logoutRequestMatcher fait du get
 		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
 		
+		
 		// marche pas
-		http.rememberMe()
-        	.key("your_key")
-        	.rememberMeServices(rememberMeServices());
+		//http.rememberMe()
+        //	.key("your_key")
+        //	.rememberMeServices(rememberMeServices());
 		
 		//http.authorizeRequests().antMatchers("/**").permitAll();
 		//http.csrf().disable();
+		
+		http.openidLogin()
+	        .loginPage("/login")
+	        //.permitAll()
+	        .authenticationUserDetailsService(userDetailsService)
+	        .attributeExchange("https://www.google.com/.*")
+	            .attribute("email")
+	                .type("http://axschema.org/contact/email")
+	                .required(true)
+	                .and()
+	            .attribute("firstname")
+	                .type("http://axschema.org/namePerson/first")
+	                .required(true)
+	                .and()
+	            .attribute("lastname")
+	                .type("http://axschema.org/namePerson/last")
+	                .required(true)
+	                .and()
+	            .and()
+	        .attributeExchange(".*yahoo.com.*")
+	            .attribute("email")
+	                .type("http://axschema.org/contact/email")
+	                .required(true)
+	                .and()
+	            .attribute("fullname")
+	                .type("http://axschema.org/namePerson")
+	                .required(true)
+	                .and()
+	            .and()
+	        .attributeExchange(".*myopenid.com.*")
+	            .attribute("email")
+	                .type("http://schema.openid.net/contact/email")
+	                .required(true)
+	                .and()
+	            .attribute("fullname")
+	                .type("http://schema.openid.net/namePerson")
+	                .required(true);
 	}
-
-    private String getUserQuery() {
-        return "SELECT login AS username, password AS password, CAST(1 AS BIT) AS enabled "
-                + "FROM employee "
-                + "WHERE login = ?";
-    }
-
-    private String getAuthoritiesQuery() {
-        return "SELECT DISTINCT employee.login AS username, role.name AS authority "
-                + "FROM employee "
-                + "INNER JOIN role ON employee.role_id = role.id "
-                + "WHERE employee.login = ?";
-    }
 }
