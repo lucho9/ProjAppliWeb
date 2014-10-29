@@ -26,13 +26,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Autowired private SecurityUserDetailsService userDetailsService;
     @Autowired private DataSource dataSource;
 	
-    //@Bean(name = "myAuthenticationManager")
-    @Bean
+    @Bean(name = "myAuthenticationManager")
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
          return super.authenticationManagerBean();
     }
     
+    /*
 	@Bean
     public RememberMeServices rememberMeServices() {
         // Key must be equal to rememberMe().key() 
@@ -42,6 +42,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         rememberMeServices.setTokenValiditySeconds(10); // 1month
         return rememberMeServices;
     }
+     */
     
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -57,6 +58,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	
+		//http.authorizeRequests().antMatchers("/**").permitAll();
+		//http.csrf().disable();
+		
 		http.authorizeRequests().antMatchers("/", "/home").permitAll();
 		http.authorizeRequests().antMatchers("/customer/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/product/**").access("hasRole('ROLE_ADMIN')");
@@ -74,14 +78,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		// avec l'instruction logoutUrl, la requête est en post -> logoutRequestMatcher fait du get
 		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
 		
-		
 		// marche pas
 		//http.rememberMe()
         //	.key("your_key")
         //	.rememberMeServices(rememberMeServices());
-		
-		//http.authorizeRequests().antMatchers("/**").permitAll();
-		//http.csrf().disable();
 		
 		http.openidLogin()
 	        .loginPage("/login")
