@@ -53,8 +53,8 @@ public class Employee {
 	@Size(min = 2, max = 30)
 	private String login;
 
-	@NotNull
-	@NotEmpty
+	//@NotNull
+	//@NotEmpty
 	private String password;
 	
 	@NotNull
@@ -88,7 +88,7 @@ public class Employee {
 	public Long getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
 	public String getLastName() {

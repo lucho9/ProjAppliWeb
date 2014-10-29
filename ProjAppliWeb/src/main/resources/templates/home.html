@@ -19,7 +19,7 @@
       <p>Appli Miage Online Store</p>
 
 <div sec:authorize="hasRole('ROLE_ADMIN')">
-	<div>Bonjour Chef <span sec:authentication="principal.username"></span></div>
+	<div>Bonjour <span sec:authentication="principal.username"></span></div>
   	<div>Vous êtes connecté en rôle <span sec:authentication="principal.authorities"></span></div>
 </div>
 <div sec:authorize="hasRole('ROLE_USER')">

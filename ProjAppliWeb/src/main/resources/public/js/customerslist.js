@@ -101,11 +101,9 @@ $(document).ready(function() {
 	});
 	 */
 
-	/*
 	// sort col 0 asc and col 1 asc
 	var sorting = [[0,0],[1,0]]; 
     $("table").trigger("sorton", [sorting]); 
     
     $("table").trigger("update");
-     */
 });

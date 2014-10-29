@@ -15,5 +15,7 @@ public interface EmployeeService {
 	public void delete(long id);
 	public void delete(Employee employee);
 	public List<Employee> findAll();
-	public Employee findEmployeeByLogin(String login);
+	public Employee findByLogin(String login);
+	public Employee findByEmailIgnoreCase(String email);
+	public Employee findByEmailAndLastNameAndFirstNameAllIgnoreCase(String email, String lastName, String firstName);
 }

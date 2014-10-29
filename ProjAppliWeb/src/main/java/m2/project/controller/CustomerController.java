@@ -37,10 +37,10 @@ public class CustomerController {
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customersList(Model model, Pageable pageable) {
 
-		Page<Customer> curPage = customerService.findAll(pageable);
-		PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
-		model.addAttribute("page", page);
-		//model.addAttribute("customers", customerService.findAll());
+		//Page<Customer> curPage = customerService.findAll(pageable);
+		//PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
+		//model.addAttribute("page", page);
+		model.addAttribute("customers", customerService.findAll());
 		
 		// for the customer form create
 		model.addAttribute("customer", new Customer());

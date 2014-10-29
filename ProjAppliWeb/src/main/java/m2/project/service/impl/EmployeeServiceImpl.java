@@ -50,7 +50,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepository.findAll(new Sort(new Order(Direction.ASC, "lastName"), new Order(Direction.ASC, "firstName")));
 	}
 	
-	public Employee findEmployeeByLogin(String login) {
-		return employeeRepository.findEmployeeByLogin(login);
+	public Employee findByLogin(String login) {
+		return employeeRepository.findByLogin(login);
+	}
+	
+	public Employee findByEmailIgnoreCase(String email) {
+		return employeeRepository.findByEmailIgnoreCase(email);
+	}
+	
+	public Employee findByEmailAndLastNameAndFirstNameAllIgnoreCase(String email, String lastName, String firstName) {
+		return employeeRepository.findByEmailAndLastNameAndFirstNameAllIgnoreCase(email, lastName, firstName);
 	}
 }
