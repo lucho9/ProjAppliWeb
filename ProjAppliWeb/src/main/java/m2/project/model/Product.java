@@ -22,7 +22,8 @@ public class Product implements Serializable {
 	
 	@NotNull
 	@Size(min=2, max=20)
-	private String name;
+	public
+	 String name;
 	@NotNull
 	@Min(1)
 	private int prix;

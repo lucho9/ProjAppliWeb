@@ -14,7 +14,7 @@ import m2.project.model.JsonResponse;
 import m2.project.model.Product;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
-import m2.project.repository.ProductPredicates;
+//import m2.project.repository.ProductPredicates;
 import m2.project.repository.ProductRepository;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.ProductService;
@@ -46,8 +46,8 @@ public class ProductController {
 	@Autowired
 	private ProductRepository productRepository;
 
-	@Autowired
-	private ProductService productService;
+	//@Autowired
+	//private ProductService productService;
 
 	
 	@Autowired
@@ -60,7 +60,8 @@ public class ProductController {
 		// for the customers list
 		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
 		
-		Page<Product> curPage = productService.findAll(pageRequest);
+		//Page<Product> curPage = productService.findAll(pageRequest);
+		Page<Product> curPage = productRepository.findAll(pageRequest);
 		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
 		model.addAttribute("page", page);
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
@@ -69,10 +70,18 @@ public class ProductController {
 					System.out.println(product.getName());
 					//Predicate predicate = ProductPredicates.nameIsLike(product.getName());
 					//String predicateAsString = predicate.toString();
-					model.addAttribute("products", productService.search(product.getName()));
+					String searchTerm=product.getName();
+					model.addAttribute("products", productRepository.find(searchTerm));
 					model.addAttribute("cats", categoryRepository.findAll());
 					//model.addAttribute("products", productRepository.findAll());//findByName(product.getName()));
 					return "/product/listproduct";
+			}else{if(rch.equals("case3")){
+				String searchTerm=product.getName();
+				model.addAttribute("products", productRepository.findByCat(searchTerm));
+				model.addAttribute("cats", categoryRepository.findAll());
+				return "/product/listproduct";
+			}
+				
 			}
 		}
 		else{
@@ -101,6 +110,17 @@ public class ProductController {
 			public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
 				JsonResponse res = new JsonResponse();
 				if (!result.hasErrors()) {
+					/*List<Product> temp= productRepository.findAll();
+					int i=0;
+					
+					while(i<temp.size()){
+					if ((product.name==temp.get(i).getName())){
+						break;
+					}
+					i++;
+					}
+					if(i==temp.size())*/
+					if(!(productRepository.findOne(product.name).isEmpty()))
 					productRepository.save(product);
 					res.setStatus("SUCCESS");
 				}
