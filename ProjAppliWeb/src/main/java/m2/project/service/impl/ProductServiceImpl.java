@@ -1,4 +1,4 @@
-package m2.project.service.impl;
+/*package m2.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,10 +15,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static m2.project.repository.ProductPredicates.nameIsLike;
+//import static m2.project.repository.ProductPredicates.nameIsLike;
 
 @Service
 public class ProductServiceImpl implements ProductService{
@@ -29,7 +30,7 @@ public class ProductServiceImpl implements ProductService{
 	     
 	    @Resource
 	    private ProductRepository productRepository;
-	 
+	 /*
 	    @Transactional(readOnly = true)
 	    @Override
 	    public List<Product> search(String searchTerm) {
@@ -47,7 +48,8 @@ public class ProductServiceImpl implements ProductService{
 	        }
 	        return list;
 	    }
-	    
+	    */
+/*
 	    public List<Product> findAll() {
 			return productRepository.findAll();
 		}
@@ -55,6 +57,8 @@ public class ProductServiceImpl implements ProductService{
 	    public Page<Product> findAll(Pageable pageable) {
 			return productRepository.findAll(pageable);
 		}
+
+		
 		
 	
-}
+}*/

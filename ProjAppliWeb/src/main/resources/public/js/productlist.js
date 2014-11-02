@@ -15,6 +15,7 @@ function clearProductFormInputs() {
 	$('#formproduct #category option').prop('selected', false);
 }
 
+
 function editProduct(action, id) {
 	//alert("erreur");
 	$.ajax({
@@ -48,7 +49,7 @@ function editProduct(action, id) {
 $(document).ready(function() {
 	var $form = $('#formproduct');
 	var $buttoncreateproduct = $('#buttoncreateproduct');
-
+	
 	$buttoncreateproduct.bind('click', function(e) {
 		clearProductFormInputs();
 		

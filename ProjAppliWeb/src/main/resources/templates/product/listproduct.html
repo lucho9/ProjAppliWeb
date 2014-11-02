@@ -33,7 +33,7 @@
         
     
     <select class="form-control" name="recherche">
-  <option value="case1">Par ref</option>
+  
   <option value="case2">Par nom</option>
   <option value="case3">Par categorie</option>
 </select>
@@ -51,7 +51,10 @@
                
                 <th>Nom Produit</th>
                 <th>Stock</th>
+                <th></th>
                 <th>Prix</th>
+                <th></th>
+                <th></th>
                
             </tr>
         </thead>
@@ -61,7 +64,8 @@
             <td th:text="${product.id}"></td>
              <td th:text="${product.category.name}"></td>
                 <td th:text="${product.name}"></td>
-                <td th:text="${product.stock}"></td>
+                <td id="cpt" th:text="${product.stock}"> </td>
+<!-- <a th:href="@{/delete(id=${product.id})}">Supprimer</a>-->
                 <td th:text="${product.prix}"></td>
                 
                   <td><button  id="${product.id}" class="btn btn-default btn-xs" th:onclick="@{'javascript:editProduct(\'/product/edit\', ' + ${product.id} + '); return false;'}" >
