@@ -62,6 +62,9 @@ $(document).ready(function() {
 		var data = $form.serialize();
 		
 		$.post($form.action, data, function(response) {
+			
+			alert(response.status);
+			
 			if (response.status == 'FAIL') {
 				for (var i = 0; i < response.errorMessageList.length; i++) {
 					var item = response.errorMessageList[i];

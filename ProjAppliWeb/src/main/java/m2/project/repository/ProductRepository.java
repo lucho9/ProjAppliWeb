@@ -30,6 +30,7 @@ public interface ProductRepository  extends JpaRepository<Product, Long>{//, Que
 	
 	@Query("SELECT p FROM Product p WHERE (p.category.name) LIKE (%:searchTerm%)")
 	public List<Product> findByCat(@Param ("searchTerm")String searchTerm);
+
 	//public List<Product> find(String searchTerm);
     public Page<Product> findAll(Pageable page);	
 	//public Page<Product> findAllOrderByLastNameAsc(Pageable page);	
