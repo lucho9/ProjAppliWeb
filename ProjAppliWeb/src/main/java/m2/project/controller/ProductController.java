@@ -75,7 +75,8 @@ public class ProductController {
 					model.addAttribute("cats", categoryRepository.findAll());
 					//model.addAttribute("products", productRepository.findAll());//findByName(product.getName()));
 					return "/product/listproduct";
-			}else{if(rch.equals("case3")){
+			}else{
+				if(rch.equals("case3")){
 				String searchTerm=product.getName();
 				model.addAttribute("products", productRepository.findByCat(searchTerm));
 				model.addAttribute("cats", categoryRepository.findAll());
@@ -120,9 +121,14 @@ public class ProductController {
 					i++;
 					}
 					if(i==temp.size())*/
-					if(!(productRepository.findOne(product.name).isEmpty()))
-					productRepository.save(product);
-					res.setStatus("SUCCESS");
+					//if(productRepository.findOne(product.name)==null)
+					try {
+						productRepository.save(product);
+						res.setStatus("SUCCESS");
+					}
+					catch(Exception e) {
+						res.setStatus("FAIL");
+					}
 				}
 				else {
 					res.setStatus("FAIL");
