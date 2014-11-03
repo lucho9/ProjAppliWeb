@@ -8,4 +8,6 @@ import m2.project.model.Customer;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
 	Page<Customer> findAll(Pageable pageable);
+	Customer findByLastName(String lastName);
+	//Customer findByLastName(String name);
 }
