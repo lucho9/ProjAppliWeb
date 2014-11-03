@@ -8,11 +8,18 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import m2.project.model.Customer;
+import m2.project.model.Facture;
 import m2.project.model.Product;
 import m2.project.repository.CustomerRepository;
+
 import m2.project.repository.ProductRepository;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -26,6 +33,8 @@ public class ProductController {
 
 	@Autowired
 	private ProductRepository productRepository;
+	@Autowired
+	private CustomerRepository customerRepository;
 	double total = 0;
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
@@ -101,10 +110,14 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
-	public String listProducts(Model model) {
+	public String listProducts(Model model, HttpSession session,  Pageable pageable) {
 		
 		model.addAttribute("products", productRepository.findAll());
 		model.addAttribute("product", new Product());
+		model.addAttribute("facture", new Facture());
+		model.addAttribute("cust", new Customer());
+		model.addAttribute("custs",customerRepository.findAll());
+		
 		return "/product/caisse";
 	}
 	
@@ -113,8 +126,12 @@ public class ProductController {
 	{
 		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
 		if(panier == null)
-			panier = new HashMap<Long, Product>();
-		
+		{	panier = new HashMap<Long, Product>();
+		if(total != 0)
+		{
+			total = 0;
+		}
+		}
 		return panier;
 	}
 	public Map<Long, Integer> getQty(HttpSession session)
@@ -174,5 +191,7 @@ public class ProductController {
 		//panier.remove();
 		return "redirect:/caisse";
 	}
+	
+	
 	
 }
