@@ -1,4 +1,4 @@
-/*package m2.project.service.impl;
+package m2.project.service.impl;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +13,7 @@ import m2.project.service.ProductService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
@@ -23,42 +24,59 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class ProductServiceImpl implements ProductService{
-	
-	
-	     
-	    private static final Logger LOGGER = LoggerFactory.getLogger(ProductServiceImpl.class);
-	     
-	    @Resource
-	    private ProductRepository productRepository;
-	 /*
-	    @Transactional(readOnly = true)
-	    @Override
-	    public List<Product> search(String searchTerm) {
-	        LOGGER.debug("Searching products with search term: " + searchTerm);
-	 
-	        //Passes the specification created by PersonPredicates class to the repository.
-	        Iterable<Product> products = productRepository.findAll(nameIsLike(searchTerm));
-	        return constructList(products);
-	    }
-	     
-	    private List<Product> constructList(Iterable<Product> products) {
-	        List<Product> list = new ArrayList<Product>();
-	        for (Product product: products) {
-	            list.add(product);
-	        }
-	        return list;
-	    }
-	    */
-/*
-	    public List<Product> findAll() {
-			return productRepository.findAll();
-		}
-	    
-	    public Page<Product> findAll(Pageable pageable) {
-			return productRepository.findAll(pageable);
-		}
 
+	@Autowired
+	ProductRepository prep;
+
+	public List<Product> findOne(String searchTerm) {
 		
+		return prep.findOne(searchTerm);
+	}
+
+	@Override
+	public List<Product> find(String searchTerm) {
+		return prep.find(searchTerm);
+	}
+
+	@Override
+	public List<Product> findByCat(String searchTerm) {
+		return prep.findByCat(searchTerm);
+	}
+
+	@Override
+	public Page<Product> findAll(Pageable page) {
+		return prep.findAll(page);
+	}
+
+	@Override
+	public List<Product> findAll() {
+		return prep.findAll();
+	}
+
+	
+	public void save(Product product) {
+		 prep.save(product);
+		
+	}
+
+	
+	public void delete(long id) {
+		 prep.delete(id);
+		
+	}
+
+	
+	public void delete(Product product) {
+		 prep.delete(product);
+		
+	}
+
+	
+	public Product findOne(long id) {
+		 return prep.findOne(id);
+	}
+	
+	
 		
 	
-}*/
+}

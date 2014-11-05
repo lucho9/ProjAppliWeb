@@ -49,6 +49,11 @@ function editProduct(action, id) {
 $(document).ready(function() {
 	var $form = $('#formproduct');
 	var $buttoncreateproduct = $('#buttoncreateproduct');
+
+	
+
+
+	
 	
 	$buttoncreateproduct.bind('click', function(e) {
 		clearProductFormInputs();
@@ -58,9 +63,12 @@ $(document).ready(function() {
 	
 	});
 	
+	
+
+	
 	$form.bind('submit', function(e) {
 		var data = $form.serialize();
-		
+		alert(data);
 		$.post($form.action, data, function(response) {
 			
 			alert(response.status);

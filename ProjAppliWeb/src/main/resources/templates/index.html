@@ -6,8 +6,10 @@
 
 
   <body>
+  
+  <div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
 
-	<!-- Menu -->
+	<!-- Menu 
 	<nav class="menu" id="theMenu">
 		<div class="menu-wrap">
 			<h1 class="logo"><a href="index.html#home">BuyMiage</a></h1>
@@ -15,17 +17,17 @@
 			<a th:href="@{/}">Accueil</a>
 			<a th:href="@{/caisse}">Caisse</a>
 			<a th:href="@{/customer}">Clients</a>
-			<a th:href="@{/employee}">Employés</a>
+			<a th:href="@{/employee}">EmployÃ©s</a>
 			<a th:href="@{/product}">Produits</a>
-			<a href="#"><i class="fa fa-facebook"></i></a>
-			<a href="#"><i class="fa fa-twitter"></i></a>
-			<a href="#"><i class="fa fa-dribbble"></i></a>
-			<a href="#"><i class="fa fa-envelope"></i></a>
+			<a th:href="@{/stock}">Stocks</a>
+			<a th:href="@{/facture}">Factures</a>
+			<a th:href="@{/help}">Aide</a>
+
 		</div>
 		
-		<!-- Menu button -->
+		
 		<div id="menuToggle"><i class="fa fa-bars"></i></div>
-	</nav>
+	</nav>-->
 	
 	<!-- MAIN IMAGE SECTION -->
 	<div id="headerwrap">
@@ -33,7 +35,7 @@
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
 					<h1>BuyMiage</h1>
-					<h2>On gère la caisse !</h2>
+					<h2>On gÃ¨re la caisse !</h2>
 					<div class="spacer"></div>
 					<i class="fa fa-angle-down"></i>
 				</div>
@@ -62,20 +64,13 @@
 				<ul class="grid effect-2" id="grid">
 					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/login.jpg"/></a></li>
 					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/caisse.jpg"/></a></li>
-						<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/help.jpg"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/help.jpg"/></a></li>
 					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/client.jpg"/></a></li>
 					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/employee.jpg"/></a></li>
 					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/produit.png"/></a></li>
 					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/stock.jpg"/></a></li>
 				
-					<!--  <li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/2.jpg"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/14.png"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/5.jpg"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/6.jpg"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/7.jpg"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/6.jpg"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/9.jpg"/></a></li>
-					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/11.png"/></a></li>-->
+					
 				</ul>
 	    	</div><!-- row -->
 	    </div><!-- container -->
@@ -90,7 +85,7 @@
 					<i class="fa fa-certificate"></i>
 				</div>
 				<div class="col-lg-3">
-					<h3>Simplicité</h3>
+					<h3>SimplicitÃ©</h3>
 					<p>L'interface permet une prise en main rapide et intuitive de l'application.</p>
 				</div>
 				
@@ -98,16 +93,16 @@
 					<i class="fa fa-globe"></i>
 				</div>
 				<div class="col-lg-3">
-					<h3>Efficacité</h3>
-					<p>L'application couvre toutes les fonctionnalités requises pour le bon fonctionnement d'une caisse en ligne.</p>
+					<h3>EfficacitÃ©</h3>
+					<p>L'application couvre toutes les fonctionnalitÃ©s requises pour le bon fonctionnement d'une caisse en ligne.</p>
 				</div>
 
 				<div class="col-lg-1 centered">
 					<i class="fa fa-question-circle"></i>
 				</div>
 				<div class="col-lg-3">
-					<h3>Aide à l'utilisation</h3>
-					<p>Le manuel d'utilisation est à tout moment accessible depuis la page d'accueil.</p>
+					<h3>Aide Ã  l'utilisation</h3>
+					<p>Le manuel d'utilisation est Ã  tout moment accessible depuis la page d'accueil.</p>
 				</div>
 			
 			
@@ -118,135 +113,9 @@
 	</div><!-- services section -->
 	
 	
-	<!-- BLOG POSTS 
-	<div class="container">
-		<div class="row mt">
-			<div class="col-lg-12">
-				<h1>Recent Posts</h1>
-			</div>
-			<div class="col-lg-8">
-				<p>Our latests thoughts about things that only matters to us.</p>
-			</div>
-			<div class="col-lg-4 goright">
-				<p><a href="#"><i class="fa fa-angle-right"></i> See All Posts</a></p>
-			</div>
-		</div>
-		<div class="row mt">
-			<div class="col-lg-4">
-				<img class="img-responsive" src="ThemeTemplate/assets/img/post01.jpg" alt=""/>
-				<h3><a href="#">Designing for the reader experience</a></h3>
-				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-				<p><a href="#"><i class="fa fa-link"></i> Read More</a></p>
-			</div>
-			<div class="col-lg-4">
-				<img class="img-responsive" src="ThemeTemplate/assets/img/post02.jpg" alt=""/>
-				<h3><a href="#">25 Examples of flication design</a></h3>
-				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-				<p><a href="#"><i class="fa fa-link"></i> Read More</a></p>
-			</div>
-			<div class="col-lg-4">
-				<img class="img-responsive" src="ThemeTemplate/assets/img/post03.jpg" alt=""/>
-				<h3><a href="#">We are an award winning design agency</a></h3>
-				<p>It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.</p>
-				<p><a href="#"><i class="fa fa-link"></i> Read More</a></p>
-			</div>		
-		</div>
-	</div>
-	-->
+
 	
-	<!--
-	<div id="lg">
-		<div class="container">
-			<div class="row centered">
-				<div class="col-lg-2 col-lg-offset-1">
-					<img src="ThemeTemplate/assets/img/clients/c01.gif" alt=""/>
-				</div>
-				<div class="col-lg-2">
-					<img src="ThemeTemplate/assets/img/clients/c02.gif" alt=""/>
-				</div>
-				<div class="col-lg-2">
-					<img src="ThemeTemplate/assets/img/clients/c03.gif" alt=""/>
-				</div>
-				<div class="col-lg-2">
-					<img src="ThemeTemplate/assets/img/clients/c04.gif" alt=""/>
-				</div>
-				<div class="col-lg-2">
-					<img src="ThemeTemplate/assets/img/clients/c05.gif" alt=""/>
-				</div>
-			</div>
-		</div>
-	</div>-->
-	
-	
-	<!--  
-	<div id="call">
-		<div class="container">
-			<div class="row">
-				<h3>THIS IS A CALL TO ACTION AREA</h3>
-				<div class="col-lg-8 col-lg-offset-2">
-					<p>Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old.</p>
-					<p><button type="button" class="btn btn-green btn-lg">Call To Action Button</button></p>
-				</div>
-			</div>
-		</div>
-	</div> -->
-	<!--  <div class="container">
-		
-		
-				
-				<div class="col-lg-8 col-lg-offset-2">
-				<h3>Manuel d'utilisation</h3>
-					<p>En cas de première utilisation ou de problème : utiliser le manuel !</p>
-					<p><button type="button" class="btn btn-green btn-lg">Aide</button></p>
-				</div>
-		
-		</div>	-->
-		<!--
-	<div class="container">
-		<div class="row mt">
-			<div class="col-lg-12">
-				<h1>Stay Connected</h1>
-				<p>Join and more.</p>
-				
-			</div>
-		</div>
-	</div>  -->
-	
-	
-	<!--
-	<section id="contact"></section>
-	<div id="sf">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-4 dg">
-					<h4 class="ml">FACEBOOK</h4>
-					<p class="centered"><a href="#"><i class="fa fa-facebook"></i></a></p>
-					<p class="ml">> Become A Friend</p>
-				</div>
-				<div class="col-lg-4 lg">
-					<h4 class="ml">TWITTER</h4>
-					<p class="centered"><a href="#"><i class="fa fa-twitter"></i></a></p>
-					<p class="ml">> Follow Us</p>
-				</div>
-				<div class="col-lg-4 dg">
-					<h4 class="ml">GOOGLE +</h4>
-					<p class="centered"><a href="#"><i class="fa fa-google-plus"></i></a></p>
-					<p class="ml">> Add Us To Your Circle</p>
-				</div>
-			</div>
-		</div>
-	</div>-->
-	
-	<!-- CONTACT FOOTER -->
-	<div id="cf">
-		<div class="container">
-			<div class="row">
-					<div class="col-lg-1 centered">
-				<h5>Copyright 2014</h5>
-				</div>
-			</div><!-- row -->
-		</div><!-- container -->
-	</div><!-- Contact Footer -->
+	<div th:substituteby="fragments/common :: [//div[@id='cf']]"></div>
 	
 
     <!-- Bootstrap core JavaScript

@@ -1,5 +1,6 @@
 package m2.project.model;
 
+import java.awt.image.BufferedImage;
 import java.io.Serializable;
 
 import javax.persistence.Column;
@@ -35,7 +36,7 @@ public class Product implements Serializable {
 	@NotNull
 	@Min(1)
 	private int stock;
-	
+	// private BufferedImage img;
 	
 	
 	

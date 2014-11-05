@@ -15,7 +15,7 @@ import m2.project.model.Product;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
 //import m2.project.repository.ProductPredicates;
-import m2.project.repository.ProductRepository;
+
 import m2.project.service.CustomerGroupService;
 import m2.project.service.ProductService;
 import m2.project.utils.PageWrapper;
@@ -43,11 +43,10 @@ import com.mysema.query.types.Predicate;
 @Controller
 public class ProductController {
 
-	@Autowired
-	private ProductRepository productRepository;
+	
 
-	//@Autowired
-	//private ProductService productService;
+	@Autowired
+	private ProductService productService;
 
 	
 	@Autowired
@@ -61,7 +60,7 @@ public class ProductController {
 		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
 		
 		//Page<Product> curPage = productService.findAll(pageRequest);
-		Page<Product> curPage = productRepository.findAll(pageRequest);
+		Page<Product> curPage = productService.findAll(pageRequest);
 		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
 		model.addAttribute("page", page);
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
@@ -71,16 +70,16 @@ public class ProductController {
 					//Predicate predicate = ProductPredicates.nameIsLike(product.getName());
 					//String predicateAsString = predicate.toString();
 					String searchTerm=product.getName();
-					model.addAttribute("products", productRepository.find(searchTerm));
+					model.addAttribute("products", productService.find(searchTerm));
 					model.addAttribute("cats", categoryRepository.findAll());
-					//model.addAttribute("products", productRepository.findAll());//findByName(product.getName()));
+					//model.addAttribute("products", productService.findAll());//findByName(product.getName()));
 					return "/product/listproduct";
 
 			}else{
 				if(rch.equals("case3")){
 
 				String searchTerm=product.getName();
-				model.addAttribute("products", productRepository.findByCat(searchTerm));
+				model.addAttribute("products", productService.findByCat(searchTerm));
 				model.addAttribute("cats", categoryRepository.findAll());
 				return "/product/listproduct";
 			}
@@ -88,11 +87,11 @@ public class ProductController {
 			}
 		}
 		else{
-			model.addAttribute("products", productRepository.findAll());
+			model.addAttribute("products", productService.findAll());
 			model.addAttribute("cats", categoryRepository.findAll());
 			return "/product/listproduct";
 		}
-		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("products", productService.findAll());
 		model.addAttribute("cats", categoryRepository.findAll());
 		return "/product/listproduct";
 	
@@ -102,7 +101,7 @@ public class ProductController {
 	/*@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productsListBis(Model model,@ModelAttribute Product product) {
 		model.addAttribute("product", new Product());
-		productRepository.save(product);
+		productService.save(product);
 		
 		return "redirect:/product";
 	}*/
@@ -113,24 +112,15 @@ public class ProductController {
 			public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
 				JsonResponse res = new JsonResponse();
 				if (!result.hasErrors()) {
-					/*List<Product> temp= productRepository.findAll();
-					int i=0;
-					
-					while(i<temp.size()){
-					if ((product.name==temp.get(i).getName())){
-						break;
-					}
-					i++;
-					}
-					if(i==temp.size())*/
+				
 
-					if(!(productRepository.findOne(product.name).isEmpty()))
-					productRepository.save(product);
+					if(!(productService.findOne(product.name).isEmpty()))
+					productService.save(product);
 					res.setStatus("SUCCESS");
 
-					//if(productRepository.findOne(product.name)==null)
+					//if(productService.findOne(product.name)==null)
 					try {
-						productRepository.save(product);
+						productService.save(product);
 						res.setStatus("SUCCESS");
 					}
 					catch(Exception e) {
@@ -150,78 +140,21 @@ public class ProductController {
 				
 				return res;
 			}
-	/*
-	@RequestMapping(value = "/product/create", method = RequestMethod.GET)
-	public String createProductForm(Model model) {
-		model.addAttribute("product", new Product());
-		model.addAttribute("cats",categoryRepository.findAll());
-		
-		
-		
-		return "/product/create";
-	}
-
-	@RequestMapping(value = "/product/create", method = RequestMethod.POST)
-	public String submitCreateProductForm(@Valid Product product,BindingResult bindingResult, Model model)  {
 	
-		 if (bindingResult.hasErrors()) {
-	            return "/product/create";
-	        }
-	    
-		productRepository.save(product);
-		return "redirect:/product";
-	}
-
-	
-	*/
 	@RequestMapping(value = "/product/edit", method = RequestMethod.GET, produces={"application/json"})
 	public @ResponseBody Product ajaxEditCustomerForm(@RequestParam("id") Long id) {
 	
-		
-		//model.addAttribute("product", productRepository.findOne(id));
-		//model.addAttribute("cats",categoryRepository.findAll());
+	
 		
 		
 	
-		return productRepository.findOne(id);
+		return productService.findOne(id);
 	}
-	/*
-	// Submit create / edit product form - Ajax 
-		@RequestMapping(value = "/edit", method = RequestMethod.POST, produces={"application/json"})
-		@ResponseBody
-		public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
-			JsonResponse res = new JsonResponse();
-			if (!result.hasErrors()) {
-				productRepository.save(product);
-				res.setStatus("SUCCESS");
-			}
-			else {
-				res.setStatus("FAIL");
-				List<FieldError> allErrors = result.getFieldErrors();
-				List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
-				for (FieldError objectError : allErrors) {
-					errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
-				}
-				res.setErrorMessageList(errorMesages);
-			}
-			
-			return res;
-		}*/
 	
-/*	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String checkProductInfo(@Valid Product product,BindingResult bindingResult, Model model) {
-		 if (bindingResult.hasErrors()) {
-	            return "redirect:/product/create";
-	        }
-	        
-		productRepository.save(product);
-		return "redirect:/product";
-	}
-	*/
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String deleteProduct(@RequestParam("id") Long id, Model model) {
 		
-		productRepository.delete(id);
+		productService.delete(id);
 		
 		return "redirect:/product";
 	}
@@ -231,7 +164,7 @@ public class ProductController {
 	@RequestMapping(value = "/panier", method = RequestMethod.GET)
 	public String Panier(Model model) {
 		
-		model.addAttribute("products",productRepository.findAll());
+		model.addAttribute("products",productService.findAll());
 		return "/product/panier";
 	}
 
@@ -244,7 +177,7 @@ public class ProductController {
 		}
 			
 		
-		sessionPanier.add(productRepository.findOne(id));
+		sessionPanier.add(productService.findOne(id));
 		session.setAttribute("panier", sessionPanier);
 		
 		

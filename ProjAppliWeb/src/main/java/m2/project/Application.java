@@ -1,8 +1,11 @@
 package m2.project;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import m2.project.model.Category;
 import m2.project.model.Customer;
@@ -13,6 +16,7 @@ import m2.project.repository.CustomerGroupRepository;
 import m2.project.model.Product;
 import m2.project.repository.ProductRepository;
 
+import org.apache.tomcat.jni.File;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -71,7 +75,7 @@ public class Application {
 	        Product p3= new Product("TV Sony",200,20);
 	        
 	        
-	        
+	      
 	        Category c1=new Category("fruit");
 	        Category c2=new Category("TV");
 

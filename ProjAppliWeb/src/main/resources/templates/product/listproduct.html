@@ -5,29 +5,47 @@
 </head>
 
 <body>
-	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
+	 <div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
 	
 	
 	
-	
-	<!-- Begin page content -->
-    <div class="container">
-      <div class="page-header">
-        <h1>
-        	Liste des produits
-        </h1>
-      </div>
+
+	<!-- MAIN IMAGE SECTION -->
+	<div id="serviceswrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Gérer<br/>
+						les produits
+					</h2>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
       
       <!--glyphicon glyphicon-plus-->
- 
-
-  <div class="form-group">
-
-		<button id="buttoncreateproduct" class="btn btn-primary btn-lg glyphicon glyphicon-plus" data-toggle="modal">
+      
+ <div class="container">
+<h1>Outils</h1>
+		<div class="row ">
+<div class="col-lg-4">
+				
+				<div class="cardinfo">
+					<h4><b>Ajouter un nouveau produit</b></h4>
+			
+					<button id="buttoncreateproduct" class="btn btn-green btn-lg glyphicon glyphicon-plus" data-toggle="modal">
 		
 		</button>
 
-       <form class="navbar-form navbar-right" role="search" name="form2" action="#" th:object="${product}" method="get">
+    
+				</div>
+						
+				
+				<div class="cardinfo">
+					<h4><b>Rechercher un produit</b></h4>
+					
+
+       <form  role="search" name="form2" action="#" th:object="${product}" method="get">
         
         <input type="text" class="form-control" placeholder="Recherche" th:field="*{name}" />
         
@@ -37,12 +55,21 @@
   <option value="case2">Par nom</option>
   <option value="case3">Par categorie</option>
 </select>
-    <button class="glyphicon glyphicon-search" type="submit" value="Rechercher" /> 
+    <button id="buttonrch" class="btn btn-green btn-lg glyphicon glyphicon-search" type="submit" value="Rechercher" /> 
     </form>
-    </div>
-    
-    
-   <ul>
+				</div>
+		
+	
+				
+			</div>
+			
+			
+			
+			
+			
+			<div class="col-lg-8">
+				
+		 <ul>
      <table class="table table-striped">
         <thead>
             <tr>
@@ -51,7 +78,7 @@
                
                 <th>Nom Produit</th>
                 <th>Stock</th>
-                <th></th>
+             
                 <th>Prix</th>
                 <th></th>
                 <th></th>
@@ -65,20 +92,17 @@
              <td th:text="${product.category.name}"></td>
                 <td th:text="${product.name}"></td>
                 <td id="cpt" th:text="${product.stock}"> </td>
-<!-- <a th:href="@{/delete(id=${product.id})}">Supprimer</a>-->
+
                 <td th:text="${product.prix}"></td>
                 
-                  <td><button  id="${product.id}" class="btn btn-default btn-xs" th:onclick="@{'javascript:editProduct(\'/product/edit\', ' + ${product.id} + '); return false;'}" >
+                  <td><button  id="${product.id}" class="btn btn-green btn-default btn-xs" th:onclick="@{'javascript:editProduct(\'/product/edit\', ' + ${product.id} + '); return false;'}" >
                   <i class="glyphicon glyphicon-pencil"></i></button></td>
                   
-              <!--   <td><a type="button" th:href="@{/edit(id=${product.id})}" class="btn btn-default btn-xs">
-  <span class="glyphicon glyphicon-pencil"></span>
-</a>-->
-<!-- <a th:href="@{/edit(id=${product.id})}">Editer</a>_</td>-->
+           
                 <td><a type="button" th:href="@{/delete(id=${product.id})}" class="btn btn-default btn-xs">
   <span class="glyphicon glyphicon-remove"></span>
 </a>
-<!-- <a th:href="@{/delete(id=${product.id})}">Supprimer</a>--></td>
+</td>
                
             </tr>
            
@@ -86,11 +110,69 @@
     </table>
     
     </ul>
+			</div>
+			
+			
+			
+			
+			
+			
+							</div>
+				
+
+	</div><!-- container -->
+    
+  
+			<!--  
+    
+    
+   <ul>
+     <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Ref produit</th>
+                 <th>Categorie</th>
+               
+                <th>Nom Produit</th>
+                <th>Stock</th>
+             
+                <th>Prix</th>
+                <th></th>
+                <th></th>
+               
+            </tr>
+        </thead>
+        <tbody>
+          
+          <tr th:each="product : ${products}" >
+            <td th:text="${product.id}"></td>
+             <td th:text="${product.category.name}"></td>
+                <td th:text="${product.name}"></td>
+                <td id="cpt" th:text="${product.stock}"> </td>
+
+                <td th:text="${product.prix}"></td>
+                
+                  <td><button  id="${product.id}" class="btn btn-green btn-default btn-xs" th:onclick="@{'javascript:editProduct(\'/product/edit\', ' + ${product.id} + '); return false;'}" >
+                  <i class="glyphicon glyphicon-pencil"></i></button></td>
+                  
+           
+                <td><a type="button" th:href="@{/delete(id=${product.id})}" class="btn btn-default btn-xs">
+  <span class="glyphicon glyphicon-remove"></span>
+</a>
+</td>
+               
+            </tr>
+           
+        </tbody>
+    </table>
+    
+    </ul>-->
 <div th:include="fragments/paginationbar :: paginationbar"></div>
-    </div>
+    
     
     
    <div th:substituteby="product/productForm :: [//div]"></div>
+
 	 <!--  End page content -->
 
 

@@ -1,4 +1,5 @@
 package m2.project.model;
+import java.awt.image.BufferedImage;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -21,7 +22,7 @@ public class Category {
 	
 	private long id;
 	private String name;
-	
+
 	
 	public Category() {
 	
@@ -29,6 +30,9 @@ public class Category {
 
 	
 	
+	
+
+
 	public Category(String name, Collection<Product> products) {
 		super();
 		this.name = name;
