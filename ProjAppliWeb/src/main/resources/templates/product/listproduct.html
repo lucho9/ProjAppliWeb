@@ -5,7 +5,7 @@
 </head>
 
 <body>
-	 <div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
+<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
 	
 	
 	
@@ -26,37 +26,43 @@
       <!--glyphicon glyphicon-plus-->
       
  <div class="container">
-<h1>Outils</h1>
+			
+		
 		<div class="row ">
 <div class="col-lg-4">
-				
 				<div class="cardinfo">
-					<h4><b>Ajouter un nouveau produit</b></h4>
-			
+					<center><h4><b>Ajouter un nouveau produit</b></h4></center>
+			<center>
 					<button id="buttoncreateproduct" class="btn btn-green btn-lg glyphicon glyphicon-plus" data-toggle="modal">
-		
+	
 		</button>
 
-    
+    	</center>
 				</div>
 						
 				
 				<div class="cardinfo">
-					<h4><b>Rechercher un produit</b></h4>
+					<center><h4><b>Rechercher un produit</b></h4></center>
 					
 
        <form  role="search" name="form2" action="#" th:object="${product}" method="get">
         
-        <input type="text" class="form-control" placeholder="Recherche" th:field="*{name}" />
+        <input id="rchinput" type="text" class="form-control" placeholder="Recherche" th:field="*{name}" />
         
     
-    <select class="form-control" name="recherche">
-  
-  <option value="case2">Par nom</option>
-  <option value="case3">Par categorie</option>
+    <select id="rch" class="form-control" name="recherche">
+ 
+  <option value="case2" id="case2">Par nom</option>
+  <option value="case3" id="case3">Par categorie</option>
+   <option value="case4" id="case4">Par tranche de prix</option>
 </select>
-    <button id="buttonrch" class="btn btn-green btn-lg glyphicon glyphicon-search" type="submit" value="Rechercher" /> 
-    </form>
+<div id="ok">
+<a>Entre</a> <input value="Min"  placeholder='Min' class='form-control'> </input><a>Et</a> <input value="Max" placeholder='Max' class='form-control'> </input>
+    </div>
+   <center> <button id="buttonrch" class="btn btn-green btn-lg glyphicon glyphicon-search" type="submit" value="Rechercher" /> 
+    
+        <button id="reinitialise"  class="btn btn-green btn-lg glyphicon glyphicon-refresh"   value="Reinitialiser" /> </center>
+        </form>
 				</div>
 		
 	
@@ -100,9 +106,9 @@
                   
            
                 <td><a type="button" th:href="@{/delete(id=${product.id})}" class="btn btn-default btn-xs">
-  <span class="glyphicon glyphicon-remove"></span>
-</a>
-</td>
+ 				 <span class="glyphicon glyphicon-remove"></span>
+				</a>
+				</td>
                
             </tr>
            
@@ -111,11 +117,7 @@
     
     </ul>
 			</div>
-			
-			
-			
-			
-			
+
 			
 							</div>
 				
@@ -123,51 +125,8 @@
 	</div><!-- container -->
     
   
-			<!--  
-    
-    
-   <ul>
-     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Ref produit</th>
-                 <th>Categorie</th>
-               
-                <th>Nom Produit</th>
-                <th>Stock</th>
-             
-                <th>Prix</th>
-                <th></th>
-                <th></th>
-               
-            </tr>
-        </thead>
-        <tbody>
-          
-          <tr th:each="product : ${products}" >
-            <td th:text="${product.id}"></td>
-             <td th:text="${product.category.name}"></td>
-                <td th:text="${product.name}"></td>
-                <td id="cpt" th:text="${product.stock}"> </td>
-
-                <td th:text="${product.prix}"></td>
-                
-                  <td><button  id="${product.id}" class="btn btn-green btn-default btn-xs" th:onclick="@{'javascript:editProduct(\'/product/edit\', ' + ${product.id} + '); return false;'}" >
-                  <i class="glyphicon glyphicon-pencil"></i></button></td>
-                  
-           
-                <td><a type="button" th:href="@{/delete(id=${product.id})}" class="btn btn-default btn-xs">
-  <span class="glyphicon glyphicon-remove"></span>
-</a>
-</td>
-               
-            </tr>
-           
-        </tbody>
-    </table>
-    
-    </ul>-->
-<div th:include="fragments/paginationbar :: paginationbar"></div>
+		
+<!-- <div th:include="fragments/paginationbar :: paginationbar"></div> -->
     
     
     

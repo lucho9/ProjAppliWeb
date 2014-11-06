@@ -55,7 +55,7 @@ public class ProductController {
 	
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public String productsList(Model model,Pageable pageable,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch) {
+	public String productsList(Model model,Pageable pageable,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch,@RequestParam(value="Min",required=false)String Min,@RequestParam(value="Max",required=false)String Max) {
 		// for the customers list
 		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
 		
@@ -63,6 +63,8 @@ public class ProductController {
 		Page<Product> curPage = productService.findAll(pageRequest);
 		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
 		model.addAttribute("page", page);
+		
+		
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
 			
 				if(rch.equals("case2")){
@@ -83,7 +85,23 @@ public class ProductController {
 				model.addAttribute("cats", categoryRepository.findAll());
 				return "/product/listproduct";
 			}
-				
+				else{
+					if(rch.equals("case4")){
+						String searchTerm=product.getName();
+						int Mini, Maxi;
+					    try {
+							Mini=Integer.parseInt(Min); 
+							Maxi=Integer.parseInt(Max); 
+					    } catch (NumberFormatException e) {
+					    	Mini=0; 
+							Maxi=1; 
+					    }
+			
+						model.addAttribute("products", productService.findByPrix(searchTerm,Mini,Maxi));
+						model.addAttribute("cats", categoryRepository.findAll());
+						return "/product/listproduct";
+					}
+				}
 			}
 		}
 		else{

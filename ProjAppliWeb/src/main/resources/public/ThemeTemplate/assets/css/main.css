@@ -199,6 +199,23 @@ hr {
     -o-transition: all .1s ease-in-out;
     transition: all .1s ease-in-out;
 }
+
+#buttonrch {
+    width: 40px;
+    height: 40px;
+}
+
+#buttoncreateproduct {
+    width: 40px;
+    height: 40px;
+}
+
+#reinitialise {
+    width: 40px;
+    height: 40px;
+}
+
+
 #menuToggle:hover {
     color: #fff;
     background: rgba(0, 0, 0, .2);
@@ -215,7 +232,7 @@ hr {
     text-align: center;
     background-attachment: relative;
     background-position: center center;
-    min-height: 750px;
+    min-height: 400px;
     width: 100%;
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
@@ -225,9 +242,10 @@ hr {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    
 }
 #headerwrap h1 {
-    margin-top: 130px;
+    margin-top: 80px;
     color: #fff;
     font-size: 140px;
     font-weight: 700;
@@ -257,7 +275,7 @@ hr {
     text-align: center;
     background-attachment: relative;
     background-position: center center;
-    min-height: 500px;
+    min-height: 400px;
     width: 100%;
     -webkit-background-size: 100%;
     -moz-background-size: 100%;
@@ -267,13 +285,14 @@ hr {
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
+    margin-bottom: 40px;
 }
 #serviceswrap h2 {
     color: #fff;
     font-size: 50px;
     font-weight: 400;
     letter-spacing: 2px;
-    margin-top: 150px;
+    margin-top: 100px;
 }
 #aboutwrap {
     background: url(../img/about-bg.jpg) no-repeat center top;
@@ -500,6 +519,7 @@ hr {
     padding: 15px;
     margin: 2px;
     text-align: left;
+    margin-top: 15px;
 }
 .cardinfo i {
     font-size: 18px;
