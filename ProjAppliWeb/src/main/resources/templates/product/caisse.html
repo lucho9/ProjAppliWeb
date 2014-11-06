@@ -1,0 +1,162 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    
+    <title>Caisse</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
+   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
+    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+     
+   
+<link rel="stylesheet" href="css_caisse.css"/>
+
+</head>
+
+
+<body>
+<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
+<br/><br/><br/>
+
+ <!--    <a href="/product/createProduct">Create a new product</a> --> 
+
+
+
+     
+
+
+ <div class="container">
+      <div class="page-header">
+        <h1>
+        	Liste des produits
+        </h1>
+      </div>
+      
+
+
+
+
+<div class="css_div">
+
+
+<div class="menu-container">
+    <div class="button-container">
+  
+     <!--    <form action="/product" th:action="@{/product}" th:object="${product}"  method="get"> -->
+       	<td><span><a  th:href="@{/caissee(id=${product.id})}" th:each="product : ${products}"  ><button class = "btn_taille_egale" th:text="${product.name}"></button></a></span></td>
+   	  <!--</form>  --> 
+  
+    </div>
+</div>
+ 
+  
+        
+</div>       
+        
+      
+
+
+<script th:inline="javascript">
+//$( "button" ).click(function() {
+ // var htmlString = $( this ).html();
+ //if(htmlString == 'pain')
+ //{ // $(this).text( htmlString );
+	 // $( "ul" ).append("<li>" + htmlString + "</li>");
+ //}  
+	  
+  
+//});
+</script>
+
+
+
+ 
+    <!--	<li th:each="product : ${session.panier}" th:text="${product.name}"></li> -->
+ 
+ <div class="css_right">
+     <div class="panel panel-default">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Mon panier</div>
+  <table class="table">
+    <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Prix</th>
+                <th>Qté</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="product : ${session.panier}" > 
+            <td th:text="${product.value.id}"></td>
+                <td th:text="${product.value.name}"></td>
+               <td th:text="${product.value.prix}"></td>
+               <td th:text="${session.qty[product.value.id]}"></td>
+              
+               <td><a th:href="@{/deletePanier(id=${product.value.id})}"><button class = "myButton">x</button></a></td>
+               
+            </tr>
+           
+        </tbody>
+  </table>
+  <br/>
+    <table class="table">
+        <thead>
+            <tr>
+                <td>Prix total</td>
+                 <td><span th:text = "${session.prixTotal}"></span></td>
+            </tr>
+        </thead>
+    
+    </table>
+   
+	</div>
+	
+	</div>
+	
+	 
+   <br /><br />
+
+</div>
+
+<form action="#" th:action="@{/validationCommande}" th:object="${facture}" method="post">      
+        
+        
+        
+ <div class="form-group">
+<label for="customerGroups" class="col-sm-2 control-label">Groupe :</label>
+<div class="col-sm-10">
+
+							<select th:field="*{namee}" >
+								<option th:each="cust : ${custs}"
+									th:field="*{namee}"
+									th:value="${cust.id}"
+									th:text="${cust.firstName}"
+									 />
+							</select>
+							<br />
+<p><input type="submit" value="Submit" onclick="myFunction()" /> <input type="reset" value="Reset" /></p>
+</div>		
+</div>
+
+
+</form>
+
+
+<br/><br/><br/><br/>
+
+
+<script>
+function myFunction() {
+    alert("Commande terminée avec succés!");
+}
+
+</script>
+
+
+<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+	<script th:replace="fragments/common :: [//script]"></script>
+
+	<script type="text/javascript" th:src="@{/resources/scripts/home.js}"></script>
+</body>
+</html>

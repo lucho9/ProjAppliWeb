@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
@@ -29,6 +30,9 @@ public class Customer implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
+	@OneToMany(mappedBy="c")
+	private List<Facture> lf;
+	
 	@NotNull
 	@Size(min = 2, max = 30)
 	private String firstName;
@@ -77,6 +81,14 @@ public class Customer implements Serializable {
 	}
 	public void setCustomerGroups(List<CustomerGroup> customerGroups) {
 		this.customerGroups = customerGroups;
+	}
+	
+	public List<Facture> getLf() {
+		return lf;
+	}
+
+	public void setLf(List<Facture> lf) {
+		this.lf = lf;
 	}
 	
 	@Override

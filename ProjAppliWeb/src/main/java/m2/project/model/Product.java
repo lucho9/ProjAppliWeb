@@ -1,8 +1,12 @@
 package m2.project.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 
 
 @Entity
@@ -15,8 +19,8 @@ public class Product {
 	private int prix;
 	private String category;
 	
-	
-	
+	@ManyToMany(mappedBy="lp")
+	List<Facture> lf;
 	
 	public Product() {
 		super();
@@ -61,7 +65,14 @@ public class Product {
 		Id = id;
 	}
 	
-	
+	public List<Facture> getLf() {
+		return lf;
+	}
+
+	public void setLf(List<Facture> lf) {
+		this.lf = lf;
+	}
+
 	
 	
 	
