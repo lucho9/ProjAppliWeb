@@ -1,19 +1,24 @@
 package m2.project.controller;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
 
 import m2.project.model.Customer;
+import m2.project.model.ErrorMessage;
 import m2.project.model.Facture;
+import m2.project.model.JsonResponse;
 import m2.project.model.Product;
+import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
-
-import m2.project.repository.ProductRepository;
-
+import m2.project.service.CustomerService;
+import m2.project.service.ProductService;
+import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,97 +27,168 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+//import m2.project.repository.ProductPredicates;
+
+
 
 
 @Controller
 public class ProductController {
 
+	
+
 	@Autowired
-	private ProductRepository productRepository;
+	private CustomerService customerservice;
+
 	@Autowired
 	private CustomerRepository customerRepository;
 	double total = 0;
+
+	@Autowired
+	private ProductService productService;
+
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
+	
+	
+
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
-	public String productsList(Model model,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch) {
-		//System.out.println(product.getName());
-	//	System.out.println(rch);
+	public String productsList(Model model,Pageable pageable,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch,@RequestParam(value="Min",required=false)String Min,@RequestParam(value="Max",required=false)String Max) {
+		// for the customers list
+		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
+		
+		//Page<Product> curPage = productService.findAll(pageRequest);
+		Page<Product> curPage = productService.findAll(pageRequest);
+		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
+		model.addAttribute("page", page);
+		
+		
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
-			//if(rch=="case1"){
-		//model.addAttribute("products", productRepository.findById(product.getId()));
-			//}else{
+			
 				if(rch.equals("case2")){
 					System.out.println(product.getName());
-		model.addAttribute("products", productRepository.findByName(product.getName()));
-			}else{model.addAttribute("products", productRepository.findByCategory(product.getName()));
-			System.out.println("categopry");
+					//Predicate predicate = ProductPredicates.nameIsLike(product.getName());
+					//String predicateAsString = predicate.toString();
+					String searchTerm=product.getName();
+					model.addAttribute("products", productService.find(searchTerm));
+					model.addAttribute("cats", categoryRepository.findAll());
+					//model.addAttribute("products", productService.findAll());//findByName(product.getName()));
+					return "/product/listproduct";
+
+			}else{
+				if(rch.equals("case3")){
+
+				String searchTerm=product.getName();
+				model.addAttribute("products", productService.findByCat(searchTerm));
+				model.addAttribute("cats", categoryRepository.findAll());
+				return "/product/listproduct";
 			}
-				
-		//	}
+				else{
+					if(rch.equals("case4")){
+						String searchTerm=product.getName();
+						int Mini, Maxi;
+					    try {
+							Mini=Integer.parseInt(Min); 
+							Maxi=Integer.parseInt(Max); 
+					    } catch (NumberFormatException e) {
+					    	Mini=0; 
+							Maxi=1; 
+					    }
+			
+						model.addAttribute("products", productService.findByPrix(searchTerm,Mini,Maxi));
+						model.addAttribute("cats", categoryRepository.findAll());
+						return "/product/listproduct";
+					}
+				}
+			}
 		}
 		else{
-			model.addAttribute("products", productRepository.findAll());
-			System.out.println("else");
+			model.addAttribute("products", productService.findAll());
+			model.addAttribute("cats", categoryRepository.findAll());
+			return "/product/listproduct";
 		}
-		//if(product.getName()!=""){
-	//	model.addAttribute("products", productRepository.findByName(product.getName()));
-		//}
-		//else
-			//model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("products", productService.findAll());
+		model.addAttribute("cats", categoryRepository.findAll());
 		return "/product/listproduct";
+	
+		
 	}
 	
-	@RequestMapping(value = "/product", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/product", method = RequestMethod.POST)
 	public String productsListBis(Model model,@ModelAttribute Product product) {
 		model.addAttribute("product", new Product());
-		productRepository.save(product);
+		productService.save(product);
 		
-		return "redirect:/product/listproduct";
-	}
-	
-	/*@RequestMapping(value = "/product/create", method = RequestMethod.GET)
-	public String createProductForm(Model model) {
-		model.addAttribute("product", new Product());
-		return "/product/create";
+		return "redirect:/product";
 	}*/
+	
+	// Submit create / edit product form - Ajax 
+			@RequestMapping(value = "/product", method = RequestMethod.POST, produces={"application/json"})
+			@ResponseBody
+			public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
+				JsonResponse res = new JsonResponse();
+				if (!result.hasErrors()) {
+				
 
-	@RequestMapping(value = "/product/create", method = RequestMethod.POST)
-	public String submitCreateProductForm(@ModelAttribute Product product) {
-		productRepository.save(product);
-		return "redirect:/product";
-	}
+					if(!(productService.findOne(product.name).isEmpty()))
+					productService.save(product);
+					res.setStatus("SUCCESS");
 
+					//if(productService.findOne(product.name)==null)
+					try {
+						productService.save(product);
+						res.setStatus("SUCCESS");
+					}
+					catch(Exception e) {
+						res.setStatus("FAIL");
+					}
+
+				}
+				else {
+					res.setStatus("FAIL");
+					List<FieldError> allErrors = result.getFieldErrors();
+					List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
+					for (FieldError objectError : allErrors) {
+						errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
+					}
+					res.setErrorMessageList(errorMesages);
+				}
+				
+				return res;
+			}
+	
+	@RequestMapping(value = "/product/edit", method = RequestMethod.GET, produces={"application/json"})
+	public @ResponseBody Product ajaxEditCustomerForm(@RequestParam("id") Long id) {
 	
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.GET)
-	public String editForm(@RequestParam("id") Long id, Model model) {
 		
-		model.addAttribute("product", productRepository.findOne(id));
-		return "/product/create";
-	}
+		
 	
-	@RequestMapping(value = "/edit", method = RequestMethod.POST)
-	public String editPost(@ModelAttribute Product product, Model model) {
-		productRepository.save(product);
-		return "redirect:/product";
+		return productService.findOne(id);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String deleteProduct(@RequestParam("id") Long id, Model model) {
 		
-		productRepository.delete(id);
+		productService.delete(id);
 		
 		return "redirect:/product";
 	}
 	
+
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpSession session,  Pageable pageable) {
 		
-		model.addAttribute("products", productRepository.findAll());
+		model.addAttribute("products", productService.findAll());
 		model.addAttribute("product", new Product());
 		model.addAttribute("facture", new Facture());
 		model.addAttribute("cust", new Customer());
@@ -147,7 +223,7 @@ public class ProductController {
 	public String editForm(@RequestParam("id") Long id, Model model, HttpSession session) {
 		
 		Product product;
-		product = productRepository.findOne(id);
+		product = productService.findOne(id);
 		//model.addAttribute("product", productRrepository.findOne(id));
 		
 		
@@ -191,6 +267,7 @@ public class ProductController {
 		//panier.remove();
 		return "redirect:/caisse";
 	}
+
 	
 	
 	

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:include="fragments/common :: [//head]">
+</head>
+
+
+  <body>
+  
+  <div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
+
+	<!-- Menu 
+	<nav class="menu" id="theMenu">
+		<div class="menu-wrap">
+			<h1 class="logo"><a href="index.html#home">BuyMiage</a></h1>
+			<i class="fa fa-arrow-right menu-close"></i>
+			<a th:href="@{/}">Accueil</a>
+			<a th:href="@{/caisse}">Caisse</a>
+			<a th:href="@{/customer}">Clients</a>
+			<a th:href="@{/employee}">Employés</a>
+			<a th:href="@{/product}">Produits</a>
+			<a th:href="@{/stock}">Stocks</a>
+			<a th:href="@{/facture}">Factures</a>
+			<a th:href="@{/help}">Aide</a>
+
+		</div>
+		
+		
+		<div id="menuToggle"><i class="fa fa-bars"></i></div>
+	</nav>-->
+	
+	<!-- MAIN IMAGE SECTION -->
+	<div id="headerwrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h1>BuyMiage</h1>
+					<h2>On gère la caisse !</h2>
+					<div class="spacer"></div>
+					<i class="fa fa-angle-down"></i>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
+
+	<!-- WELCOME SECTION -->
+    <div class="container">
+      <div class="row mt">
+    	<div class="col-lg-12 centered">
+	        <h1>Navigation rapide</h1>
+	        	<i class="fa fa-angle-down"></i>
+	        
+      	</div>
+      	<!--<div class="col-lg-4">
+      		<p class="pull-right"><button type="button" class="btn btn-green">Start</button></p>
+      	</div>-->
+      </div>
+    </div><!-- container -->
+    
+    <!-- PORTFOLIO SECTION -->
+    <div id="portfolio">
+    	<div class="container">
+	    	<div class="row mt">
+				<ul class="grid effect-2" id="grid">
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/login.jpg"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/caisse.jpg"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/help.jpg"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/client.jpg"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/employee.jpg"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/produit.png"/></a></li>
+					<li><a href="singleproject.html"><img src="ThemeTemplate/assets/img/portfolio/stock.jpg"/></a></li>
+				
+					
+				</ul>
+	    	</div><!-- row -->
+	    </div><!-- container -->
+    </div><!-- portfolio -->
+
+
+	<!-- SERVICES SECTION -->
+	<div id="services">
+		<div class="container">
+			<div class="row mt">
+				<div class="col-lg-1 centered">
+					<i class="fa fa-certificate"></i>
+				</div>
+				<div class="col-lg-3">
+					<h3>Simplicité</h3>
+					<p>L'interface permet une prise en main rapide et intuitive de l'application.</p>
+				</div>
+				
+				<div class="col-lg-1 centered">
+					<i class="fa fa-globe"></i>
+				</div>
+				<div class="col-lg-3">
+					<h3>Efficacité</h3>
+					<p>L'application couvre toutes les fonctionnalités requises pour le bon fonctionnement d'une caisse en ligne.</p>
+				</div>
+
+				<div class="col-lg-1 centered">
+					<i class="fa fa-question-circle"></i>
+				</div>
+				<div class="col-lg-3">
+					<h3>Aide à l'utilisation</h3>
+					<p>Le manuel d'utilisation est à tout moment accessible depuis la page d'accueil.</p>
+				</div>
+			
+			
+				
+			
+			</div><!-- row -->
+		</div><!-- container -->
+	</div><!-- services section -->
+	
+	
+
+	
+	<div th:substituteby="fragments/common :: [//div[@id='cf']]"></div>
+	
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <script src="ThemeTemplate/assets/js/bootstrap.min.js"></script>
+    <script src="ThemeTemplate/assets/js/main.js"></script>
+	<script src="ThemeTemplate/assets/js/masonry.pkgd.min.js"></script>
+	<script src="ThemeTemplate/assets/js/imagesloaded.js"></script>
+    <script src="ThemeTemplate/assets/js/classie.js"></script>
+	<script src="ThemeTemplate/assets/js/AnimOnScroll.js"></script>
+	<script src="ThemeTemplate/assets/js/modernizr.custom.js"></script>
+	<script>
+		new AnimOnScroll( document.getElementById( 'grid' ), {
+			minDuration : 0.4,
+			maxDuration : 0.7,
+			viewportFactor : 0.2
+		} );
+	</script>
+  </body>
+</html>
