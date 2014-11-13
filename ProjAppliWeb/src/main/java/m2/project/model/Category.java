@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -22,14 +23,18 @@ public class Category {
 	
 	private long id;
 	private String name;
-
+	
 	
 	public Category() {
 	
 	}
 
 	
-	
+	//La TVA représente la taxe sur la valeur ajoutée. 
+	//Différents taux de TVA sont possibles : 19,6% dans la plupart des cas, 5.5% pour les denrées alimentaires et les livres 
+	//et 2,1% pour les médicaments et les journaux.
+	//@ManyToOne
+	//private int TVA;
 	
 
 

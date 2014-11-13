@@ -1,49 +1,54 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    
-    <title>Caisse</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
-     
-   
-<link rel="stylesheet" href="css_caisse.css"/>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tag">
+
+<head th:include="fragments/common :: [//head]">
 
 </head>
 
-
 <body>
-<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
-<br/><br/><br/>
+<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
+	
+	
+	
 
- <!--    <a href="/product/createProduct">Create a new product</a> --> 
+	<!-- MAIN IMAGE SECTION -->
+	<div id="serviceswrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Passer<br/>
+						à la caisse
+					</h2>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
+   
+
 
 
 
      
+<div class="container">
+
+<div class="row ">
 
 
- <div class="container">
-      <div class="page-header">
-        <h1>
-        	Liste des produits
-        </h1>
-      </div>
-      
-
-
-
-
-<div class="css_div">
-
-
-<div class="menu-container">
-    <div class="button-container">
+<div class="col-lg-2">
+				<div class="panel panel-default">
+  <center><h4><b>Catégorie </b><span class="glyphicon glyphicon-tags"/></h4></center>
+    
+       	<td><center><span><a  name="filtreCat" th:href="@{/caisse(filtreCat=${cat.name})}" th:each="cat : ${cats}" th:value="${cat.name}" ><button id="caissecat"   class = "btn btn-default btn-lg" th:text="${cat.name}"></button></a></span></center></td>
+   	  <!--</form>  --> 
   
+    </div>
+</div>
+<div class="col-lg-6">
+				<div class="panel panel-default">
+  <center><h4><b>Produits </b><span class="glyphicon glyphicon-tag"/></h4></center>
      <!--    <form action="/product" th:action="@{/product}" th:object="${product}"  method="get"> -->
-       	<td><span><a  th:href="@{/caissee(id=${product.id})}" th:each="product : ${products}"  ><button class = "btn_taille_egale" th:text="${product.name}"></button></a></span></td>
+       	<td><span><a  th:href="@{/caissee(id=${product.id})}" th:each="product : ${products}"  ><button id="caisse" class = "btn btn-default btn-lg" th:text="${product.name}"></button></a></span></td>
    	  <!--</form>  --> 
   
     </div>
@@ -51,32 +56,23 @@
  
   
         
-</div>       
+   
         
       
 
 
-<script th:inline="javascript">
-//$( "button" ).click(function() {
- // var htmlString = $( this ).html();
- //if(htmlString == 'pain')
- //{ // $(this).text( htmlString );
-	 // $( "ul" ).append("<li>" + htmlString + "</li>");
- //}  
-	  
-  
-//});
-</script>
+<script th:inline="javascript"/>
+
 
 
 
  
-    <!--	<li th:each="product : ${session.panier}" th:text="${product.name}"></li> -->
+
  
- <div class="css_right">
+ <div class="col-lg-4">
      <div class="panel panel-default">
   <!-- Default panel contents -->
-  <div class="panel-heading">Mon panier</div>
+  <center><h4><b>Panier </b><span class="glyphicon glyphicon-shopping-cart"/></h4></center>
   <table class="table">
     <thead>
             <tr>
@@ -93,7 +89,9 @@
                <td th:text="${product.value.prix}"></td>
                <td th:text="${session.qty[product.value.id]}"></td>
               
-               <td><a th:href="@{/deletePanier(id=${product.value.id})}"><button class = "myButton">x</button></a></td>
+               <td><a th:href="@{/deletePanier(id=${product.value.id})}" class="btn btn-default btn-xs">
+ 				 <span class="glyphicon glyphicon-remove"></span>
+				</a></td>
                
             </tr>
            
@@ -113,17 +111,19 @@
 	</div>
 	
 	</div>
-	
+	</div>    
 	 
    <br /><br />
 
-</div>
 
+ 
+ <div class="col-lg-4">
+     <div class="panel panel-default">
 <form action="#" th:action="@{/validationCommande}" th:object="${facture}" method="post">      
         
         
         
- <div class="form-group">
+
 <label for="customerGroups" class="col-sm-2 control-label">Groupe :</label>
 <div class="col-sm-10">
 
@@ -137,12 +137,12 @@
 							<br />
 <p><input type="submit" value="Submit" onclick="myFunction()" /> <input type="reset" value="Reset" /></p>
 </div>		
-</div>
 
 
 </form>
-
-
+</div>
+</div>
+</div>
 <br/><br/><br/><br/>
 
 

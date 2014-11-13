@@ -66,7 +66,7 @@ public class ProductController {
 		// for the customers list
 		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
 		
-		//Page<Product> curPage = productService.findAll(pageRequest);
+		
 		Page<Product> curPage = productService.findAll(pageRequest);
 		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
 		model.addAttribute("page", page);
@@ -76,12 +76,11 @@ public class ProductController {
 			
 				if(rch.equals("case2")){
 					System.out.println(product.getName());
-					//Predicate predicate = ProductPredicates.nameIsLike(product.getName());
-					//String predicateAsString = predicate.toString();
+				
 					String searchTerm=product.getName();
 					model.addAttribute("products", productService.find(searchTerm));
 					model.addAttribute("cats", categoryRepository.findAll());
-					//model.addAttribute("products", productService.findAll());//findByName(product.getName()));
+			
 					return "/product/listproduct";
 
 			}else{
@@ -112,9 +111,32 @@ public class ProductController {
 			}
 		}
 		else{
-			model.addAttribute("products", productService.findAll());
-			model.addAttribute("cats", categoryRepository.findAll());
-			return "/product/listproduct";
+			if(rch!=null){
+				if(rch.equals("case3")){
+
+					String searchTerm=product.getName();
+					model.addAttribute("products", productService.findByCat(searchTerm));
+					model.addAttribute("cats", categoryRepository.findAll());
+					return "/product/listproduct";
+				}
+					else{
+						if(rch.equals("case4")){
+							String searchTerm=product.getName();
+							int Mini, Maxi;
+						    try {
+								Mini=Integer.parseInt(Min); 
+								Maxi=Integer.parseInt(Max); 
+						    } catch (NumberFormatException e) {
+						    	Mini=0; 
+								Maxi=1; 
+						    }
+						    model.addAttribute("products", productService.findByPrix(searchTerm,Mini,Maxi));
+							model.addAttribute("cats", categoryRepository.findAll());
+							return "/product/listproduct";
+	
+			}
+		}
+			}
 		}
 		model.addAttribute("products", productService.findAll());
 		model.addAttribute("cats", categoryRepository.findAll());
@@ -123,14 +145,7 @@ public class ProductController {
 		
 	}
 	
-	/*@RequestMapping(value = "/product", method = RequestMethod.POST)
-	public String productsListBis(Model model,@ModelAttribute Product product) {
-		model.addAttribute("product", new Product());
-		productService.save(product);
-		
-		return "redirect:/product";
-	}*/
-	
+
 	// Submit create / edit product form - Ajax 
 			@RequestMapping(value = "/product", method = RequestMethod.POST, produces={"application/json"})
 			@ResponseBody
@@ -186,14 +201,22 @@ public class ProductController {
 	
 
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
-	public String listProducts(Model model, HttpSession session,  Pageable pageable) {
-		
+	public String listProducts(Model model, HttpSession session,  Pageable pageable,@RequestParam(value="filtreCat",required=false) String cat) {
+		if(cat!=null){
+			model.addAttribute("products", productService.findByCat(cat));
+			model.addAttribute("product", new Product());
+			model.addAttribute("facture", new Facture());
+			model.addAttribute("cust", new Customer());
+			model.addAttribute("custs",customerRepository.findAll());
+			model.addAttribute("cats",categoryRepository.findAll());
+			return "/product/caisse";
+		}
 		model.addAttribute("products", productService.findAll());
 		model.addAttribute("product", new Product());
 		model.addAttribute("facture", new Facture());
 		model.addAttribute("cust", new Customer());
 		model.addAttribute("custs",customerRepository.findAll());
-		
+		model.addAttribute("cats",categoryRepository.findAll());
 		return "/product/caisse";
 	}
 	
@@ -224,7 +247,7 @@ public class ProductController {
 		
 		Product product;
 		product = productService.findOne(id);
-		//model.addAttribute("product", productRrepository.findOne(id));
+		
 		
 		
 		Map<Long, Integer> qty = getQty(session);

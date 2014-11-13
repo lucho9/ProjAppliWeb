@@ -33,7 +33,10 @@ public class Product implements Serializable {
 	@NotNull
 	@Min(1)
 	private int stock;
-	// private BufferedImage img;
+	
+	
+	
+	
 	
 
 	@ManyToMany(mappedBy="lp")
@@ -44,8 +47,22 @@ public class Product implements Serializable {
 	@ManyToOne
 	private Category category ;
 
-	
-
+	//crr=éer une référence produit, voir comment la récupérer dans le .html
+	public String getRef() {
+		StringBuilder s = null;
+		s.append("#");
+		String refcat=this.category.getName();
+		refcat.substring(0, 1);
+		s.append(refcat);
+		
+		String refprod=this.getName();
+		refprod.substring(0, 1);
+		s.append(refprod);
+		
+		s.append(this.getId().toString());
+		return s.toString();
+		
+	}
 	
 	   
 

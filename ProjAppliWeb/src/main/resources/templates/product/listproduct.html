@@ -31,7 +31,7 @@
 		
 		<div class="row ">
 <div class="col-lg-4">
-				<div class="cardinfo">
+				<div class="panel panel-default">
 					<center><h4><b>Ajouter un nouveau produit</b></h4></center>
 			<center>
 					<button id="buttoncreateproduct" class="btn btn-green btn-lg glyphicon glyphicon-plus" data-toggle="modal">
@@ -42,7 +42,7 @@
 				</div>
 						
 				
-				<div class="cardinfo">
+			<div class="panel panel-default">
 					<center><h4><b>Rechercher un produit</b></h4></center>
 					
 
@@ -58,7 +58,7 @@
    <option value="case4" id="case4">Par tranche de prix</option>
 </select>
 <div id="ok">
-<a>Entre</a> <input value="Min"  placeholder='Min' class='form-control'> </input><a>Et</a> <input value="Max" placeholder='Max' class='form-control'> </input>
+<a>Entre</a> <input name="Min"  placeholder='Min' class='form-control'> </input><a>Et</a> <input name="Max" placeholder='Max' class='form-control'> </input>
     </div>
    <center> <button id="buttonrch" class="btn btn-green btn-lg glyphicon glyphicon-search" type="submit" value="Rechercher" /> 
     
@@ -75,13 +75,13 @@
 			
 			
 			<div class="col-lg-8">
-				
+				<div class="panel panel-default">
 		 <ul>
      <table class="table table-striped">
         <thead>
             <tr>
-                <th>Ref produit</th>
-                 <th>Categorie</th>
+                <th>Réf produit</th>
+                 <th>Catégorie</th>
                
                 <th>Nom Produit</th>
                 <th>Stock</th>
@@ -117,6 +117,7 @@
     </table>
     
     </ul>
+    </div>
 			</div>
 
 			
