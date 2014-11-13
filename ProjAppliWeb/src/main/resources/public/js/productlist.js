@@ -55,6 +55,8 @@ $(document).ready(function() {
 	var $form = $('#formproduct');
 	var $buttoncreateproduct = $('#buttoncreateproduct');
 	var $reinitialise = $('#reinitialise');
+
+	
 	$("#ok").hide(); 
 
 
@@ -67,31 +69,7 @@ $(document).ready(function() {
 			$("#ok").hide(); 
 		}
 	}); 
-	/*
-	$("#case2").bind('click',function(e){
-		
-		$("#ok").hide(); 
-	   // $("#rch").val('case4').after("<a id='ok'>Entre</a> <input  id='ok' placeholder='Min' class='form-control'> </input><a id='ok'>Et</a> <input id='ok' placeholder='Max' class='form-control'> </input>");
-	    
-		
-	});
 
-	$("#case3").bind('click',function(e){
-		alert("3");
-		$("#ok").hide(); 
-	   // $("#rch").val('case4').after("<a id='ok'>Entre</a> <input  id='ok' placeholder='Min' class='form-control'> </input><a id='ok'>Et</a> <input id='ok' placeholder='Max' class='form-control'> </input>");
-	   
-		
-	});
-
-	//$('#rch option:selected').val();
-	$('#case4').bind('click', function(e){
-		alert("test");
-		$("#ok").show(); 
-	   // $("#rch").val('case4').after("<a id='ok'>Entre</a> <input  id='ok' placeholder='Min' class='form-control'> </input><a id='ok'>Et</a> <input id='ok' placeholder='Max' class='form-control'> </input>");
-	    //$("#rch").val('case4').unbind('click');
-		
-	});*/
 	
 	$reinitialise.bind('click', function(e) {
 		e.preventDefault();

@@ -115,7 +115,7 @@ public class Application {
 	        //Set collec = new HashSet();
 	        
 	        p1.setCategory(c1);
-	        p2.setCategory(c1);
+	        p2.setCategory(c2);
 	        p3.setCategory(c2);
 	        
 	 

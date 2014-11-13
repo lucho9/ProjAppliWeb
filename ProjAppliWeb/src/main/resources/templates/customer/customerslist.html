@@ -6,15 +6,23 @@
 </head>
 
 <body>
-	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
+<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
+	
+	
+	
 
-	<!-- Begin page content -->
-	<div class="container">
-		<div class="page-header">
-			<h1>
-				Client <small>Gestion des clients</small>
-			</h1>
-		</div>
+	<!-- MAIN IMAGE SECTION -->
+	<div id="serviceswrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Gérer<br/>
+						les clients
+					</h2>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
 		
 		<button id="buttoncreatecustomer" class="btn btn-primary btn-lg" data-toggle="modal">
 		  Créer un client
@@ -79,7 +87,7 @@
 			</tbody>
 		</table>
 		<!--<div th:include="fragments/paginationbar :: paginationbar"></div>-->
-	</div>
+
 	
 	<div th:substituteby="customer/customerform :: [//div]"></div>
 	

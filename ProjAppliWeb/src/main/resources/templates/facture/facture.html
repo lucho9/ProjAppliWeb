@@ -1,25 +1,28 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    
-    <title>Factures</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css"/>
-   <link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css"/>
-    <script src="//code.jquery.com/jquery-1.10.2.js"></script>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tag">
+
+<head th:include="fragments/common :: [//head]">
 </head>
+
 <body>
-	<div role="navigation" th:substituteby="fragments/menu :: [//div[@class='navbar']]"></div>
-	
-	<br/><br/><br/>
+<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
 	
 	
-	<div class="container">
-      <div class="page-header">
-        <h1>
-        	Factures
-        </h1>
-      </div>
+	
+
+	<!-- MAIN IMAGE SECTION -->
+	<div id="serviceswrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Gérer<br/>
+						la facture
+					</h2>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
 <!-- <p th:text="'id: ' + ${facture.c.firstName}" /> --> 
  
   <br/>
@@ -55,7 +58,7 @@
 			</tbody>
 		</table>
 		<p><input name="B1" onclick="imprimer()" type="button" value="Imprimer"/></p>
-		</div>
+		
 		
 		<script language="Javascript">
 function imprimer(){window.print();}

@@ -31,6 +31,7 @@ public class Facture {
 	
 	private double prixTotal;
 
+
 	public double getPrixTotal() {
 		return prixTotal;
 	}
@@ -57,9 +58,6 @@ public class Facture {
 		this.lq = lq;
 	}
 	private Long namee;
-	
-
-	
 	
 
 	public Facture(long id, Customer c, List<Product> lp, Long namee) {
