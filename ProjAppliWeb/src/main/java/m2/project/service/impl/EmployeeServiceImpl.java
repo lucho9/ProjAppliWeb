@@ -46,6 +46,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		employeeRepository.delete(employee);
 	}
 	
+	public void deleteAll() {
+		employeeRepository.deleteAll();
+	}
+	
 	public List<Employee> findAll() {
 		return employeeRepository.findAll(new Sort(new Order(Direction.ASC, "lastName"), new Order(Direction.ASC, "firstName")));
 	}

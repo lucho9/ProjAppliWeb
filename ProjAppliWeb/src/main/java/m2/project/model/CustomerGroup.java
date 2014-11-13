@@ -10,12 +10,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OrderBy;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
+@Table(
+	uniqueConstraints={@UniqueConstraint(columnNames={"name"})}
+)
 public class CustomerGroup implements Serializable {
 	private static final long serialVersionUID = 1L;
 

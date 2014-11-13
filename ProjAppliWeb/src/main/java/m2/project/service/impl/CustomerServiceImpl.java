@@ -46,6 +46,10 @@ public class CustomerServiceImpl implements CustomerService {
 		customerRepository.delete(customer);
 	}
 	
+	public void deleteAll() {
+		customerRepository.deleteAll();
+	}
+	
 	public List<Customer> findAll() {
 		return customerRepository.findAll(new Sort(new Order(Direction.ASC, "lastName"), new Order(Direction.ASC, "firstName")));
 	}
