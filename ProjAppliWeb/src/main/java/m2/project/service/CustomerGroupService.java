@@ -7,8 +7,9 @@ import m2.project.model.CustomerGroup;
 public interface CustomerGroupService {
 	public CustomerGroup findOne(long id);
 	public List<CustomerGroup> findAll();	
-	public void save(CustomerGroup customerGroup);
+	public CustomerGroup save(CustomerGroup customerGroup);
 	public void delete(long id);
 	public void delete(CustomerGroup customerGroup);
+	public void deleteAll();
 	public String getGroupInfos(long id);
 }

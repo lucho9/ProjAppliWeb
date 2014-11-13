@@ -14,6 +14,7 @@ public interface EmployeeService {
 	public void save(Employee employee);
 	public void delete(long id);
 	public void delete(Employee employee);
+	public void deleteAll();
 	public List<Employee> findAll();
 	public Employee findByLogin(String login);
 	public Employee findByEmailIgnoreCase(String email);

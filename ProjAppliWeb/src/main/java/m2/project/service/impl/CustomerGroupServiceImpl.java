@@ -26,8 +26,8 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
 		return customerGroupRepository.findAll();
 	}
 	
-	public void save(CustomerGroup customerGroup) {
-		customerGroupRepository.save(customerGroup);
+	public CustomerGroup save(CustomerGroup customerGroup) {
+		return customerGroupRepository.save(customerGroup);
 	}
 
 	public void delete(long id) {
@@ -36,6 +36,10 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
 	
 	public void delete(CustomerGroup customerGroup) {
 		customerGroupRepository.delete(customerGroup);
+	}
+	
+	public void deleteAll() {
+		customerGroupRepository.deleteAll();
 	}
 	
 	public String getGroupInfos(long id) {
