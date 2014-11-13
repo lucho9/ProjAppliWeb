@@ -35,6 +35,10 @@ public class RoleServiceImpl implements RoleService {
 	public void delete(Role role) {
 		roleRepository.delete(role);
 	}
+	
+	public void deleteAll() {
+		roleRepository.deleteAll();
+	}
 
 	public List<Role> findAll() {
 		return roleRepository.findAll(new Sort(new Order(Direction.ASC, "name")));

@@ -78,7 +78,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 			//.defaultSuccessUrl("/success-login", true)
             //.failureUrl("/error-login")
             .loginProcessingUrl("/process-login")
-			.usernameParameter("login").passwordParameter("pwd").permitAll(); // redéfinition des input names de login.html
+			.usernameParameter("login").passwordParameter("pwd") // redéfinition des input names de login.html
+			.permitAll();
+			
 			//and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
 		
 		// avec l'instruction logoutUrl, la requête est en post -> logoutRequestMatcher fait du get
