@@ -209,6 +209,7 @@ public class ProductController {
 			model.addAttribute("cust", new Customer());
 			model.addAttribute("custs",customerRepository.findAll());
 			model.addAttribute("cats",categoryRepository.findAll());
+			model.addAttribute("filtreCat", cat);
 			return "/product/caisse";
 		}
 		model.addAttribute("products", productService.findAll());
@@ -217,6 +218,7 @@ public class ProductController {
 		model.addAttribute("cust", new Customer());
 		model.addAttribute("custs",customerRepository.findAll());
 		model.addAttribute("cats",categoryRepository.findAll());
+		model.addAttribute("filtreCat", "");
 		return "/product/caisse";
 	}
 	
@@ -243,7 +245,7 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/caissee", method = RequestMethod.GET)
-	public String editForm(@RequestParam("id") Long id, Model model, HttpSession session) {
+	public String submitCaisse(@RequestParam("id") Long id, @RequestParam(value="filtreCat", required=false) String cat, Model model, HttpSession session) {
 		
 		Product product;
 		product = productService.findOne(id);

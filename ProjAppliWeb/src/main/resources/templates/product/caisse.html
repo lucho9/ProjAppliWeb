@@ -39,7 +39,12 @@
 				<div class="panel panel-default">
   <center><h4><b>Catégorie </b><span class="glyphicon glyphicon-tags"/></h4></center>
     
-       	<td><center><span><a  name="filtreCat" th:href="@{/caisse(filtreCat=${cat.name})}" th:each="cat : ${cats}" th:value="${cat.name}" ><button id="caissecat"   class = "btn btn-default btn-lg" th:text="${cat.name}"></button></a></span></center></td>
+       	<td><center><span>
+       		<a name="filtreCat" th:href="@{/caisse(filtreCat=${cat.name})}" th:each="cat : ${cats}" th:value="${cat.name}" th:switch="${filtreCat}">
+       			<button th:case="${cat.name}" id="caissecat" class = "btn btn-default btn-lg active" th:text="${cat.name}"></button>
+       			<button th:case="*" id="caissecat" class = "btn btn-default btn-lg" th:text="${cat.name}"></button>
+       		</a>
+       	</span></center></td>
    	  <!--</form>  --> 
   
     </div>
@@ -48,7 +53,7 @@
 				<div class="panel panel-default">
   <center><h4><b>Produits </b><span class="glyphicon glyphicon-tag"/></h4></center>
      <!--    <form action="/product" th:action="@{/product}" th:object="${product}"  method="get"> -->
-       	<td><span><a  th:href="@{/caissee(id=${product.id})}" th:each="product : ${products}"  ><button id="caisse" class = "btn btn-default btn-lg" th:text="${product.name}"></button></a></span></td>
+       	<td><span><a  th:href="@{'/caissee?id=' + ${product.id} + '&filtreCat=\'' + ${filtreCat} + '\''}" th:each="product : ${products}"  ><button id="caisse" class = "btn btn-default btn-lg" th:text="${product.name}"></button></a></span></td>
    	  <!--</form>  --> 
   
     </div>
