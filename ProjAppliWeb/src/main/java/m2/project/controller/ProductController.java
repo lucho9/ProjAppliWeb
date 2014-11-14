@@ -72,6 +72,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		
 		
+		
+		
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
 			
 				if(rch.equals("case2")){

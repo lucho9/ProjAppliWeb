@@ -79,7 +79,7 @@
                 <th>ID</th>
                 <th>Nom</th>
                 <th>Prix</th>
-                <th>Qté</th>
+                <th>Quantité</th>
             </tr>
         </thead>
         <tbody>
@@ -112,9 +112,9 @@
 	
 	</div>
 	</div>    
-	 
-   <br /><br />
-
+ 
+	  <div class="col-lg-8">
+	  </div>
 
  
  <div class="col-lg-4">
@@ -124,8 +124,8 @@
         
         
 
-<label for="customerGroups" class="col-sm-2 control-label">Groupe :</label>
-<div class="col-sm-10">
+<center><h4><b>Choisir un client </b><span class="glyphicon glyphicon-shopping-cart"/></h4></center>
+
 
 							<select th:field="*{namee}" >
 								<option th:each="cust : ${custs}"
@@ -136,7 +136,7 @@
 							</select>
 							<br />
 <p><input type="submit" value="Submit" onclick="myFunction()" /> <input type="reset" value="Reset" /></p>
-</div>		
+	
 
 
 </form>

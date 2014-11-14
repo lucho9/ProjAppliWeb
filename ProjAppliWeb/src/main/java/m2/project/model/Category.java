@@ -1,4 +1,5 @@
 package m2.project.model;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 
@@ -23,7 +24,6 @@ public class Category {
 	
 	private long id;
 	private String name;
-	
 	
 	public Category() {
 	
