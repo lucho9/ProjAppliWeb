@@ -53,7 +53,8 @@
 				<div class="panel panel-default">
   <center><h4><b>Produits </b><span class="glyphicon glyphicon-tag"/></h4></center>
      <!--    <form action="/product" th:action="@{/product}" th:object="${product}"  method="get"> -->
-       	<td><span><a  th:href="@{'/caissee?id=' + ${product.id} + '&filtreCat=\'' + ${filtreCat} + '\''}" th:each="product : ${products}"  ><button id="caisse" class = "btn btn-default btn-lg" th:text="${product.name}"></button></a></span></td>
+       	<td><span><a  th:href="@{'/caissee?id=' + ${product.id}}" th:each="product : ${products}"  ><button id="caisse" class = "btn btn-default btn-lg" th:text="${product.name}"></button></a></span></td>
+       	<!--<td><span><a  th:href="@{'/caissee?id=' + ${product.id} + '&filtreCat=\'' + ${filtreCat} + '\''}" th:each="product : ${products}"  ><button id="caisse" class = "btn btn-default btn-lg" th:text="${product.name}"></button></a></span></td>-->
    	  <!--</form>  --> 
   
     </div>
