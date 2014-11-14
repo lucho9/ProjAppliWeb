@@ -58,7 +58,8 @@ public class ProductController {
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
-	
+	String categorie = "";
+	String temp = "";
 
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
@@ -202,6 +203,16 @@ public class ProductController {
 
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpSession session,  Pageable pageable,@RequestParam(value="filtreCat",required=false) String cat) {
+		
+		System.out.println(cat);
+		
+		categorie = cat;
+		
+		if(categorie==null)
+		{
+			categorie = temp;
+		}
+		temp = categorie;
 		if(cat!=null){
 			model.addAttribute("products", productService.findByCat(cat));
 			model.addAttribute("product", new Product());
@@ -212,6 +223,18 @@ public class ProductController {
 			model.addAttribute("filtreCat", cat);
 			return "/product/caisse";
 		}
+		if(categorie!=null){
+			model.addAttribute("products", productService.findByCat(categorie));
+			model.addAttribute("product", new Product());
+			model.addAttribute("facture", new Facture());
+			model.addAttribute("cust", new Customer());
+			model.addAttribute("custs",customerRepository.findAll());
+			model.addAttribute("cats",categoryRepository.findAll());
+			model.addAttribute("filtreCat", categorie);
+			return "/product/caisse";
+		}
+		else
+		{
 		model.addAttribute("products", productService.findAll());
 		model.addAttribute("product", new Product());
 		model.addAttribute("facture", new Facture());
@@ -220,6 +243,7 @@ public class ProductController {
 		model.addAttribute("cats",categoryRepository.findAll());
 		model.addAttribute("filtreCat", "");
 		return "/product/caisse";
+		}
 	}
 	
 	
@@ -268,7 +292,7 @@ public class ProductController {
 		
 		session.setAttribute("panier", panier);
 		session.setAttribute("qty", qty);
-		
+	//	categorie = cat;
 		
 		session.setAttribute("prixTotal", total);
 		return "redirect:/caisse";
