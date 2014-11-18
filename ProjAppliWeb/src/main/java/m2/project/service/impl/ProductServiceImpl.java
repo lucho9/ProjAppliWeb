@@ -57,7 +57,7 @@ public class ProductServiceImpl implements ProductService{
 	public void save(Product product) {
 		product.setRef(getRef(product));
 		 prep.save(product);
-		
+		 
 	}
 
 	
@@ -83,7 +83,7 @@ public class ProductServiceImpl implements ProductService{
 		return prep.findByPrix(searchTerm, Min, Max);
 	}
 	
-	//crr=éer une référence produit, voir comment la récupérer dans le .html
+	//créer une référence produit, voir comment la récupérer dans le .html
 		public String getRef(Product p) {
 			StringBuilder s = new StringBuilder();
 			s.append("#");
