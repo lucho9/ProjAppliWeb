@@ -16,6 +16,7 @@ import m2.project.repository.ProductRepository;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
 import m2.project.service.EmployeeService;
+import m2.project.service.ProductService;
 import m2.project.service.RoleService;
 
 import org.springframework.boot.SpringApplication;
@@ -35,6 +36,7 @@ public class Application {
 		CustomerGroupService customerGroupService = context.getBean(CustomerGroupService.class);		
 		CustomerService customerService = context.getBean(CustomerService.class);
 		ProductRepository productRepository = context.getBean(ProductRepository.class);
+		ProductService productService = context.getBean(ProductService.class);
 
 		RoleService roleService = context.getBean(RoleService.class);
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
@@ -120,9 +122,9 @@ public class Application {
 	 
 	        
 	        
-	        productRepository.save(p1);
-	        productRepository.save(p2);
-	        productRepository.save(p3);
+	        productService.save(p1);
+	        productService.save(p2);
+	        productService.save(p3);
 	     
 
     }

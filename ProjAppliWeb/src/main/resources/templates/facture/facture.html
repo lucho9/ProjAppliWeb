@@ -25,11 +25,12 @@
 	</div><!-- /headerwrap -->
 <!-- <p th:text="'id: ' + ${facture.c.firstName}" /> --> 
  
-  <br/>
-  <table class="table">
+  <div class="col-lg-8">
+				<div  class="panel panel-default">
+  <table class="table table-striped">
 			<thead>
         		<tr>
-					<th>Num facture</th>
+					<th>#Ref facture</th>
 					<th>Client</th>
 					<th>Produits</th>
 					<th>Prix unitaire</th>
@@ -39,7 +40,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="factur : ${factures}">
-					<td  th:text="${factur.namee}"></td>
+					<td  th:text="${factur.ref}"></td>
 					<td th:text="${factur.c.firstName}">
 						
 					</td>
@@ -54,10 +55,35 @@
 					</td>
 					<td  th:text="${factur.prixTotal}"></td>
 					
+					 <td><a type="button"  class="btn btn-default btn-xs">
+ 				 <span class="glyphicon glyphicon-print"></span>
+				</a>
+				</td>
+				 <td><a type="button"  class="btn btn-default btn-xs">
+ 				 <span class="glyphicon glyphicon-pencil"></span>
+				</a>
+				</td>
+				 <td><a type="button" th:href="@{/facture/delete(id=${factur.id})}" class="btn btn-default btn-xs">
+ 				 <span class="glyphicon glyphicon-trash"></span>
+				</a>
+				</td>
+					
 				</tr>
 			</tbody>
 		</table>
-		<p><input name="B1" onclick="imprimer()" type="button" value="Imprimer"/></p>
+
+		</div>
+		</div>
+		
+		
+		 <div class="col-lg-4">
+				<div  class="panel panel-default">
+				<center><h4><b>Imprimer toutes les factures</b></h4></center>
+				<center><button id="btnimprim" class="btn btn-green btn-lg glyphicon glyphicon-print" value="Imprimer" name="B1" onclick="imprimer()" />
+		</center>
+		</div>
+		</div>
+
 		
 		
 		<script language="Javascript">

@@ -55,8 +55,9 @@ public class ProductServiceImpl implements ProductService{
 
 	
 	public void save(Product product) {
+		product.setRef(getRef(product));
 		 prep.save(product);
-		
+		 
 	}
 
 	
@@ -82,7 +83,27 @@ public class ProductServiceImpl implements ProductService{
 		return prep.findByPrix(searchTerm, Min, Max);
 	}
 	
+	//créer une référence produit, voir comment la récupérer dans le .html
+		public String getRef(Product p) {
+			StringBuilder s = new StringBuilder();
+			s.append("#");
 	
+			
+			String refcat=p.getCategory().getName();
+			refcat=refcat.substring(0, 2).toUpperCase();
+			s.append(refcat);
+			
+			String refprod=p.getName().toUpperCase();
+			refprod=refprod.substring(0, 2);
+			s.append(refprod);
+			
+			String id=String.valueOf(p.getId());
+			s.append(id);
+			
+			
+			return s.toString();
+			
+		}
 		
 	
 }

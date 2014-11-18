@@ -46,7 +46,7 @@
 					<center><h4><b>Rechercher un produit</b></h4></center>
 					
 
-       <form  role="search" name="form2" action="#" th:object="${product}" method="get">
+       <form  id="formrch" role="search" name="form2" action="#" th:object="${product}" method="get">
         
         <input id="rchinput" type="text" class="form-control" placeholder="Recherche" th:field="*{name}" />
         
@@ -80,7 +80,9 @@
      <table class="table table-striped">
         <thead>
             <tr>
-                <th>Réf produit</th>
+
+                <th>#Réf produit</th>
+
                  <th>Catégorie</th>
                
                 <th>Nom Produit</th>
@@ -95,7 +97,7 @@
         <tbody>
           
           <tr th:each="product : ${products}" >
-            <td th:text="${product.id}"></td>
+            <td th:text="${product.ref}"></td>
              <td th:text="${product.category.name}"></td>
                 <td th:text="${product.name}"></td>
                 <td id="cpt" th:text="${product.stock}"> </td>
@@ -107,7 +109,7 @@
                   
            
                 <td><a type="button" th:href="@{/delete(id=${product.id})}" class="btn btn-default btn-xs">
- 				 <span class="glyphicon glyphicon-remove"></span>
+ 				 <span class="glyphicon glyphicon-trash"></span>
 				</a>
 				</td>
                

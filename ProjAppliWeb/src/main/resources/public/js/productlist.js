@@ -63,10 +63,12 @@ $(document).ready(function() {
 	$("#rch").bind('change',function(e) {
 		
 		if ($(this).val()=="case4") {
-			$("#ok").show(); 
+			$("#ok").show();
+			$("#rchinput").hide();
 			
 		} else {
 			$("#ok").hide(); 
+			$("#rchinput").show();
 		}
 	}); 
 

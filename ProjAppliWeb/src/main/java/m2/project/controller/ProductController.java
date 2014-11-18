@@ -73,6 +73,8 @@ public class ProductController {
 		model.addAttribute("page", page);
 		
 		
+		
+		
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
 			
 				if(rch.equals("case2")){
@@ -203,6 +205,7 @@ public class ProductController {
 
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpSession session,  Pageable pageable,@RequestParam(value="filtreCat",required=false) String cat) {
+
 		
 		System.out.println(cat);
 		
@@ -235,13 +238,16 @@ public class ProductController {
 		}
 		else
 		{
+
 		model.addAttribute("products", productService.findAll());
 		model.addAttribute("product", new Product());
 		model.addAttribute("facture", new Facture());
 		model.addAttribute("cust", new Customer());
 		model.addAttribute("custs",customerRepository.findAll());
 		model.addAttribute("cats",categoryRepository.findAll());
+
 		model.addAttribute("filtreCat", "");
+
 		return "/product/caisse";
 		}
 	}

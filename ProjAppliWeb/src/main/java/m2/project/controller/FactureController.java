@@ -12,10 +12,10 @@ import m2.project.model.Facture;
 import m2.project.model.Product;
 import m2.project.model.QuantiteCommande;
 import m2.project.repository.CustomerRepository;
-
 import m2.project.repository.FactureRepository;
 import m2.project.repository.ProductRepository;
 import m2.project.repository.QuantiteCommandeRepository;
+import m2.project.service.FactureService;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +24,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 
 
@@ -33,6 +34,9 @@ public class FactureController {
 
 	@Autowired
 	private FactureRepository factureRepository;
+	
+	@Autowired
+	private FactureService factureService;
 	@Autowired
 	private CustomerRepository customerRepository;
 	@Autowired
@@ -98,6 +102,15 @@ public class FactureController {
 		return "redirect:/caisse";
 		
 	}
+	
+	@RequestMapping(value = "/facture/delete", method = RequestMethod.GET)
+	public String deleteProduct(@RequestParam("id") Long id, Model model) {
+		
+		factureRepository.delete(id);
+		
+		return "redirect:/factures";
+	}
+	
 	
 	@RequestMapping(value = "/factures", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpSession session,  Pageable pageable) {

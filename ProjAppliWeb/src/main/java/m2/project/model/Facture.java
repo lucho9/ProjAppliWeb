@@ -32,6 +32,10 @@ public class Facture {
 	private double prixTotal;
 
 
+	
+	public String ref="";
+
+
 	public double getPrixTotal() {
 		return prixTotal;
 	}
