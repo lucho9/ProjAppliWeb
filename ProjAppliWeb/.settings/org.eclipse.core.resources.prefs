@@ -1,6 +1,8 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/resources/templates/config.html=UTF-8
+encoding//src/main/resources/templates/configform.html=UTF-8
 encoding//src/main/resources/templates/customer/customerform.html=UTF-8
 encoding//src/main/resources/templates/customer/customerslist.html=UTF-8
 encoding//src/main/resources/templates/employee/employeeform.html=UTF-8
@@ -9,7 +11,6 @@ encoding//src/main/resources/templates/errors/error.html=UTF-8
 encoding//src/main/resources/templates/fragments/common.html=UTF-8
 encoding//src/main/resources/templates/fragments/menu.html=UTF-8
 encoding//src/main/resources/templates/fragments/paginationbar.html=UTF-8
-encoding//src/main/resources/templates/home.html=UTF-8
 encoding//src/main/resources/templates/index.html=UTF-8
 encoding//src/main/resources/templates/login.html=UTF-8
 encoding//src/main/resources/templates/product/create.html=UTF-8

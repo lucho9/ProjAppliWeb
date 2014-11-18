@@ -20,6 +20,7 @@ function editEmployee(action, id) {
 	    	$('#formemployee #password').val(data.password);
 	    	$('#formemployee #role option[value="' + data.role + '"]').prop('selected', true);
 	    	
+	    	//$('#formemployee #password').hide();
 	    	$('#divformemployee .modal-title').html("Editer");
 	    	$('#divformemployee').modal('show');
 	    }
@@ -28,6 +29,11 @@ function editEmployee(action, id) {
 	        alert("error: " + data + " status: " + status + " err:" + err);
 	    }*/
 	});
+}
+
+function initFilter() {
+	$('#formfilter #filtername').val('');
+	$('#formfilter').submit();
 }
 
 $(document).ready(function() {
@@ -67,12 +73,4 @@ $(document).ready(function() {
 
 		return false;
 	});
-	
-	/*
-	// sort col 0 asc
-	var sorting = [[0,0],[1,0]]; 
-	$("table").trigger("sorton", [sorting]); 
-    
-    $("table").trigger("update");
-     */
 });

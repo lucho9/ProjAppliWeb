@@ -10,10 +10,8 @@ import m2.project.model.ErrorMessage;
 import m2.project.model.JsonResponse;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
-import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,12 +33,20 @@ public class CustomerController {
 
 	// Customers list / Create customer form - not Ajax
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
-	public String customersList(Model model, Pageable pageable) {
-
-		//Page<Customer> curPage = customerService.findAll(pageable);
-		//PageWrapper<Customer> page = new PageWrapper<Customer>(curPage, "/customer");
-		//model.addAttribute("page", page);
-		model.addAttribute("customers", customerService.findAll());
+	public String customersList(Model model, Pageable pageable, @RequestParam(value="filtername", required = false) String filterName) {
+		if (filterName != null && !filterName.isEmpty()) {
+			String[] searchTerms = filterName.split(" ");
+			String searchTerm1 = searchTerms[0].toLowerCase();
+			String searchTerm2 = "<NO TERM>";
+			if (searchTerms.length > 1 && searchTerms[1] != null && !searchTerms[1].isEmpty())
+				searchTerm2 = searchTerms[1].toLowerCase();
+			model.addAttribute("customers", customerService.findByNames(searchTerm1, searchTerm2));
+			model.addAttribute("filtername", filterName);
+		}
+		else {
+			model.addAttribute("customers", customerService.findAll());
+			model.addAttribute("filtername", null);
+		}
 		
 		// for the customer form create
 		model.addAttribute("customer", new Customer());

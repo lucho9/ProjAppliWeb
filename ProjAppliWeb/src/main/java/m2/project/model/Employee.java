@@ -49,12 +49,10 @@ public class Employee {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birth;
 	
-	@NotNull
-	@Size(min = 2, max = 30)
+	private int loginType = 0;
+	
 	private String login;
 
-	//@NotNull
-	//@NotEmpty
 	private String password;
 	
 	@NotNull
@@ -74,6 +72,7 @@ public class Employee {
 		this.mobileNumber = mobileNumber;
 		this.email = email;
 		this.birth = birth;
+		this.loginType = 0;
 		this.login = login;
 		
 		hashPassword(password);
@@ -81,8 +80,10 @@ public class Employee {
 		this.role = role;
 	}
 	public void hashPassword(String password) {
-		PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-		this.password = passwordEncoder.encode(password);
+		if (password != null) {
+			PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+			this.password = passwordEncoder.encode(password);
+		}
 	}
 
 	public Long getId() {
@@ -132,6 +133,12 @@ public class Employee {
 	}
 	public void setBirth(Date birth) {
 		this.birth = birth;
+	}
+	public int getLoginType() {
+		return loginType;
+	}
+	public void setLoginType(int loginType) {
+		this.loginType = loginType;
 	}
 	public String getLogin() {
 		return login;

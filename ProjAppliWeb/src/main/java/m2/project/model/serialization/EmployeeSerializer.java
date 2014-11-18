@@ -25,9 +25,9 @@ public class EmployeeSerializer extends JsonSerializer<Employee> {
         
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
         jgen.writeStringField("birth", dateFormat.format(value.getBirth()));
-        
+        jgen.writeStringField("loginType", "" + value.getLoginType());
         jgen.writeStringField("login", value.getLogin());
-        //jgen.writeStringField("password", value.getPassword());
+        jgen.writeStringField("hasPassword", (value.getPassword() != null && value.getPassword().length() > 0) ? "1" : "0");
         jgen.writeNumberField("role", value.getRole().getId());
         jgen.writeEndObject();
     }

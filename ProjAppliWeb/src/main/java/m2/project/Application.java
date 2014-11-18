@@ -72,10 +72,7 @@ public class Application {
 		customerService.save(new Customer("Titty", "Twister", customerGroupsList));
 		customerService.save(new Customer("Remundo", "Do", customerGroupsList));
         
-
-        
-		
-		// roles
+        // roles
 		Role a = new Role("ROLE_ADMIN", "Administrateur");
 		Role u = new Role("ROLE_USER", "Utilisateur");
 		roleService.save(a);
@@ -84,10 +81,12 @@ public class Application {
 		// employees
 		GregorianCalendar cal = new GregorianCalendar(1947, 02, 16);
 		employeeService.save(new Employee("Clint", "Westwood", "", "0033 3 00 00 00 01", "0033 6 00 00 00 01", "clint@gmail.com", new Date(cal.getTimeInMillis()), "admin", "admin", a));
-		cal = new GregorianCalendar(1987, 01, 31);
+		cal = new GregorianCalendar(1987, 1, 31);
 		employeeService.save(new Employee("Brad", "Pett", "", "0033 3 00 00 00 02", "0033 6 00 00 00 02", "brad@gmail.com", new Date(cal.getTimeInMillis()), "user", "user", u));
-		cal = new GregorianCalendar(1977, 05, 16);
-		employeeService.save(new Employee("Robert", "Martin", "", "0033 3 00 00 00 03", "0033 6 00 00 00 03", "robert.martin@gmail.com", new Date(cal.getTimeInMillis()), "gomygamez@gmail.com", "", a));
+		//cal = new GregorianCalendar(1977, 5, 16);
+		//employeeService.save(new Employee("Robert", "Martin", "", "0033 3 00 00 00 03", "0033 6 00 00 00 03", "robert.martin@gmail.com", new Date(cal.getTimeInMillis()), "gomygamez@gmail.com", "robert", a));
+		cal = new GregorianCalendar(1979, 8, 12);
+		employeeService.save(new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "", new Date(cal.getTimeInMillis()), "", null, u));
 
        
 	       	

@@ -47,8 +47,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-        	//.antMatchers("/errors/**", "/templates/fragments/**", "/theme/**", "/js/**");
-        	.antMatchers("/errors/**", "/templates/fragments/**", "/theme/**", "/js/**", "/ThemeTemplate/**");
+        	.antMatchers("/errors/**", "/templates/fragments/**", "/theme/**", "/js/**", "/ThemeTemplate/**", "/index/**", "/callconfig/**", "/config/**");
     }
 
     @Override
@@ -59,19 +58,17 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	
-		http.authorizeRequests().antMatchers("/**").permitAll();
-		http.csrf().disable();
+		//http.authorizeRequests().antMatchers("/**").permitAll();
+		//http.csrf().disable();
 		
-		/*
-		http.authorizeRequests().antMatchers("/", "/home").permitAll();
-		http.authorizeRequests().antMatchers("/customer/**").access("hasRole('ROLE_ADMIN')");
+		//http.authorizeRequests().antMatchers("/", ).permitAll();
+		http.authorizeRequests().antMatchers("/customer/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/product/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/employee/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/caisse/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/stock/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/facture/**").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/help/**").access("hasRole('ROLE_ADMIN')");
-		
 		
 		http.formLogin()
 			.loginPage("/login")
@@ -127,6 +124,5 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	            .attribute("fullname")
 	                .type("http://schema.openid.net/namePerson")
 	                .required(true);
-	    */
 	}
 }

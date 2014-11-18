@@ -2,18 +2,18 @@ package m2.project.service.impl;
 
 import java.util.List;
 
-import org.springframework.data.domain.Sort.Order;
+import m2.project.model.Employee;
+import m2.project.repository.EmployeeRepository;
+import m2.project.service.EmployeeService;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import m2.project.model.Employee;
-import m2.project.repository.EmployeeRepository;
-import m2.project.service.EmployeeService;
 
 @Service
 @Transactional
@@ -64,5 +64,13 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	public Employee findByEmailAndLastNameAndFirstNameAllIgnoreCase(String email, String lastName, String firstName) {
 		return employeeRepository.findByEmailAndLastNameAndFirstNameAllIgnoreCase(email, lastName, firstName);
+	}
+	
+	public List<Employee> findByNames(String searchTerm1, String searchTerm2) {
+		return employeeRepository.findByNames(searchTerm1, searchTerm2);
+	}
+	
+	public Employee findByLastNameAndFirstNameAllIgnoreCase(String lastName, String firstName) {
+		return employeeRepository.findByLastNameAndFirstNameAllIgnoreCase(lastName, firstName);
 	}
 }

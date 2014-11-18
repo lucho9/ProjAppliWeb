@@ -14,6 +14,7 @@ import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -36,12 +37,26 @@ public class EmployeeController {
 	
 	// Employees list / Create employee form - not Ajax
 	@RequestMapping(value = "/employee", method = RequestMethod.GET)
-	public String employeesList(Model model, Pageable pageable) {
-		
-		Page<Employee> curPage = employeeService.findAll(pageable);
-		PageWrapper<Employee> page = new PageWrapper<Employee>(curPage, "/employee");
-		model.addAttribute("page", page);
-		//model.addAttribute("employees", employeeService.findAll());
+	public String employeesList(Model model, Pageable pageable, @RequestParam(value="filtername", required = false) String filterName) {
+		if (filterName != null && !filterName.isEmpty()) {
+			String[] searchTerms = filterName.split(" ");
+			String searchTerm1 = searchTerms[0].toLowerCase();
+			String searchTerm2 = "<NO TERM>";
+			if (searchTerms.length > 1 && searchTerms[1] != null && !searchTerms[1].isEmpty())
+				searchTerm2 = searchTerms[1].toLowerCase();
+
+			List<Employee> emps = employeeService.findByNames(searchTerm1, searchTerm2);
+			Page<Employee> curPage = new PageImpl<Employee>(emps, pageable, 10);
+			PageWrapper<Employee> page = new PageWrapper<Employee>(curPage, "/employee");
+			model.addAttribute("page", page);
+			model.addAttribute("filtername", filterName);
+		}
+		else {
+			Page<Employee> curPage = employeeService.findAll(pageable);
+			PageWrapper<Employee> page = new PageWrapper<Employee>(curPage, "/employee");
+			model.addAttribute("page", page);
+			model.addAttribute("filtername", null);
+		}
 		
 		// for the employee form create
 		model.addAttribute("employee", new Employee());

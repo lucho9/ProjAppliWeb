@@ -53,4 +53,9 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> findAll() {
 		return customerRepository.findAll(new Sort(new Order(Direction.ASC, "lastName"), new Order(Direction.ASC, "firstName")));
 	}
+	
+	public List<Customer> findByNames(String searchTerm1, String searchTerm2) {
+		return customerRepository.findByNames(searchTerm1, searchTerm2);
+	}
+
 }
