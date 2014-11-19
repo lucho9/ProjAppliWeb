@@ -50,6 +50,7 @@ public class ProductController {
 	@Autowired
 	private CustomerRepository customerRepository;
 	double total = 0;
+	double tempTVA = 0;
 
 	@Autowired
 	private ProductService productService;
@@ -288,12 +289,16 @@ public class ProductController {
 		if (!qty.containsKey(product.getId())) {
 			panier.put(product.getId(), product);
 			qty.put(product.getId(), 1);
-			total = total + product.getPrix();
+			tempTVA=tempTVA+product.getPrix()*(product.getCategory().getTVA().getTva());
+			//total = total + tempTVA;
+			total = total +product.getPrix();
 			
 		}
 		else {
 			qty.put(product.getId(), qty.get(product.getId()) + 1);
-			total = total + product.getPrix();
+			tempTVA=tempTVA+product.getPrix()*(product.getCategory().getTVA().getTva());
+			//total = total + tempTVA;
+			total = total +product.getPrix();
 		}
 		
 		session.setAttribute("panier", panier);
@@ -301,6 +306,7 @@ public class ProductController {
 	//	categorie = cat;
 		
 		session.setAttribute("prixTotal", total);
+		session.setAttribute("prixTotalTTC", total+tempTVA);
 		return "redirect:/caisse";
 	}
 	
@@ -310,6 +316,7 @@ public class ProductController {
 		Map<Long, Integer> qty = getQty(session);
 		Map<Long, Product> panier = getPanier(session);
 		total = total - (qty.get(id) * panier.get(id).getPrix());
+		tempTVA=tempTVA-((qty.get(id) * panier.get(id).getPrix())*(panier.get(id).getCategory().getTVA().getTva()));
 		if (qty.containsKey(id))
 			qty.remove(id);
 		
@@ -319,6 +326,10 @@ public class ProductController {
 		session.setAttribute("panier", panier);
 		session.setAttribute("qty", qty);
 		session.setAttribute("prixTotal", total);
+		if(panier.isEmpty())
+			session.setAttribute("prixTotalTTC", total);
+		else
+		session.setAttribute("prixTotalTTC", total+tempTVA);
 		//panier.remove();
 		return "redirect:/caisse";
 	}

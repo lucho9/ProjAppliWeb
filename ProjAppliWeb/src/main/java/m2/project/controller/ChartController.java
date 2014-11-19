@@ -18,11 +18,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 @Controller
-@RequestMapping("/charts")
 public class ChartController {
+	
+	
+	
+
+	@RequestMapping(value="/stats",method=RequestMethod.GET)
+	public String affichePage(){
+		return "/stats/statsForm";
+	}
 
 	
-	@RequestMapping(value="/piechart",method=RequestMethod.GET)
+	@RequestMapping(value="/chart",method=RequestMethod.GET)
 	public void drawPieChart(HttpServletResponse response){
 		response.setContentType("image/png");
 		PieDataset pdSet=createDataSet();
@@ -30,7 +37,9 @@ public class ChartController {
 		
 		try{
 			ChartUtilities.writeChartAsPNG(response.getOutputStream(),chart,750,400);
-			response.getOutputStream().close();
+			
+			
+			//response.getOutputStream().close();
 		}catch(IOException ex){
 			ex.printStackTrace();
 		}

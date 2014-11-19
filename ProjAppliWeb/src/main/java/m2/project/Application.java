@@ -11,8 +11,10 @@ import m2.project.model.CustomerGroup;
 import m2.project.model.Employee;
 import m2.project.model.Product;
 import m2.project.model.Role;
+import m2.project.model.TVA;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.ProductRepository;
+import m2.project.repository.TVARepository;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
 import m2.project.service.EmployeeService;
@@ -42,7 +44,7 @@ public class Application {
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
 
 		CategoryRepository categoryRepository = context.getBean(CategoryRepository.class);
-
+		TVARepository tvaRepository = context.getBean(TVARepository.class);
 		
 		// customer groups
 		CustomerGroup g = new CustomerGroup("Metro", 10);
@@ -98,11 +100,20 @@ public class Application {
 	        Product p2= new Product("TV Samsung",250,50);
 	        Product p3= new Product("TV Sony",200,20);
 	        
+	     
 	        
-	      
 	        Category c1=new Category("fruit");
 	        Category c2=new Category("TV");
 
+	        TVA t1=new TVA(0.05);
+	        TVA t2=new TVA(0.206);
+	        
+	        tvaRepository.save(t1);
+	        tvaRepository.save(t2);
+	        
+	        
+	        c1.setTVA(t1);
+	        c2.setTVA(t2);
 	        
 	        //g.setId((long) 111);
 	        

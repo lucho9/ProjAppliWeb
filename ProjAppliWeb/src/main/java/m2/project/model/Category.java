@@ -34,9 +34,22 @@ public class Category {
 	//La TVA représente la taxe sur la valeur ajoutée. 
 	//Différents taux de TVA sont possibles : 19,6% dans la plupart des cas, 5.5% pour les denrées alimentaires et les livres 
 	//et 2,1% pour les médicaments et les journaux.
-	//@ManyToOne
-	//private int TVA;
 	
+	@ManyToOne
+	private TVA TVA;
+	
+
+
+	public TVA getTVA() {
+		return TVA;
+	}
+
+
+
+	public void setTVA(TVA tVA) {
+		TVA = tVA;
+	}
+
 
 
 	public Category(String name, Collection<Product> products) {
@@ -50,6 +63,8 @@ public class Category {
 	public Category(String laCategory) {
 		this.name=laCategory;
 	}
+	
+	
 	
 	@OneToMany(mappedBy="category")
 	private Collection<Product> products ;
