@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-
 <head th:include="fragments/common :: [//head]">
 </head>
 
@@ -114,6 +113,8 @@
     <!-- Bootstrap core JavaScript
     ================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
+    
+<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
     <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
     <script src="ThemeTemplate/assets/js/bootstrap.min.js"></script>
     <script src="ThemeTemplate/assets/js/main.js"></script>
