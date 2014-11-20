@@ -9,6 +9,7 @@ import m2.project.model.Category;
 import m2.project.model.Customer;
 import m2.project.model.CustomerGroup;
 import m2.project.model.Employee;
+import m2.project.model.Facture;
 import m2.project.model.Product;
 import m2.project.model.Role;
 import m2.project.model.TVA;
@@ -18,6 +19,7 @@ import m2.project.repository.TVARepository;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
 import m2.project.service.EmployeeService;
+import m2.project.service.FactureService;
 import m2.project.service.ProductService;
 import m2.project.service.RoleService;
 
@@ -39,7 +41,7 @@ public class Application {
 		CustomerService customerService = context.getBean(CustomerService.class);
 		ProductRepository productRepository = context.getBean(ProductRepository.class);
 		ProductService productService = context.getBean(ProductService.class);
-
+		FactureService factureService= context.getBean(FactureService.class);
 		RoleService roleService = context.getBean(RoleService.class);
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
 
@@ -102,6 +104,12 @@ public class Application {
 
 	    TVA t1=new TVA(0.05);
 	    TVA t2=new TVA(0.206);
+	    
+	    Customer c=new Customer("David", "kjdbhhdsdsbg", customerGroupsList);
+	    customerService.save(c);
+		factureService.save(new Facture( c, 562));
+		
+        
 	        
 	    tvaRepository.save(t1);
 	    tvaRepository.save(t2);
