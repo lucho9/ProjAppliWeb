@@ -26,6 +26,8 @@ public class Category {
 	private String name;
 
 	
+	private String color;
+	
 	public Category() {
 	
 	}
@@ -60,8 +62,9 @@ public class Category {
 
 
 
-	public Category(String laCategory) {
+	public Category(String laCategory, String color) {
 		this.name=laCategory;
+		this.color = color;
 	}
 	
 	
@@ -94,6 +97,12 @@ public class Category {
 		this.products = products;
 	}
 	
-	
-	
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 }

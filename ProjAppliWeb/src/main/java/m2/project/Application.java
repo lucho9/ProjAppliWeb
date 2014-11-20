@@ -92,51 +92,38 @@ public class Application {
 		cal = new GregorianCalendar(1979, 8, 12);
 		employeeService.save(new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "", new Date(cal.getTimeInMillis()), "", null, u));
 
-       
-	       	
-	       
-	        //création des produits
-	        Product p1= new Product("pomme golden",1,100);
-	        Product p2= new Product("TV Samsung",250,50);
-	        Product p3= new Product("TV Sony",200,20);
+        //création des produits
+	    Product p1= new Product("pomme golden",1,100);
+	    Product p2= new Product("TV Samsung",250,50);
+	    Product p3= new Product("TV Sony",200,20);
 	        
-	     
-	        
-	        Category c1=new Category("fruit");
-	        Category c2=new Category("TV");
+	    Category c1=new Category("fruit", "#ffaa00");
+	    Category c2=new Category("TV", "#11dd66");
 
-	        TVA t1=new TVA(0.05);
-	        TVA t2=new TVA(0.206);
+	    TVA t1=new TVA(0.05);
+	    TVA t2=new TVA(0.206);
 	        
-	        tvaRepository.save(t1);
-	        tvaRepository.save(t2);
+	    tvaRepository.save(t1);
+	    tvaRepository.save(t2);
 	        
+	    c1.setTVA(t1);
+	    c2.setTVA(t2);
 	        
-	        c1.setTVA(t1);
-	        c2.setTVA(t2);
+	    //g.setId((long) 111);
 	        
-	        //g.setId((long) 111);
+	    categoryRepository.save(c1);
+	    categoryRepository.save(c2);
 	        
-	        categoryRepository.save(c1);
-	        categoryRepository.save(c2);
+	    //g.setStock(s);
 	        
-
-	        //g.setStock(s);
-	     
+	    //Set collec = new HashSet();
 	        
-	        //Set collec = new HashSet();
+	    p1.setCategory(c1);
+	    p2.setCategory(c2);
+	    p3.setCategory(c2);
 	        
-	        p1.setCategory(c1);
-	        p2.setCategory(c2);
-	        p3.setCategory(c2);
-	        
-	 
-	        
-	        
-	        productService.save(p1);
-	        productService.save(p2);
-	        productService.save(p3);
-	     
-
+	    productService.save(p1);
+	    productService.save(p2);
+	    productService.save(p3);
     }
 }

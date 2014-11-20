@@ -41,9 +41,8 @@
 			<tbody>
 				<tr th:each="factur : ${factures}">
 					<td  th:text="${factur.ref}"></td>
-					<td th:text="${factur.c.firstName}">
-						
-					</td>
+					<td th:if="${factur.c == null}"></td>
+					<td th:if="${factur.c != null}" th:text="${factur.c.firstName}"></td>
 					<td>
 						<div th:each="produit : ${factur.lp}" th:text="${produit.name}"></div>
 					</td>
@@ -93,6 +92,6 @@ function imprimer(){window.print();}
 	<script th:replace="fragments/common :: [//script]"></script>
 
 	<script type="text/javascript" th:src="@{/js/common.js}"></script>
-	<script type="text/javascript" th:src="@{/js/home.js}"></script>
+	<script type="text/javascript" th:src="@{/js/facture.js}"></script>
 </body>
 </html>

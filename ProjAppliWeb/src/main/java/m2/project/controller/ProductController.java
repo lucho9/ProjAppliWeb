@@ -41,21 +41,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class ProductController {
-
-	
-
 	@Autowired
-	private CustomerService customerservice;
+	private CustomerService customerService;
 
-	@Autowired
-	private CustomerRepository customerRepository;
 	double total = 0;
 	double tempTVA = 0;
 
 	@Autowired
 	private ProductService productService;
 
-	
 	@Autowired
 	private CategoryRepository categoryRepository;
 	
@@ -151,106 +145,76 @@ public class ProductController {
 	
 
 	// Submit create / edit product form - Ajax 
-			@RequestMapping(value = "/product", method = RequestMethod.POST, produces={"application/json"})
-			@ResponseBody
-			public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
-				JsonResponse res = new JsonResponse();
-				if (!result.hasErrors()) {
-				
+	@RequestMapping(value = "/product", method = RequestMethod.POST, produces={"application/json"})
+	@ResponseBody
+	public JsonResponse ajaxSubmitCustomerForm(Model model, @ModelAttribute(value = "product") @Valid Product product, BindingResult result) {
+		JsonResponse res = new JsonResponse();
+		if (!result.hasErrors()) {
+		
 
-					if(!(productService.findOne(product.name).isEmpty()))
-					productService.save(product);
-					res.setStatus("SUCCESS");
+			if(!(productService.findOne(product.name).isEmpty()))
+			productService.save(product);
+			res.setStatus("SUCCESS");
 
-					//if(productService.findOne(product.name)==null)
-					try {
-						productService.save(product);
-						res.setStatus("SUCCESS");
-					}
-					catch(Exception e) {
-						res.setStatus("FAIL");
-					}
-
-				}
-				else {
-					res.setStatus("FAIL");
-					List<FieldError> allErrors = result.getFieldErrors();
-					List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
-					for (FieldError objectError : allErrors) {
-						errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
-					}
-					res.setErrorMessageList(errorMesages);
-				}
-				
-				return res;
+			//if(productService.findOne(product.name)==null)
+			try {
+				productService.save(product);
+				res.setStatus("SUCCESS");
 			}
+			catch(Exception e) {
+				res.setStatus("FAIL");
+			}
+		}
+		else {
+			res.setStatus("FAIL");
+			List<FieldError> allErrors = result.getFieldErrors();
+			List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
+			for (FieldError objectError : allErrors) {
+				errorMesages.add(new ErrorMessage(objectError.getField(), objectError.getDefaultMessage()));
+			}
+			res.setErrorMessageList(errorMesages);
+		}
+		
+		return res;
+	}
 	
 	@RequestMapping(value = "/product/edit", method = RequestMethod.GET, produces={"application/json"})
 	public @ResponseBody Product ajaxEditCustomerForm(@RequestParam("id") Long id) {
-	
-	
-		
-		
-	
 		return productService.findOne(id);
 	}
 	
 	@RequestMapping(value = "/delete", method = RequestMethod.GET)
 	public String deleteProduct(@RequestParam("id") Long id, Model model) {
-		
 		productService.delete(id);
-		
 		return "redirect:/product";
 	}
 	
-
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
 	public String listProducts(Model model, HttpSession session,  Pageable pageable,@RequestParam(value="filtreCat",required=false) String cat) {
-
-		
-		System.out.println(cat);
-		
 		categorie = cat;
 		
-		if(categorie==null)
-		{
+		if(categorie == null) {
 			categorie = temp;
 		}
 		temp = categorie;
-		if(cat!=null){
+		if(cat != null) {
 			model.addAttribute("products", productService.findByCat(cat));
-			model.addAttribute("product", new Product());
-			model.addAttribute("facture", new Facture());
-			model.addAttribute("cust", new Customer());
-			model.addAttribute("custs",customerRepository.findAll());
-			model.addAttribute("cats",categoryRepository.findAll());
 			model.addAttribute("filtreCat", cat);
-			return "/product/caisse";
 		}
-		if(categorie!=null){
+		if(categorie != null) {
 			model.addAttribute("products", productService.findByCat(categorie));
-			model.addAttribute("product", new Product());
-			model.addAttribute("facture", new Facture());
-			model.addAttribute("cust", new Customer());
-			model.addAttribute("custs",customerRepository.findAll());
-			model.addAttribute("cats",categoryRepository.findAll());
 			model.addAttribute("filtreCat", categorie);
-			return "/product/caisse";
 		}
-		else
-		{
-
-		model.addAttribute("products", productService.findAll());
+		else {
+			model.addAttribute("products", productService.findAll());
+			model.addAttribute("filtreCat", "");
+		}
 		model.addAttribute("product", new Product());
 		model.addAttribute("facture", new Facture());
 		model.addAttribute("cust", new Customer());
-		model.addAttribute("custs",customerRepository.findAll());
+		model.addAttribute("custs", customerService.findAll());
 		model.addAttribute("cats",categoryRepository.findAll());
-
-		model.addAttribute("filtreCat", "");
-
 		return "/product/caisse";
-		}
 	}
 	
 	
