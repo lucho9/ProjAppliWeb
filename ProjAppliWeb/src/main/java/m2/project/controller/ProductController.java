@@ -13,6 +13,7 @@ import m2.project.model.Customer;
 import m2.project.model.ErrorMessage;
 import m2.project.model.Facture;
 import m2.project.model.JsonResponse;
+import m2.project.model.Panier;
 import m2.project.model.Product;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
@@ -44,9 +45,6 @@ public class ProductController {
 	@Autowired
 	private CustomerService customerService;
 
-	double total = 0;
-	double tempTVA = 0;
-
 	@Autowired
 	private ProductService productService;
 
@@ -55,31 +53,25 @@ public class ProductController {
 	
 	String categorie = "";
 	String temp = "";
-
 	
 	@RequestMapping(value = "/product", method = RequestMethod.GET)
 	public String productsList(Model model,Pageable pageable,@ModelAttribute Product product,@RequestParam(value="recherche",required=false)String rch,@RequestParam(value="Min",required=false)String Min,@RequestParam(value="Max",required=false)String Max) {
 		// for the customers list
 		final PageRequest pageRequest = new PageRequest(pageable.getPageNumber(), 5, Direction.ASC, "name");
 		
-		
 		Page<Product> curPage = productService.findAll(pageRequest);
 		PageWrapper<Product> page = new PageWrapper<Product>(curPage, "/product");
 		model.addAttribute("page", page);
 		
-		
-		
-		
 		if((product.getName()!=null)&&!(product.getName().equals(""))&&rch!=null){
-			
-				if(rch.equals("case2")){
-					System.out.println(product.getName());
+			if(rch.equals("case2")){
+				System.out.println(product.getName());
 				
-					String searchTerm=product.getName();
-					model.addAttribute("products", productService.find(searchTerm));
-					model.addAttribute("cats", categoryRepository.findAll());
-			
-					return "/product/listproduct";
+				String searchTerm=product.getName();
+				model.addAttribute("products", productService.find(searchTerm));
+				model.addAttribute("cats", categoryRepository.findAll());
+		
+				return "/product/listproduct";
 
 			}else{
 				if(rch.equals("case3")){
@@ -197,6 +189,9 @@ public class ProductController {
 			categorie = temp;
 		}
 		temp = categorie;
+		
+		session.setAttribute("panier", getPanier(session));
+		
 		if(cat != null) {
 			model.addAttribute("products", productService.findByCat(cat));
 			model.addAttribute("filtreCat", cat);
@@ -218,89 +213,34 @@ public class ProductController {
 	}
 	
 	
-	public Map<Long, Product> getPanier(HttpSession session)
+	public Panier getPanier(HttpSession session)
 	{
-		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
+		Panier panier = (Panier)session.getAttribute("panier");
 		if(panier == null) {
-			panier = new HashMap<Long, Product>();
-			if(total != 0) {
-				total = 0;
-			}
-			
+			panier = new Panier();
 		}
 		
 		return panier;
 	}
-	public Map<Long, Integer> getQty(HttpSession session)
-	{
-		Map<Long, Integer> qty = (Map<Long, Integer>)session.getAttribute("qty");
-		if(qty == null)
-			qty = new HashMap<Long, Integer>();
-		
-		return qty;
-	}
-	
+
 	@RequestMapping(value = "/caissee", method = RequestMethod.GET)
 	public String submitCaisse(@RequestParam("id") Long id, Model model, HttpSession session) {
 		Product product;
 		product = productService.findOne(id);
 		
-		Map<Long, Integer> qty = getQty(session);
-		Map<Long, Product> panier = getPanier(session);
-		
-		
-		
-		if (!qty.containsKey(product.getId())) {
-			panier.put(product.getId(), product);
-			qty.put(product.getId(), 1);
-			tempTVA=tempTVA+product.getPrix()*(product.getCategory().getTVA().getTva());
-			//total = total + tempTVA;
-			total = total +product.getPrix();
-			
-		}
-		else {
-			qty.put(product.getId(), qty.get(product.getId()) + 1);
-			tempTVA=tempTVA+product.getPrix()*(product.getCategory().getTVA().getTva());
-			//total = total + tempTVA;
-			total = total +product.getPrix();
-		}
-		
-		session.setAttribute("panier", panier);
-		session.setAttribute("qty", qty);
-		
-		session.setAttribute("prixTotal", total);
-		
-		String qteGroupeDiscount = "";
-		String prixGroupeDiscount = "";
-		if ()
-		session.setAttribute("qteGroupeDiscount", qteGroupeDiscount);
-		session.setAttribute("prixGroupeDiscount", prixGroupeDiscount);
-		
-		session.setAttribute("prixTotalTTC", total+tempTVA);
+		Panier p = getPanier(session);
+		p.addProduct(product);
+		session.setAttribute("panier", p);
+
 		return "redirect:/caisse";
 	}
 	
 	@RequestMapping(value = "/deletePanier", method = RequestMethod.GET)
 	public String deletePanier(@RequestParam("id") Long id, Model model, HttpSession session) {
+		Panier p = getPanier(session);
+		p.removeProduct(id);
+		session.setAttribute("panier", p);
 		
-		Map<Long, Integer> qty = getQty(session);
-		Map<Long, Product> panier = getPanier(session);
-		total = total - (qty.get(id) * panier.get(id).getPrix());
-		tempTVA=tempTVA-((qty.get(id) * panier.get(id).getPrix())*(panier.get(id).getCategory().getTVA().getTva()));
-		if (qty.containsKey(id))
-			qty.remove(id);
-		
-		if (panier.containsKey(id))
-			panier.remove(id);
-		
-		session.setAttribute("panier", panier);
-		session.setAttribute("qty", qty);
-		session.setAttribute("prixTotal", total);
-		if(panier.isEmpty())
-			session.setAttribute("prixTotalTTC", total);
-		else
-		session.setAttribute("prixTotalTTC", total+tempTVA);
-		//panier.remove();
 		return "redirect:/caisse";
 	}
 

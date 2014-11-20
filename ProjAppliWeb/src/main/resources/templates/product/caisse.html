@@ -92,12 +92,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="product : ${session.panier}">
+							<tr th:each="product : ${session.panier.products}">
 								<td th:text="${product.value.id}"></td>
 								<td th:text="${product.value.name}"></td>
 								<td th:text="${product.value.prix}"></td>
 								<td th:text="${product.value.category.TVA.tva}"></td>
-								<td th:text="${session.qty[product.value.id]}"></td>
+								<td th:text="${session.panier.quantities[product.value.id]}"></td>
 
 								<td><a th:href="@{/deletePanier(id=${product.value.id})}"
 									class="btn btn-default btn-xs"> <span
@@ -113,19 +113,21 @@
 						<tbody>
 							<tr>
 								<td>Prix total HT</td>
-								<td><span th:text="${session.prixTotal}"></span></td>
+								<td><span th:text="${session.panier.total}"></span></td>
 							</tr>
+							<!--
 							<tr>
-								<td>Réduction groupe <span th:text="${session.qteGroupeDiscount}"></td>
-								<td><span th:text="${session.prixGroupeDiscount}"></span></td>
+								<td>Réduction groupe <span th:text="${session.panier.qteGroupeDiscount}"></td>
+								<td><span th:text="${session.panier.prixGroupeDiscount}"></span></td>
 							</tr>
+							 -->
 							<tr>
 								<td>Prix total TTC</td>
-								<td><span th:text="${session.prixTotalTTC}"></span></td>
+								<td><span th:text="${session.panier.totalTTC}"></span></td>
 							</tr>
 							<tr>
 								<td>Prix total HT</td>
-								<td><span th:text="${session.prixTotal}"></span></td>
+								<td><span th:text="${session.panier.total}"></span></td>
 							</tr>
 							<tr>
 								<td>Client</td>
