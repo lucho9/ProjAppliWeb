@@ -112,8 +112,8 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<td>Prix total HT</td>
-								<td><span th:text="${session.panier.total}"></span></td>
+								<td>Discount</td>
+								<td><span th:text="${session.panier.prixGroupeDiscount}"></span></td>
 							</tr>
 							<!--
 							<tr>
@@ -136,7 +136,9 @@
 										<option value="0">Client non enregistré</option>
 										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
 									</select>
+									
 								</td>
+									
 							</tr>
 						</tbody>
 					</table>
@@ -178,6 +180,7 @@
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	<script th:replace="fragments/common :: [//script]"></script>
 
-	<script type="text/javascript" th:src="@{/resources/scripts/caisse.js}"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
+	<script type="text/javascript" th:src="@{/js/caisse.js}"></script>
 </body>
 </html>

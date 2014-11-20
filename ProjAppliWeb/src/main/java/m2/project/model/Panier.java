@@ -12,21 +12,33 @@ public class Panier {
 	private double qteGroupeDiscount = 0;
 	private double prixGroupeDiscount = 0;
 	
+	
 	private Map<Long, Product> products = new HashMap<Long, Product>();
 	private Map<Long, Double> quantities = new HashMap<Long, Double>();
+	private Customer client;
 	
+	public Customer getClient() {
+		return client;
+	}
+
+	public void setClient(Customer client) {
+		this.client = client;
+	}
+
 	public void addProduct(Product product) {
 		if (!quantities.containsKey(product.getId())) {
 			products.put(product.getId(), product);
 			quantities.put(product.getId(), 1.0);
 			tempTVA = tempTVA + product.getPrix() * (product.getCategory().getTVA().getTva());
 			total = total + product.getPrix();
+			totalTTC = total + (tempTVA);
 			
 		}
 		else {
 			quantities.put(product.getId(), quantities.get(product.getId()) + 1);
 			tempTVA = tempTVA + product.getPrix() * (product.getCategory().getTVA().getTva());
 			total = total + product.getPrix();
+			totalTTC = total + (tempTVA);
 		}
 	}
 	
@@ -34,7 +46,7 @@ public class Panier {
 		if (products.containsKey(id) && quantities.containsKey(id)) {
 			total = total - (quantities.get(id) * products.get(id).getPrix());
 			tempTVA=tempTVA-((quantities.get(id) * products.get(id).getPrix()) * (products.get(id).getCategory().getTVA().getTva()));
-			
+			totalTTC = total + (tempTVA);
 			quantities.remove(id);
 			products.remove(id);
 		}		
