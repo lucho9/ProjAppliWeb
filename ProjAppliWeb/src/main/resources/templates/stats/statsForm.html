@@ -1,0 +1,53 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tag">
+
+<head th:include="fragments/common :: [//head]">
+<link rel="shortcut icon" href="ThemeTemplate/assets/ico/favicon.png"/>
+    <link href="ThemeTemplate/assets/css/font-awesome.min.css" rel="stylesheet"/>
+
+     <script src="ThemeTemplate/assets/js/modernizr.custom.js"></script>
+</head>
+
+<body>
+<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
+	
+	
+	
+
+	<!-- MAIN IMAGE SECTION -->
+	<div id="serviceswrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Statistiques<br/>
+					</h2>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div>
+   
+
+
+<img src="/chart" />
+
+
+	
+
+<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+
+	<script src="theme/js/AnimOnScroll.js"></script>
+	<script>
+		new AnimOnScroll( document.getElementById( 'process' ), {
+			minDuration : 0.4,
+			maxDuration : 0.7,
+			viewportFactor : 0.2
+		} );
+	</script>
+	<script th:replace="fragments/common :: [//script]"></script>
+<script src="ThemeTemplate/assets/js/masonry.pkgd.min.js"></script>
+
+	
+
+</body>
+</html>>

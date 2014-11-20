@@ -1,30 +1,36 @@
 <!DOCTYPE HTML>
+
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.springframework.org/security/tag">
+
 
 <head th:include="fragments/common :: [//head]">
 
 </head>
 
 <body>
+
 	<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
+
 	
+	
+	
+
 	<!-- MAIN IMAGE SECTION -->
 	<div id="serviceswrap">
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-					<h2>
-						Passer<br /> à la caisse
+					<h2>Passer<br/>
+						à la caisse
 					</h2>
 				</div>
-			</div>
-			<!-- row -->
-		</div>
-		<!-- /container -->
-	</div>
-	<!-- /headerwrap -->
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
+   
+
 
 	<div class="container">
 		<div class="row ">
@@ -42,8 +48,8 @@
 									th:href="@{/caisse(filtreCat=${cat.name})}"
 									th:each="cat : ${cats}" th:value="${cat.name}"
 									th:switch="${filtreCat}">
-										<button th:case="${cat.name}" id="caissecat" class="btn btn-default btn-lg active" th:text="${cat.name}"></button>
-										<button th:case="*" id="caissecat" class="btn btn-default btn-lg" th:text="${cat.name}"></button>
+										<button th:case="${cat.name}" id="caissecat" class="btn btn-default btn-lg active" th:text="${cat.name}" th:style="@{'background-color: ' + ${cat.color}}"></button>
+										<button th:case="*" id="caissecat" class="btn btn-default btn-lg" th:text="${cat.name}" th:style="@{'background-color: ' + ${cat.color}}"></button>
 								</a>
 							</span>
 						</center>
@@ -60,27 +66,12 @@
 					<td>
 						<span>
 							<a th:href="@{'/caissee?id=' + ${product.id}}" th:each="product : ${products}">
-								<button id="caisse" class="btn btn-default btn-lg" th:text="${product.name}"></button>
+								<button id="caisse" class="btn btn-default btn-lg" th:text="${product.name}" th:style="@{'background-color: ' + ${product.category.color}}"></button>
 							</a>
 						</span>
 					</td>
 				</div>
 			</div>
-
-
-
-
-
-
-
-
-			<script th:inline="javascript" />
-
-
-
-
-
-
 
 			<div class="col-lg-4">
 				<div class="panel panel-default">
@@ -96,6 +87,7 @@
 								<th>ID</th>
 								<th>Nom</th>
 								<th>Prix</th>
+								<th>TVA</th>
 								<th>Qté</th>
 							</tr>
 						</thead>
@@ -104,6 +96,7 @@
 								<td th:text="${product.value.id}"></td>
 								<td th:text="${product.value.name}"></td>
 								<td th:text="${product.value.prix}"></td>
+								<td th:text="${product.value.category.TVA.tva}"></td>
 								<td th:text="${session.qty[product.value.id]}"></td>
 
 								<td><a th:href="@{/deletePanier(id=${product.value.id})}"
@@ -119,49 +112,50 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<td>Prix total</td>
+								<td>Prix total HT</td>
 								<td><span th:text="${session.prixTotal}"></span></td>
+							</tr>
+							<tr>
+								<td>Réduction groupe</td>
+								<td><span th:text="${session.discount}"></span></td>
+							</tr>
+							<tr>
+								<td>Prix total TTC</td>
+								<td><span th:text="${session.prixTotalTTC}"></span></td>
 							</tr>
 						</thead>
 
 					</table>
 
 				</div>
-
+				
+				<div class="panel panel-default">
+					<center>
+						<h4>
+							<b>Choisir un client</b><span class="glyphicon glyphicon-user" />
+						</h4>
+					</center>
+					<form action="#" th:action="@{/facture/validationCommande}" th:object="${facture}" method="post">
+						<center>
+							<select th:field="*{c}">
+								<option value="0">Client non enregistré</option>
+								<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
+							</select>
+						</center>
+						<center>
+							<h4>
+								<b>Valider la commande </b><span class="glyphicon glyphicon-credit-card" />
+							</h4>
+						</center>
+						<center>
+							<button  class="btn btn-green btn-lg glyphicon glyphicon-ok" type="submit" value="Submit" onclick="myFunction()" /> <button class="btn btn-green btn-lg glyphicon glyphicon-remove" type="reset" value="Reset" />
+						</center>
+					</form>
+				</div>
 			</div>
 		</div>
-
 		<br />
 		<br />
-
-
-
-		<div class="col-lg-4">
-			<div class="panel panel-default">
-				<form action="#" th:action="@{/validationCommande}"
-					th:object="${facture}" method="post">
-
-
-
-
-					<label for="customerGroups" class="col-sm-2 control-label">Nom
-						:</label>
-					<div class="col-sm-10">
-
-						<select th:field="*{namee}">
-							<option th:each="cust : ${custs}" th:field="*{namee}"
-								th:value="${cust.id}" th:text="${cust.firstName}" />
-						</select> <br />
-						<p>
-							<input type="submit" value="Submit" onclick="myFunction()" /> <input
-								type="reset" value="Reset" />
-						</p>
-					</div>
-
-
-				</form>
-			</div>
-		</div>
 	</div>
 	<br />
 	<br />
@@ -179,6 +173,6 @@
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	<script th:replace="fragments/common :: [//script]"></script>
 
-	<script type="text/javascript" th:src="@{/resources/scripts/home.js}"></script>
+	<script type="text/javascript" th:src="@{/resources/scripts/caisse.js}"></script>
 </body>
 </html>

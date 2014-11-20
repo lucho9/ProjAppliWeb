@@ -32,6 +32,10 @@ public class Facture {
 	private double prixTotal;
 
 
+	
+	public String ref="";
+
+
 	public double getPrixTotal() {
 		return prixTotal;
 	}
@@ -41,13 +45,12 @@ public class Facture {
 	}
 
 	public Facture(long id, Customer c, List<Product> lp,
-			List<QuantiteCommande> lq, Long namee) {
+			List<QuantiteCommande> lq) {
 		super();
 		this.id = id;
 		this.c = c;
 		this.lp = lp;
 		this.lq = lq;
-		this.namee = namee;
 	}
 
 	public List<QuantiteCommande> getLq() {
@@ -57,24 +60,12 @@ public class Facture {
 	public void setLq(List<QuantiteCommande> lq) {
 		this.lq = lq;
 	}
-	private Long namee;
 	
-
-	public Facture(long id, Customer c, List<Product> lp, Long namee) {
+	public Facture(long id, Customer c, List<Product> lp) {
 		super();
 		this.id = id;
 		this.c = c;
 		this.lp = lp;
-		
-		this.namee = namee;
-	}
-
-	public Long getNamee() {
-		return namee;
-	}
-
-	public void setNamee(Long namee) {
-		this.namee = namee;
 	}
 
 	public Facture() {

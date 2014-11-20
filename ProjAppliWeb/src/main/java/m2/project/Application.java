@@ -11,11 +11,14 @@ import m2.project.model.CustomerGroup;
 import m2.project.model.Employee;
 import m2.project.model.Product;
 import m2.project.model.Role;
+import m2.project.model.TVA;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.ProductRepository;
+import m2.project.repository.TVARepository;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
 import m2.project.service.EmployeeService;
+import m2.project.service.ProductService;
 import m2.project.service.RoleService;
 
 import org.springframework.boot.SpringApplication;
@@ -35,12 +38,13 @@ public class Application {
 		CustomerGroupService customerGroupService = context.getBean(CustomerGroupService.class);		
 		CustomerService customerService = context.getBean(CustomerService.class);
 		ProductRepository productRepository = context.getBean(ProductRepository.class);
+		ProductService productService = context.getBean(ProductService.class);
 
 		RoleService roleService = context.getBean(RoleService.class);
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
 
 		CategoryRepository categoryRepository = context.getBean(CategoryRepository.class);
-
+		TVARepository tvaRepository = context.getBean(TVARepository.class);
 		
 		// customer groups
 		CustomerGroup g = new CustomerGroup("Metro", 10);
@@ -88,42 +92,38 @@ public class Application {
 		cal = new GregorianCalendar(1979, 8, 12);
 		employeeService.save(new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "", new Date(cal.getTimeInMillis()), "", null, u));
 
-       
-	       	
-	       
-	        //création des produits
-	        Product p1= new Product("pomme golden",1,100);
-	        Product p2= new Product("TV Samsung",250,50);
-	        Product p3= new Product("TV Sony",200,20);
+        //création des produits
+	    Product p1= new Product("pomme golden",1,100);
+	    Product p2= new Product("TV Samsung",250,50);
+	    Product p3= new Product("TV Sony",200,20);
 	        
-	        
-	      
-	        Category c1=new Category("fruit");
-	        Category c2=new Category("TV");
+	    Category c1=new Category("fruit", "#ffaa00");
+	    Category c2=new Category("TV", "#11dd66");
 
+	    TVA t1=new TVA(0.05);
+	    TVA t2=new TVA(0.206);
 	        
-	        //g.setId((long) 111);
+	    tvaRepository.save(t1);
+	    tvaRepository.save(t2);
 	        
-	        categoryRepository.save(c1);
-	        categoryRepository.save(c2);
+	    c1.setTVA(t1);
+	    c2.setTVA(t2);
 	        
-
-	        //g.setStock(s);
-	     
+	    //g.setId((long) 111);
 	        
-	        //Set collec = new HashSet();
+	    categoryRepository.save(c1);
+	    categoryRepository.save(c2);
 	        
-	        p1.setCategory(c1);
-	        p2.setCategory(c2);
-	        p3.setCategory(c2);
+	    //g.setStock(s);
 	        
-	 
+	    //Set collec = new HashSet();
 	        
+	    p1.setCategory(c1);
+	    p2.setCategory(c2);
+	    p3.setCategory(c2);
 	        
-	        productRepository.save(p1);
-	        productRepository.save(p2);
-	        productRepository.save(p3);
-	     
-
+	    productService.save(p1);
+	    productService.save(p2);
+	    productService.save(p3);
     }
 }

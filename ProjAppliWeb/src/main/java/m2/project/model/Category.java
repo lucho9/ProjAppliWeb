@@ -1,4 +1,5 @@
 package m2.project.model;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.util.Collection;
 
@@ -23,7 +24,9 @@ public class Category {
 	
 	private long id;
 	private String name;
+
 	
+	private String color;
 	
 	public Category() {
 	
@@ -33,9 +36,22 @@ public class Category {
 	//La TVA représente la taxe sur la valeur ajoutée. 
 	//Différents taux de TVA sont possibles : 19,6% dans la plupart des cas, 5.5% pour les denrées alimentaires et les livres 
 	//et 2,1% pour les médicaments et les journaux.
-	//@ManyToOne
-	//private int TVA;
 	
+	@ManyToOne
+	private TVA TVA;
+	
+
+
+	public TVA getTVA() {
+		return TVA;
+	}
+
+
+
+	public void setTVA(TVA tVA) {
+		TVA = tVA;
+	}
+
 
 
 	public Category(String name, Collection<Product> products) {
@@ -46,9 +62,12 @@ public class Category {
 
 
 
-	public Category(String laCategory) {
+	public Category(String laCategory, String color) {
 		this.name=laCategory;
+		this.color = color;
 	}
+	
+	
 	
 	@OneToMany(mappedBy="category")
 	private Collection<Product> products ;
@@ -78,6 +97,12 @@ public class Category {
 		this.products = products;
 	}
 	
-	
-	
+	public String getColor() {
+		return color;
+	}
+
+
+	public void setColor(String color) {
+		this.color = color;
+	}
 }

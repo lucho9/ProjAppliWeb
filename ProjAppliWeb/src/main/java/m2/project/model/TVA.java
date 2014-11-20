@@ -8,7 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-/*
+
 @Entity
 public class TVA {
 	@Id
@@ -21,13 +21,51 @@ public class TVA {
 	//Différents taux de TVA sont possibles : 19,6% dans la plupart des cas, 5.5% pour les denrées alimentaires et les livres 
 	//et 2,1% pour les médicaments et les journaux.
 	
-	private int TVA;
+	private double tva;
 	
-	@OneToMany(mappedBy="category")
+	@OneToMany(mappedBy="TVA")
 	private List<Category> lc;
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public double getTva() {
+		return tva;
+	}
+
+	public void setTva(int tva) {
+		this.tva = tva;
+	}
+
+	public List<Category> getLc() {
+		return lc;
+	}
+
+	public void setLc(List<Category> lc) {
+		this.lc = lc;
+	}
+
+	public TVA(double tva) {
+		super();
+		this.tva = tva;
+	}
+
+	public TVA(double tva, List<Category> lc) {
+		super();
+		this.tva = tva;
+		this.lc = lc;
+	}
+
+	public TVA() {
+		super();
+	}
 	
 	
 	
 	
 }
-*/
