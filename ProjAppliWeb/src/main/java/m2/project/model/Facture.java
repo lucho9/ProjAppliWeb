@@ -92,6 +92,12 @@ public class Facture {
 		this.c = c;
 	}
 
+	public Facture(Customer c, double prixTotal) {
+		super();
+		this.c = c;
+		this.prixTotal = prixTotal;
+	}
+
 	
 	
 	

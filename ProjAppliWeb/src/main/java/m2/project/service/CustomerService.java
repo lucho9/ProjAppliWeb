@@ -17,4 +17,5 @@ public interface CustomerService {
 	public void deleteAll();
 	public List<Customer> findAll();
 	public List<Customer> findByNames(String searchTerm1, String searchTerm2);
+	public double totalDepense(Customer customer);
 }
