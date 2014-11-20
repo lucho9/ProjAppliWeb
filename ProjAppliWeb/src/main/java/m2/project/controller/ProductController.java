@@ -221,13 +221,14 @@ public class ProductController {
 	public Map<Long, Product> getPanier(HttpSession session)
 	{
 		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
-		if(panier == null)
-		{	panier = new HashMap<Long, Product>();
-		if(total != 0)
-		{
-			total = 0;
+		if(panier == null) {
+			panier = new HashMap<Long, Product>();
+			if(total != 0) {
+				total = 0;
+			}
+			
 		}
-		}
+		
 		return panier;
 	}
 	public Map<Long, Integer> getQty(HttpSession session)
@@ -240,15 +241,14 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/caissee", method = RequestMethod.GET)
-	public String submitCaisse(@RequestParam("id") Long id, @RequestParam(value="filtreCat", required=false) String cat, Model model, HttpSession session) {
-		
+	public String submitCaisse(@RequestParam("id") Long id, Model model, HttpSession session) {
 		Product product;
 		product = productService.findOne(id);
 		
-		
-		
 		Map<Long, Integer> qty = getQty(session);
 		Map<Long, Product> panier = getPanier(session);
+		
+		
 		
 		if (!qty.containsKey(product.getId())) {
 			panier.put(product.getId(), product);
@@ -267,9 +267,15 @@ public class ProductController {
 		
 		session.setAttribute("panier", panier);
 		session.setAttribute("qty", qty);
-	//	categorie = cat;
 		
 		session.setAttribute("prixTotal", total);
+		
+		String qteGroupeDiscount = "";
+		String prixGroupeDiscount = "";
+		if ()
+		session.setAttribute("qteGroupeDiscount", qteGroupeDiscount);
+		session.setAttribute("prixGroupeDiscount", prixGroupeDiscount);
+		
 		session.setAttribute("prixTotalTTC", total+tempTVA);
 		return "redirect:/caisse";
 	}

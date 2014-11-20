@@ -15,4 +15,5 @@ encoding//src/main/resources/templates/index.html=UTF-8
 encoding//src/main/resources/templates/login.html=UTF-8
 encoding//src/main/resources/templates/product/create.html=UTF-8
 encoding//src/main/resources/templates/product/listproduct.html=UTF-8
+encoding//src/test/java=UTF-8
 encoding/<project>=UTF-8

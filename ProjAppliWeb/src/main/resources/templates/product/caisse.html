@@ -110,23 +110,34 @@
 					</table>
 					<br />
 					<table class="table">
-						<thead>
+						<tbody>
 							<tr>
 								<td>Prix total HT</td>
 								<td><span th:text="${session.prixTotal}"></span></td>
 							</tr>
 							<tr>
-								<td>Réduction groupe</td>
-								<td><span th:text="${session.discount}"></span></td>
+								<td>Réduction groupe <span th:text="${session.qteGroupeDiscount}"></td>
+								<td><span th:text="${session.prixGroupeDiscount}"></span></td>
 							</tr>
 							<tr>
 								<td>Prix total TTC</td>
 								<td><span th:text="${session.prixTotalTTC}"></span></td>
 							</tr>
-						</thead>
-
+							<tr>
+								<td>Prix total HT</td>
+								<td><span th:text="${session.prixTotal}"></span></td>
+							</tr>
+							<tr>
+								<td>Client</td>
+								<td>
+									<select id="changeCustomer">
+										<option value="0">Client non enregistré</option>
+										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
+									</select>
+								</td>
+							</tr>
+						</tbody>
 					</table>
-
 				</div>
 				
 				<div class="panel panel-default">
@@ -137,17 +148,9 @@
 					</center>
 					<form action="#" th:action="@{/facture/validationCommande}" th:object="${facture}" method="post">
 						<center>
-							<select th:field="*{c}">
-								<option value="0">Client non enregistré</option>
-								<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
-							</select>
-						</center>
-						<center>
 							<h4>
 								<b>Valider la commande </b><span class="glyphicon glyphicon-credit-card" />
 							</h4>
-						</center>
-						<center>
 							<button  class="btn btn-green btn-lg glyphicon glyphicon-ok" type="submit" value="Submit" onclick="myFunction()" /> <button class="btn btn-green btn-lg glyphicon glyphicon-remove" type="reset" value="Reset" />
 						</center>
 					</form>
