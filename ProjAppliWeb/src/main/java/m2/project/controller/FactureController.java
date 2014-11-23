@@ -9,6 +9,7 @@ import javax.servlet.http.HttpSession;
 
 import m2.project.model.Customer;
 import m2.project.model.Facture;
+import m2.project.model.Panier;
 import m2.project.model.Product;
 import m2.project.model.QuantiteCommande;
 import m2.project.repository.CustomerRepository;
@@ -44,24 +45,37 @@ public class FactureController {
 	
 	@RequestMapping(value = "/facture/validationCommande", method = RequestMethod.POST)
 	public String validationPanier(Model model,@ModelAttribute Facture facture, HttpSession session) {
-		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
+		
+		
+		Panier p = getPanier(session);
+	
+		Map<Long, Product> panier = p.getProducts();
+		Map<Long, Double> qty = p.getQuantities();
+		
+		List<Product> valueList = new ArrayList<Product>(panier.values());
+		List<Double> quantites = new ArrayList<Double>(qty.values());
+		
+		double prixTotal =  p.getTotalTTC();
+		
+		Customer c = p.getClient();
+/*		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
 		if(panier == null)
 			panier = new HashMap<Long, Product>();
-	
-		List<Product> valueList = new ArrayList<Product>(panier.values());
+	*/
+		// List<Product> valueList = new ArrayList<Product>(panier.values());
 		
-		Map<Long, Integer> qty = (Map<Long, Integer>)session.getAttribute("qty");
+/*		Map<Long, Integer> qty = (Map<Long, Integer>)session.getAttribute("qty");
 		if(qty == null)
 			qty = new HashMap<Long, Integer>();
-		
-		double prixTotal =  (Double) session.getAttribute("prixTotal");
+	*/	
+	//	double prixTotal =  (Double) session.getAttribute("prixTotal");
 	
-		List<Integer> quantites = new ArrayList<Integer>(qty.values());
+	//	List<Integer> quantites = new ArrayList<Integer>(qty.values());
 		List<QuantiteCommande> valueQte = new ArrayList<QuantiteCommande>();
 		
 		for(int i=0; i<quantites.size();i++)
 		{	
-			QuantiteCommande q = new QuantiteCommande();
+		QuantiteCommande q = new QuantiteCommande();
 		q.setQte(quantites.get(i));
 		System.out.println(quantites.get(i) + "-----");
 		valueQte.add(q);
@@ -80,15 +94,18 @@ public class FactureController {
 		facture.setLq(valueQte);
 		facture.setPrixTotal(prixTotal);
 		//facture.setLq(qteList);
-		
+		facture.setC(c);
 		factureRepository.save(facture);
 		//model.addAttribute("facture", facture);
 		
 		//model.addAttribute("factures", factureRepository.findAll());
-		
+	/*	
 	    session.removeAttribute("panier");
 	    session.removeAttribute("qty");
 		session.removeAttribute("prixTotal");
+		*/
+		
+		session.removeAttribute("panier");
 		return "redirect:/caisse";
 	}
 	
@@ -110,4 +127,14 @@ public class FactureController {
 		return "/facture/facture";
 		
 	}
+	public Panier getPanier(HttpSession session)
+	{
+		Panier panier = (Panier)session.getAttribute("panier");
+		if(panier == null) {
+			panier = new Panier();
+		}
+		
+		return panier;
+	}
+	
 }

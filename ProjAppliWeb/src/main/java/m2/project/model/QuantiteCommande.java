@@ -14,14 +14,16 @@ public class QuantiteCommande {
 	@GeneratedValue
 	private Long Id;
 	
-	private Integer qte;
+	private Double qte;
 	
 	
-	public Integer getQte() {
+	
+
+	public Double getQte() {
 		return qte;
 	}
 
-	public void setQte(Integer qte) {
+	public void setQte(Double qte) {
 		this.qte = qte;
 	}
 
@@ -44,7 +46,9 @@ public class QuantiteCommande {
 		this.lf_qte = lf_qte;
 	}
 
-	public QuantiteCommande(Long id, Integer qte, List<Facture> lf_qte) {
+	
+
+	public QuantiteCommande(Long id, Double qte, List<Facture> lf_qte) {
 		super();
 		Id = id;
 		this.qte = qte;
