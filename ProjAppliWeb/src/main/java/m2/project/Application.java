@@ -107,7 +107,7 @@ public class Application {
 	    
 	    Customer c=new Customer("David", "kjdbhhdsdsbg", customerGroupsList);
 	    customerService.save(c);
-		factureService.save(new Facture( c, 562));
+		//factureService.save(new Facture( c, 562));
 		
         
 	        

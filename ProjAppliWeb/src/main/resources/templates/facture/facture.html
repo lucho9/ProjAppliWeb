@@ -40,7 +40,7 @@
 			</thead>
 			<tbody>
 				<tr th:each="factur : ${factures}">
-					<td  th:text="${factur.ref}"></td>
+					<td  th:text="${factur.numFacture}"></td>
 					<td th:if="${factur.c == null}"></td>
 					<td th:if="${factur.c != null}" th:text="${factur.c.firstName}"></td>
 					<td>

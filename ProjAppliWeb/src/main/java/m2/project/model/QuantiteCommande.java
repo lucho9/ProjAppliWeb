@@ -1,6 +1,7 @@
 package m2.project.model;
 
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,6 +14,8 @@ public class QuantiteCommande {
 	@Id
 	@GeneratedValue
 	private Long Id;
+	
+	 private Random rand = new Random();
 	
 	private Double qte;
 	
@@ -54,6 +57,10 @@ public class QuantiteCommande {
 		this.qte = qte;
 		this.lf_qte = lf_qte;
 	}
+	
+	
+
+	
 
 	public QuantiteCommande() {
 		super();

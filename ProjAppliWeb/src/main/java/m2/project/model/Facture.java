@@ -2,6 +2,7 @@ package m2.project.model;
 
 
 import java.util.List;
+import java.util.Random;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ public class Facture {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 	
-	
+	private Random rand = new Random();
 	
 	@ManyToOne
 	private Customer c;
@@ -32,7 +33,29 @@ public class Facture {
 	private double prixTotal;
 
 
-	
+	public Facture(long id, Customer c, List<Product> lp,
+			List<QuantiteCommande> lq, double prixTotal, int numFacture) {
+		super();
+		this.id = id;
+		this.c = c;
+		this.lp = lp;
+		this.lq = lq;
+		this.prixTotal = prixTotal;
+		this.numFacture = numFacture;
+	}
+
+	private int numFacture;
+	public int getNumFacture() {
+		
+		
+		this.numFacture = rand.nextInt(10000 - 1000 + 1) + 1000;
+		return numFacture;
+	}
+
+	public void setNumFacture(int numFacture) {
+		this.numFacture = numFacture;
+	}
+
 	public String ref="";
 
 
