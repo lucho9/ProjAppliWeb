@@ -31,7 +31,30 @@ public class Facture {
 	private List<QuantiteCommande> lq;
 	
 	private double prixTotal;
+	
+	private String moyenPaiement;
 
+
+	public Facture(long id, Customer c, List<Product> lp,
+			List<QuantiteCommande> lq, double prixTotal, String moyenPaiement,
+			int numFacture) {
+		super();
+		this.id = id;
+		this.c = c;
+		this.lp = lp;
+		this.lq = lq;
+		this.prixTotal = prixTotal;
+		this.moyenPaiement = moyenPaiement;
+		this.numFacture = numFacture;
+	}
+
+	public String getMoyenPaiement() {
+		return moyenPaiement;
+	}
+
+	public void setMoyenPaiement(String moyenPaiement) {
+		this.moyenPaiement = moyenPaiement;
+	}
 
 	public Facture(long id, Customer c, List<Product> lp,
 			List<QuantiteCommande> lq, double prixTotal, int numFacture) {

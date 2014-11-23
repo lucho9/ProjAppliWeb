@@ -133,10 +133,28 @@
 								<td>Client</td>
 								<td>
 									<select id="changeCustomer">
-										<option value="0">Client non enregistré</option>
-										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
+									<!-- <option  value="0">Client non enregistré</option>  -->	
+										<option  th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
 									</select>
 									
+								</td>
+								</tr>
+						<!-- <tr>
+						<td>Client choisi</td> 
+					<td><span th:text="@{${session.panier.client.firstName} + ' ' + ${session.panier.client.lastName}}"></span></td>
+						</tr> -->
+							
+							<tr>
+								<td>Moyen de paiement</td>
+								<td>
+								<input type="radio" name="MP" value="CB"/>
+								<img src="cb.gif"/>
+								<br />
+								<input type="radio" name="MP" value="cheque" />
+								<img src="cheque.png"/>
+								<br/>
+								<input type="radio" name="MP" value="cash"/>
+								<img src="cash.png"/>
 								</td>
 									
 							</tr>
@@ -145,11 +163,7 @@
 				</div>
 				
 				<div class="panel panel-default">
-					<center>
-						<h4>
-							<b>Choisir un client</b><span class="glyphicon glyphicon-user" />
-						</h4>
-					</center>
+					
 					<form action="#" th:action="@{/facture/validationCommande}" th:object="${facture}" method="post">
 						<center>
 							<h4>

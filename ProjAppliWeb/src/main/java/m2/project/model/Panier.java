@@ -11,11 +11,21 @@ public class Panier {
 	
 	private double qteGroupeDiscount = 0;
 	private double prixGroupeDiscount = 0;
+	private String moyenPaiement = "";
 	
-	
+	public String getMoyenPaiement() {
+		return moyenPaiement;
+	}
+
+	public void setMoyenPaiement(String moyenPaiement) {
+		this.moyenPaiement = moyenPaiement;
+	}
+
 	private Map<Long, Product> products = new HashMap<Long, Product>();
 	private Map<Long, Double> quantities = new HashMap<Long, Double>();
 	private Customer client;
+	
+	
 	
 	public Customer getClient() {
 		return client;

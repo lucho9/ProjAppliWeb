@@ -47,6 +47,9 @@ public class ProductController {
 	private CustomerService customerService;
 
 	@Autowired
+	private CustomerRepository customerRepository;
+	
+	@Autowired
 	private ProductService productService;
 
 	@Autowired
@@ -205,10 +208,22 @@ public class ProductController {
 			model.addAttribute("products", productService.findAll());
 			model.addAttribute("filtreCat", "");
 		}
+		
+		Panier p = getPanier(session);
+		model.addAttribute("cust", new Customer());
+		if(p.getClient() != null)
+		{
+			
+			model.addAttribute("custs",p.getClient());
+		}
+		else
+		{
+			model.addAttribute("custs", customerService.findAll());
+		}
 		model.addAttribute("product", new Product());
 		model.addAttribute("facture", new Facture());
-		model.addAttribute("cust", new Customer());
-		model.addAttribute("custs", customerService.findAll());
+		
+		
 		model.addAttribute("cats",categoryRepository.findAll());
 		return "/product/caisse";
 	}
@@ -283,6 +298,34 @@ public class ProductController {
 		return "redirect:/caisse";
 	}
 
+	@RequestMapping(value = "/cbCaisse", method = RequestMethod.GET)
+	public String cbChoise(@RequestParam("id") String id, Model model, HttpSession session) {
+		
+		
+		String choix = id;
+		Panier p = getPanier(session);
+		if(choix == "cash")
+		{
+			choix = id;
+		}
+		else
+		if(choix == "cheque")
+		{
+			choix = id;
+		}
+		else
+		if(choix == "CB")
+		{
+			choix = id;
+		}
+		
+		p.setMoyenPaiement(choix);		
+		session.setAttribute("panier", p);
+		
+		
+		return "redirect:/caisse";
+		
+	}
 	
 	
 	

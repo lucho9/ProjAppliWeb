@@ -36,6 +36,7 @@
 					<th>Prix unitaire</th>
 					<th>Qte</th>
 					<th>Prix total</th>
+					<th>Moyen de paiement</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -53,6 +54,7 @@
 						<div th:each="quantite : ${factur.lq}" th:text="${quantite.qte}"></div>
 					</td>
 					<td  th:text="${factur.prixTotal}"></td>
+					<td th:text = "${factur.moyenPaiement}"></td>
 					
 					 <td><a type="button"  class="btn btn-default btn-xs">
  				 <span class="glyphicon glyphicon-print"></span>

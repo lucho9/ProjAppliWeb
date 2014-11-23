@@ -56,6 +56,7 @@ public class FactureController {
 		List<Double> quantites = new ArrayList<Double>(qty.values());
 		
 		double prixTotal =  p.getTotalTTC();
+		String moyenPaiement = p.getMoyenPaiement();
 		
 		Customer c = p.getClient();
 /*		Map<Long, Product> panier = (Map<Long, Product>)session.getAttribute("panier");
@@ -94,6 +95,7 @@ public class FactureController {
 		facture.setLq(valueQte);
 		facture.setPrixTotal(prixTotal);
 		//facture.setLq(qteList);
+		facture.setMoyenPaiement(moyenPaiement);
 		facture.setC(c);
 		factureRepository.save(facture);
 		//model.addAttribute("facture", facture);
