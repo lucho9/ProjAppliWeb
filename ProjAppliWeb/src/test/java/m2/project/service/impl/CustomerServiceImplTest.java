@@ -1,81 +1,80 @@
 package m2.project.service.impl;
 
-import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+//import static org.junit.Assert.fail;
+//import static org.mockito.Matchers.any;
+//import static org.mockito.Mockito.any;
+//import static org.mockito.Mockito.when;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
+import m2.project.Application;
 import m2.project.model.Customer;
 import m2.project.model.CustomerGroup;
-import m2.project.service.CustomerGroupService;
+//import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
 
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.MockitoAnnotations;
-
+import org.junit.runner.RunWith;
+//import org.mockito.InjectMocks;
+//import org.mockito.Mock;
+//import org.mockito.MockitoAnnotations;
+//import org.mockito.Spy;
+//import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
-import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.web.WebAppConfiguration;
 
-//import static org.mockito.Mockito.any;
-//import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.*;
-
-import org.mockito.stubbing.OngoingStubbing;
-
-/**
- * @author Sment
- *
- */
+@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
+@ContextConfiguration(classes = {Application.class})
+@WebAppConfiguration
 public class CustomerServiceImplTest {
-	@Mock
-    CustomerGroupService mockCustomerGroupService;
-	
-	@InjectMocks
+	//@Autowired
+    //private CustomerGroupService customerGroupService;
 	@Autowired
-    CustomerService customerService;
+	private CustomerService customerService;
 	
-	private Customer c1, c2, c3;
-	private CustomerGroup g1, g2;
-	
+	//private CustomerGroup g;
+	//private List<CustomerGroup> cgl;
+
+	private long c1ID, c2ID;
+	private Customer c1, c2;
+
 	@Before
 	public void setUp() throws Exception {
-    	MockitoAnnotations.initMocks(this);
-        
+    	////MockitoAnnotations.initMocks(this);
+		
         customerService.deleteAll();
-		//mockCustomerGroupService.deleteAll();
+		//customerGroupService.deleteAll();
 		
 		// customer groups
-		g1 = new CustomerGroup("G1", 10);
-		g2 = new CustomerGroup("G2", 5);
-		//mockCustomerGroupService.save(g1);
-		//mockCustomerGroupService.save(g2);
+		//g = new CustomerGroup("G1", 10);
+		////when(customerGroupService.save(g)).thenReturn(g);
 		
-		// specify mock behave when method called
-        when(mockCustomerGroupService.save(any(CustomerGroup.class))).thenReturn(g1);
-        when(mockCustomerGroupService.save(any(CustomerGroup.class))).thenReturn(g1);
-        
-		List<CustomerGroup> cgl1 = new ArrayList<CustomerGroup>();
-		cgl1.add(g1);
-		List<CustomerGroup> cgl2 = new ArrayList<CustomerGroup>();
-		cgl2.add(g1);
-		cgl2.add(g2);
+		//customerGroupService.save(g);
 		
-		//Mockito.when(mockCustomerGroupService.get(1L)).thenReturn(g1);
-		//Mockito.when(mockCustomerGroupService.get(1L)).thenReturn(g1);
+		//cgl = new ArrayList<CustomerGroup>();
+		//cgl.add(g);
 		
 		// customers
 		c1 = new Customer("FNC1", "LNC1", null);
-		c2 = new Customer("FNC2", "LNC2", cgl1);
-		c3 = new Customer("FNC3", "LNC3", cgl2);
+		c2 = new Customer("FNC2", "LNC2", null);
+		//c2 = new Customer("FNC2", "LNC2", cgl);
 		customerService.save(c1);
 		customerService.save(c2);
-		customerService.save(c3);
+		c1ID = c1.getId();
+		c2ID = c2.getId();
 	}
 
 	/**
@@ -83,7 +82,13 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testFindOne() {
-		fail("Not yet implemented");
+		Customer customer = customerService.findOne(c1ID);
+		assertThat(customer, allOf(
+                hasProperty("id", is(c1ID)),
+                hasProperty("firstName", is("FNC1")),
+                hasProperty("lastName", is("LNC1"))
+                //hasProperty("customerGroups", is((List<CustomerGroup>)null))
+        ));
 	}
 
 	/**
@@ -91,7 +96,24 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testFindAllPageable() {
-		fail("Not yet implemented");
+		Pageable pageable = new PageRequest(0, 10);
+		Page<Customer> page = customerService.findAll(pageable);
+		
+		assertThat(page.getNumberOfElements(), is(2));
+		Iterator<Customer> iterator = page.iterator();
+		
+		assertThat(iterator.next(), allOf(
+				hasProperty("id", is(c1ID)),
+				hasProperty("firstName", is("FNC1")),
+                hasProperty("lastName", is("LNC1"))
+                //hasProperty("customerGroups", is((List<CustomerGroup>)null))
+        ));
+		assertThat(iterator.next(), allOf(
+				hasProperty("id", is(c2ID)),
+				hasProperty("firstName", is("FNC2")),
+                hasProperty("lastName", is("LNC2"))
+                //hasProperty("customerGroups", is((List<CustomerGroup>)cgl))
+        ));
 	}
 
 	/**
@@ -99,7 +121,20 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testFindAllOrderByLastNameAsc() {
-		fail("Not yet implemented");
+		List<Customer> customers = customerService.findAll();
+		assertThat(customers.size(), is(2));
+		assertThat(customers.get(0), allOf(
+                hasProperty("id", is(c1ID)),
+                hasProperty("firstName", is("FNC1")),
+                hasProperty("lastName", is("LNC1"))
+                //hasProperty("customerGroups", is((List<CustomerGroup>)null))
+        ));
+		assertThat(customers.get(1), allOf(
+                hasProperty("id", is(c2ID)),
+                hasProperty("firstName", is("FNC2")),
+                hasProperty("lastName", is("LNC2"))
+                //hasProperty("customerGroups", is(cgl))
+        ));
 	}
 
 	/**
@@ -107,21 +142,29 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testSave() {
+		Customer c3 = new Customer("FNC3", "LNC3", null);
+		customerService.save(c3);
+		//Customer c4 = new Customer("FNC4", "LNC4", cgl);
+		//customerService.save(c4);
+		long c3ID = c3.getId();
+		//long c4ID = c4.getId();
 		
-		
-		//https://samerabdelkafi.wordpress.com/2013/07/01/junit-test-with-mockito-and-spring/
-		//https://mockito.googlecode.com/hg-history/1.5/javadoc/org/mockito/Mockito.html
-		
-		  // specify mock behave when method called
-        when(mockCustomerGroupService.save(any(CustomerGroup.class))).thenReturn(g1);
-         
-        //Assert.assertNotNull(invoiceService);
-        //Map<Product, Integer> products = new HashMap<Product, Integer>();
-        //products.put(new Product("labtop", BigDecimal.valueOf(1255.50)), 2);
-        //Invoice invoice = invoiceService.processInvoice(products);
-         
-        //Assert.assertEquals(1255.50 * 2, invoice.getTotal().doubleValue(), 0);
-         
+		List<Customer> customers = customerService.findAll();
+		assertThat(customers.size(), is(3));
+		assertThat(customers.get(2), allOf(
+                hasProperty("id", is(c3ID)),
+                hasProperty("firstName", is("FNC3")),
+                hasProperty("lastName", is("LNC3"))
+                //hasProperty("customerGroups", is((List<CustomerGroup>)null))
+        ));
+		/*
+		assertThat(customers.get(3), allOf(
+                hasProperty("id", is(c4ID)),
+                hasProperty("firstName", is("FNC4")),
+                hasProperty("lastName", is("LNC4")),
+                hasProperty("customerGroups", is(cgl))
+        ));
+         */
 	}
 
 	/**
@@ -129,7 +172,15 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testDeleteLong() {
-		fail("Not yet implemented");
+		customerService.delete(c1ID);
+		List<Customer> customers = customerService.findAll();
+		assertThat(customers.size(), is(1));
+		assertThat(customers.get(0), allOf(
+                hasProperty("id", is(c2ID)),
+                hasProperty("firstName", is("FNC2")),
+                hasProperty("lastName", is("LNC2"))
+                //hasProperty("customerGroups", is(cgl))
+        ));
 	}
 
 	/**
@@ -137,7 +188,15 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testDeleteCustomer() {
-		fail("Not yet implemented");
+		customerService.delete(c1);
+		List<Customer> customers = customerService.findAll();
+		assertThat(customers.size(), is(1));
+		assertThat(customers.get(0), allOf(
+                hasProperty("id", is(c2ID)),
+                hasProperty("firstName", is("FNC2")),
+                hasProperty("lastName", is("LNC2"))
+                //hasProperty("customerGroups", is(cgl))
+        ));
 	}
 
 	/**
@@ -145,7 +204,9 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testDeleteAll() {
-		fail("Not yet implemented");
+		customerService.deleteAll();
+		List<Customer> customers = customerService.findAll();
+		assertThat(customers.size(), is(0));
 	}
 
 	/**
@@ -153,7 +214,21 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testFindAll() {
-		fail("Not yet implemented");
+		//fail("Not yet implemented");
+		List<Customer> customers = customerService.findAll();
+		assertThat(customers.size(), is(2));
+		assertThat(customers.get(0), allOf(
+				hasProperty("id", is(c1ID)),
+				hasProperty("firstName", is("FNC1")),
+                hasProperty("lastName", is("LNC1"))
+                //hasProperty("customerGroups", is((List<CustomerGroup>)null))
+        ));
+		assertThat(customers.get(1), allOf(
+				hasProperty("id", is(c2ID)),
+				hasProperty("firstName", is("FNC2")),
+                hasProperty("lastName", is("LNC2"))
+                //hasProperty("customerGroups", is(cgl))
+        ));
 	}
 
 }

@@ -21,6 +21,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	CustomerRepository customerRepository;
+
+	/*
+	@Autowired
+    public CustomerServiceImpl(final CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+	 */
 	
 	public Customer findOne(long id) {
 		return customerRepository.findOne(id);

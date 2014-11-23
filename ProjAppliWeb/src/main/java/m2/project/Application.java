@@ -48,7 +48,7 @@ public class Application {
 		
 		// customer groups
 		CustomerGroup g = new CustomerGroup("Metro", 10);
-		CustomerGroup g2 = new CustomerGroup("Association des pêcheurs", 5);
+		CustomerGroup g2 = new CustomerGroup("Association", 5);
 		customerGroupService.save(g);
 		customerGroupService.save(g2);
 		

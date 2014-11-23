@@ -3,6 +3,7 @@ package m2.project.model;
 import java.io.Serializable;
 import java.util.List;
 
+//import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,6 +42,7 @@ public class Customer implements Serializable {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
+	//@ManyToMany(cascade=CascadeType.ALL)
 	@ManyToMany
 	private List<CustomerGroup> customerGroups;
 	

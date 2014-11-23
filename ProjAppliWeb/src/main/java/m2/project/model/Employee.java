@@ -2,6 +2,7 @@ package m2.project.model;
 
 import java.util.Date;
 
+//import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -14,9 +15,7 @@ import javax.validation.constraints.Size;
 
 import m2.project.model.serialization.EmployeeSerializer;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -56,6 +55,7 @@ public class Employee {
 	private String password;
 	
 	@NotNull
+	//@ManyToOne(cascade=CascadeType.ALL)
 	@ManyToOne
 	private Role role;
 	
