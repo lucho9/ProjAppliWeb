@@ -28,7 +28,7 @@ public class CustomerGroupServiceImplTest {
 	@Autowired
 	private CustomerGroupService customerGroupService;
 	
-	long g1ID, g2ID;
+	private long g1ID, g2ID;
 	private CustomerGroup g1, g2;
 	
 	@Before

@@ -77,6 +77,9 @@ public class CustomerServiceImplTest {
 		c2ID = c2.getId();
 	}
 
+	// test unoque constraint
+	
+	
 	/**
 	 * Test method for {@link m2.project.service.impl.CustomerServiceImpl#findOne(long)}.
 	 */
