@@ -25,7 +25,7 @@ public class Category {
 	private long id;
 	private String name;
 
-	
+	private String img;
 	private String color;
 	
 	public Category() {
@@ -40,6 +40,18 @@ public class Category {
 	@ManyToOne
 	private TVA TVA;
 	
+
+
+	public String getImg() {
+		return img;
+	}
+
+
+
+	public void setImg(String img) {
+		this.img = img;
+	}
+
 
 
 	public TVA getTVA() {
@@ -62,10 +74,19 @@ public class Category {
 
 
 
-	public Category(String laCategory, String color) {
+	
+	public Category(String name, String img) {
+		super();
+		this.name = name;
+		this.img = img;
+	}
+
+
+
+/*	public Category(String laCategory, String color) {
 		this.name=laCategory;
 		this.color = color;
-	}
+	}*/
 	
 	
 	

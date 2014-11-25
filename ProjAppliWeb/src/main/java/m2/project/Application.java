@@ -1,5 +1,6 @@
 package m2.project;
 
+import java.awt.Image;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -99,9 +100,12 @@ public class Application {
 	    Product p2= new Product("TV Samsung",250,50);
 	    Product p3= new Product("TV Sony",200,20);
 	        
-	    Category c1=new Category("fruit", "#ffaa00");
-	    Category c2=new Category("TV", "#11dd66");
+	    //Category c1=new Category("fruit", "#ffaa00");
+	    //Category c2=new Category("TV", "#11dd66");
 
+	    Category c1=new Category("fruit", "/ThemeTemplate/assets/img/fruit.jpg");
+	    Category c2=new Category("TV", "/ThemeTemplate/assets/img/TV.png");
+	    
 	    TVA t1=new TVA(0.05);
 	    TVA t2=new TVA(0.206);
 	    
