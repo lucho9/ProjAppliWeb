@@ -17,6 +17,7 @@ import m2.project.model.TVA;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.ProductRepository;
 import m2.project.repository.TVARepository;
+import m2.project.service.CategoryService;
 import m2.project.service.CustomerGroupService;
 import m2.project.service.CustomerService;
 import m2.project.service.EmployeeService;
@@ -46,7 +47,7 @@ public class Application {
 		RoleService roleService = context.getBean(RoleService.class);
 		EmployeeService employeeService = context.getBean(EmployeeService.class);
 
-		CategoryRepository categoryRepository = context.getBean(CategoryRepository.class);
+		CategoryService categoryService = context.getBean(CategoryService.class);
 		TVARepository tvaRepository = context.getBean(TVARepository.class);
 		
 		// customer groups
@@ -123,8 +124,8 @@ public class Application {
 	        
 	    //g.setId((long) 111);
 	        
-	    categoryRepository.save(c1);
-	    categoryRepository.save(c2);
+	    categoryService.save(c1);
+	    categoryService.save(c2);
 	        
 	    //g.setStock(s);
 	        

@@ -55,7 +55,8 @@ $(document).ready(function() {
 	var $form = $('#formproduct');
 	var $buttoncreateproduct = $('#buttoncreateproduct');
 	var $reinitialise = $('#reinitialise');
-
+	var $formnewcat= $('#formnewcat');
+	var $buttoncreatecat = $('#buttoncreatecat');
 	
 	$("#ok").hide(); 
 
@@ -93,6 +94,20 @@ $(document).ready(function() {
 	
 	});
 	
+	/*
+	$formnewcat.bind('submit', function(e) {
+		var data = $form.serialize();
+		alert(data);
+		$.post($form.action, data, function(response) {
+			
+			alert(response.status);
+			
+				window.location.href = "/product/newcat";
+			
+		}, 'json');
+		e.preventDefault();
+		return false;
+	});*/
 	
 
 	

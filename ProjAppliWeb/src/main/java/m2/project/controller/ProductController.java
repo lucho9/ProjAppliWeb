@@ -171,6 +171,7 @@ public class ProductController {
 		return res;
 	}
 	
+	
 	@RequestMapping(value = "/product/edit", method = RequestMethod.GET, produces={"application/json"})
 	public @ResponseBody Product ajaxEditCustomerForm(@RequestParam("id") Long id) {
 		return productService.findOne(id);
