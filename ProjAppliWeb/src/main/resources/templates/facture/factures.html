@@ -1,0 +1,109 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.springframework.org/security/tag">
+
+<head th:include="fragments/common :: [//head]">
+</head>
+
+<body>
+<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
+	
+	
+	
+
+	<!-- MAIN IMAGE SECTION -->
+	<div id="serviceswrap">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-8 col-lg-offset-2">
+					<h2>Gérer<br/>
+						la facture
+					</h2>
+				</div>
+			</div><!-- row -->
+		</div><!-- /container -->
+	</div><!-- /headerwrap -->
+
+	<div class="container">
+	 	<div class="row ">
+ 			<div class="col-lg-3">
+				<div class="panel panel-default">
+					<h4 class="text-center">
+						<b>Imprimer toutes les factures</b>
+					</h4>
+					<div class="text-center">
+						<button id="btnimprim" class="btn btn-green btn-lg glyphicon glyphicon-print" value="Imprimer" name="B1" onclick="imprimer()" />
+					</div>
+				</div>
+				<div class="panel panel-default">
+					<h4 class="text-center">
+						<b>Rechercher une facture</b>
+					</h4>
+					<div class="text-center">
+						<form id="formfilter" th:action="@{/factures}" method="get">
+							<input id="filtername" name="filtername" type="text" class="form-control" placeholder="Recherche par client" th:value="${filtername}"/>
+							<button class="btn btn-green btn-lg glyphicon glyphicon-search" type="submit"></button>
+							<button class="btn btn-green btn-lg glyphicon glyphicon-refresh" type="button" onclick="initFilter(); return false;"></button>
+						</form>
+					</div>
+				</div>
+			</div>
+  			<div class="col-lg-8">
+				<div  class="panel panel-default">
+  					<table class="table table-striped">
+						<thead>
+        					<tr>
+								<th>#Ref</th>
+								<th>Client</th>
+								<th>Produits</th>
+								<th>Unitaire</th>
+								<th>Qté</th>
+								<th>Total TTC</th>
+								<th>Date</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="factur : ${factures}">
+								<td  th:text="${factur.ref}"></td>
+								<td th:if="${factur.c == null}"></td>
+								<td th:if="${factur.c != null}" th:text="${factur.c.getCustomerName()}"></td>
+								<td>
+									<div th:each="produit : ${factur.lp}" th:text="${produit.name}"></div>
+								</td>
+								<td>
+									<div th:each="produit : ${factur.lp}" th:text="${produit.prix} + euro"></div>
+								</td>
+								<td>
+									<div th:each="quantite : ${factur.lq}" th:text="${quantite.qte}"></div>
+								</td>
+								<td th:text="${factur.prixTotal}"></td>
+								<td th:text="${factur.getDateFactureFormated()}"></td>
+								<td>
+									<a type="button" th:href="@{/facture/display(id=${factur.id})}" class="btn btn-default btn-xs">
+				 						<span class="glyphicon glyphicon-print"></span>
+									</a>
+								</td>
+								<td>
+								 	<a type="button" th:href="@{/facture/delete(id=${factur.id})}" class="btn btn-default btn-xs">
+				 				 		<span class="glyphicon glyphicon-remove"></span>
+									</a>
+								</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</div>
+		</div>
+	</div>	
+		
+<script type="text/javascript">
+
+</script>
+
+<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+<script th:replace="fragments/common :: [//script]"></script>
+
+<script type="text/javascript" th:src="@{/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/js/factures.js}"></script>
+</body>
+</html>

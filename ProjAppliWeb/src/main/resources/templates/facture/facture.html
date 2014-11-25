@@ -16,82 +16,76 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8 col-lg-offset-2">
-					<h2>Gérer<br/>
-						la facture
-					</h2>
+					<h2>Facture</h2>
 				</div>
 			</div><!-- row -->
 		</div><!-- /container -->
 	</div><!-- /headerwrap -->
-<!-- <p th:text="'id: ' + ${facture.c.firstName}" /> --> 
- 
-  <div class="col-lg-8">
-				<div  class="panel panel-default">
-  <table class="table table-striped">
-			<thead>
-        		<tr>
-					<th>#Ref facture</th>
-					<th>Client</th>
-					<th>Produits</th>
-					<th>Prix unitaire</th>
-					<th>Qte</th>
-					<th>Prix total</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="factur : ${factures}">
-					<td  th:text="${factur.ref}"></td>
-					<td th:if="${factur.c == null}"></td>
-					<td th:if="${factur.c != null}" th:text="${factur.c.firstName}"></td>
-					<td>
-						<div th:each="produit : ${factur.lp}" th:text="${produit.name}"></div>
-					</td>
-					<td>
-						<div th:each="produit : ${factur.lp}" th:text="${produit.prix} + euro"></div>
-					</td>
-					<td>
-						<div th:each="quantite : ${factur.lq}" th:text="${quantite.qte}"></div>
-					</td>
-					<td  th:text="${factur.prixTotal}"></td>
-					
-					 <td><a type="button"  class="btn btn-default btn-xs">
- 				 <span class="glyphicon glyphicon-print"></span>
-				</a>
-				</td>
-				 <td><a type="button"  class="btn btn-default btn-xs">
- 				 <span class="glyphicon glyphicon-pencil"></span>
-				</a>
-				</td>
-				 <td><a type="button" th:href="@{/facture/delete(id=${factur.id})}" class="btn btn-default btn-xs">
- 				 <span class="glyphicon glyphicon-trash"></span>
-				</a>
-				</td>
-					
-				</tr>
-			</tbody>
-		</table>
 
-		</div>
-		</div>
-		
-		
-		 <div class="col-lg-4">
-				<div  class="panel panel-default">
-				<center><h4><b>Imprimer toutes les factures</b></h4></center>
-				<center><button id="btnimprim" class="btn btn-green btn-lg glyphicon glyphicon-print" value="Imprimer" name="B1" onclick="imprimer()" />
-		</center>
-		</div>
-		</div>
+	<div class="container">
+	 	<div class="row ">
+ 			<table class="table">
+            	<tbody>
+	                <tr>
+                    	<td>
+                        	<table class="table">
+                            	<tbody>
+                                	<tr>
+										<td class="table-cell">Facturé à</td>
+										<td class="table-cell" th:text="${facture.c.getCustomerName()}"></td>
+						
+                                        <br></br>
+                                        <em></em>
+                                        <br></br>
+                                        <br></br>
 
+                                        Date : 
+
+                                        <em></em>
+                                        <br></br>
+
+                                        Référence : 
+
+                                        <em></em>
+                                        <br></br>
+
+                                        Numéro de facture :
+
+                                        <em></em>
+                                        <br></br>
+                                        <div align="center"></div>
+                                        <br></br>
+
+                                        Conditions de paiement : 
+
+                                                <em></em>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+            <td style="width: 7px; background-image: url(http://www.linternaute.com/images/argent/ombre-droite.gif);"></td>
+        </tr>
+        <tr></tr>
+    </tbody>
+
+</table>
+ 			
+		</div>
+	</div>	
 		
-		
-		<script language="Javascript">
+<script type="text/javascript">
 function imprimer(){window.print();}
 </script>
-		<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
-	<script th:replace="fragments/common :: [//script]"></script>
 
-	<script type="text/javascript" th:src="@{/js/common.js}"></script>
-	<script type="text/javascript" th:src="@{/js/facture.js}"></script>
+<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+<script th:replace="fragments/common :: [//script]"></script>
+
+<script type="text/javascript" th:src="@{/js/common.js}"></script>
+<script type="text/javascript" th:src="@{/js/facture.js}"></script>
 </body>
 </html>

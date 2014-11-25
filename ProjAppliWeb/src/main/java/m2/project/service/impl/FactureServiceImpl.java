@@ -1,35 +1,30 @@
 package m2.project.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
+import m2.project.model.Employee;
 import m2.project.model.Facture;
 import m2.project.repository.FactureRepository;
-import m2.project.repository.ProductRepository;
 import m2.project.service.FactureService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
-
-
-
 
 @Service
 public class FactureServiceImpl implements FactureService{
 
-	
 	@Autowired
 	FactureRepository frep;
-
-
 	
 	public void save(Facture f) {
-		f.ref=getRef(f);
+		f.setRef(getRef(f));
+		f.setDateFacture(new Date());
 		frep.save(f);
-		
-		
 	}
-	
-	
 	
 	//créer une référence produit, voir comment la récupérer dans le .html
 	public String getRef(Facture f) {
@@ -39,9 +34,22 @@ public class FactureServiceImpl implements FactureService{
 		String id=String.valueOf(f.getId());
 		s.append(id);
 		
-		
 		return s.toString();
-		
+	}
+	
+	public List<Facture> findByCustomerNames(String searchTerm1, String searchTerm2) {
+		return frep.findByCustomerNames(searchTerm1, searchTerm2);
+	}
+	
+	public void delete(long id) {
+		frep.delete(id);
 	}
 
+	public List<Facture> findAll() {
+		return frep.findAll(new Sort(new Order(Direction.DESC, "dateFacture"), new Order(Direction.ASC, "c.lastName"), new Order(Direction.ASC, "c.firstName")));
+	}
+	
+	public Facture findOne(long id) {
+		return frep.findOne(id);
+	}
 }

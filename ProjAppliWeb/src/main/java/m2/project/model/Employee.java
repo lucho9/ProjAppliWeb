@@ -46,7 +46,6 @@ public class Employee {
 	private String email;
 	
 	@NotNull
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date birth;
 	
 	private int loginType = 0;

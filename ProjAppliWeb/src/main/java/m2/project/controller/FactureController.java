@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.servlet.http.HttpSession;
 
 import m2.project.model.Customer;
+import m2.project.model.Employee;
 import m2.project.model.Facture;
 import m2.project.model.Product;
 import m2.project.model.QuantiteCommande;
@@ -16,8 +17,11 @@ import m2.project.repository.FactureRepository;
 import m2.project.repository.ProductRepository;
 import m2.project.repository.QuantiteCommandeRepository;
 import m2.project.service.FactureService;
+import m2.project.utils.PageWrapper;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,12 +37,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FactureController {
 
 	@Autowired
-	private FactureRepository factureRepository;
-	
-	@Autowired
 	private FactureService factureService;
+
 	@Autowired
 	private CustomerRepository customerRepository;
+	
 	@Autowired
 	private QuantiteCommandeRepository quantiteCommandeRepository;
 	
@@ -81,7 +84,8 @@ public class FactureController {
 		facture.setPrixTotal(prixTotal);
 		//facture.setLq(qteList);
 		
-		factureRepository.save(facture);
+		
+		factureService.save(facture);
 		//model.addAttribute("facture", facture);
 		
 		//model.addAttribute("factures", factureRepository.findAll());
@@ -93,21 +97,42 @@ public class FactureController {
 	}
 	
 	@RequestMapping(value = "/facture/delete", method = RequestMethod.GET)
-	public String deleteProduct(@RequestParam("id") Long id, Model model) {
+	public String deleteFacture(@RequestParam("id") Long id, Model model) {
 		
-		factureRepository.delete(id);
+		factureService.delete(id);
 		
 		return "redirect:/factures";
 	}
 	
+	@RequestMapping(value = "/facture/display", method = RequestMethod.GET)
+	public String displayFacture(@RequestParam("id") Long id, Model model) {
+		model.addAttribute("facture", factureService.findOne(id));
+		return "/facture/facture";
+	}
 	
 	@RequestMapping(value = "/factures", method = RequestMethod.GET)
-	public String listProducts(Model model, HttpSession session,  Pageable pageable) {
+	public String listProducts(Model model, HttpSession session,  Pageable pageable, @RequestParam(value="filtername", required = false) String filterName) {
+		if (filterName != null && !filterName.isEmpty()) {
+			String[] searchTerms = filterName.split(" ");
+			String searchTerm1 = searchTerms[0].toLowerCase();
+			String searchTerm2 = "<NO TERM>";
+			if (searchTerms.length > 1 && searchTerms[1] != null && !searchTerms[1].isEmpty())
+				searchTerm2 = searchTerms[1].toLowerCase();
 
-		model.addAttribute("factures", factureRepository.findAll());
-		
+			List<Facture> factures = factureService.findByCustomerNames(searchTerm1, searchTerm2);
+			
+			model.addAttribute("factures", factures);
+			model.addAttribute("filtername", filterName);
+			
+		}
+		else {
+			model.addAttribute("factures", factureService.findAll());
+			model.addAttribute("filtername", null);
+		}
 	   
-		return "/facture/facture";
+		return "/facture/factures";
 		
 	}
+	
+	
 }
