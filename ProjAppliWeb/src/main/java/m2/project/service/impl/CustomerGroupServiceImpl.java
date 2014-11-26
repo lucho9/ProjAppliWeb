@@ -8,6 +8,9 @@ import m2.project.repository.CustomerGroupRepository;
 import m2.project.service.CustomerGroupService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.domain.Sort.Direction;
+import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +26,7 @@ public class CustomerGroupServiceImpl implements CustomerGroupService {
 	}
 	
 	public List<CustomerGroup> findAll() {
-		return customerGroupRepository.findAll();
+		return customerGroupRepository.findAll(new Sort(new Order(Direction.DESC, "discount")));
 	}
 	
 	public CustomerGroup save(CustomerGroup customerGroup) {

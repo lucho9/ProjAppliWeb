@@ -29,6 +29,7 @@ import org.junit.runners.JUnit4;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
@@ -36,10 +37,11 @@ import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.context.SecurityContextImpl;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestContext;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -64,43 +66,36 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
 //@RunWith(SpringJUnit4ClassRunner.class)
-//@SpringApplicationConfiguration(classes = Application.class) // specify which application context(s) that should be used in the test
-//@WebAppConfiguration // tell Spring that a WebApplicationContext should be loaded for the test
-//@IntegrationTest("server.port:0") // start the server on a random available port, useful when there are different services occupying different ports 
-
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 @ContextConfiguration(classes = {Application.class})
 @WebAppConfiguration
 public class CustomerControllerTest {
-	
-	@InjectMocks
-    CustomerController controller;
-
-	@Mock
-    CustomerService mockCustomerService;
+	private MockMvc mockMvc;
+	 
+    //@Autowired
     @Mock
-    CustomerGroupService mockCustomerGroupService;
+	private CustomerService customerService;
+
+    //@Autowired
+    @Mock
+    private CustomerGroupService customerGroupService;
     
-    @Mock
-    View mockView;
-
-    MockMvc mockMvc;
-
-    /*
+	//private long g1ID, g2ID;
+	private CustomerGroup g1, g2;
+	//private long c1ID, c2ID;
+	private Customer c1, c2;
+	private List<CustomerGroup> lcg; 
+	private List<Customer> lc; 
+	
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
+ 
+        // Setup Spring test in standalone mode
+        //this.mockMvc = MockMvcBuilders.standaloneSetup(new CustomerController()).build();
     	
-        //MockitoAnnotations.initMocks(this);
-        //mockMvc = MockMvcBuilders.standaloneSetup(controller)
-        		//.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-        //        .setSingleView(mockView)
-        //        .build();
-       
-    	
-    	MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+    	this.mockMvc = MockMvcBuilders.standaloneSetup(new CustomerController())
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .setViewResolvers(new ViewResolver() {
                     @Override
@@ -109,195 +104,89 @@ public class CustomerControllerTest {
                     }
                 })
                 .build();
-        
+    	
         final Authentication authentication = new TestingAuthenticationToken("celine.gilet", "netapsys");
         final SecurityContext securityContext = new SecurityContextImpl();
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
-    }*/
-    
-	Customer c1, c2, c3;
-	//CustomerGroup g1, g2;
-    
-    @Before
-    public void setup() throws Exception {
-    	
-    	MockitoAnnotations.initMocks(this);
-        mockMvc = MockMvcBuilders.standaloneSetup(controller)
-                .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
-                .build();
         
+        /*
+        GrantedAuthority[] ga = new GrantedAuthority[] {new GrantedAuthorityImpl("ROLE_ADMIN")};
+        TestingAuthenticationToken token = new TestingAuthenticationToken("admin", "password", ga);
+        token.setAuthenticated(true);        
+        SecurityContextHolder.getContext().setAuthentication(token);
+        */
+ 
+        // datas
+        //customerGroupService.deleteAll();
+		g1 = new CustomerGroup("G1", 10.0);
+		g2 = new CustomerGroup("G2", 5.0);
+		//customerGroupService.save(g1);
+		//customerGroupService.save(g2);
+		//g1ID = g1.getId();
+		//g2ID = g2.getId();
+		lcg = new ArrayList<CustomerGroup>();
+        lcg.add(g1);
+        lcg.add(g2);
         
-        mockCustomerService.deleteAll();
-		mockCustomerGroupService.deleteAll();
-		
-		// customer groups
-		/*
-		g1 = new CustomerGroup("G1", 10);
-		g2 = new CustomerGroup("G2", 5);
-		mockCustomerGroupService.save(g1);
-		mockCustomerGroupService.save(g2);
-		List<CustomerGroup> cgl1 = new ArrayList<CustomerGroup>();
-		cgl1.add(g1);
-		List<CustomerGroup> cgl2 = new ArrayList<CustomerGroup>();
-		cgl2.add(g1);
-		cgl2.add(g2);
-		*/
-		
-		// customers
+		//customerService.deleteAll();
 		c1 = new Customer("FNC1", "LNC1", "", null);
-		//c2 = new Customer("FNC2", "LNC2", cgl1);
-		//c3 = new Customer("FNC3", "LNC3", cgl2);
-		mockCustomerService.save(c1);
-		mockCustomerService.save(c2);
-		mockCustomerService.save(c3);
+		c2 = new Customer("FNC2", "LNC2", "", lcg);
+		//customerService.save(c1);
+		//customerService.save(c2);
+		//c1ID = c1.getId();
+		//c2ID = c2.getId();
+        lc = new ArrayList<Customer>();
+        lc.add(c1);
+        lc.add(c2);
     }
     
-    
-    @After
-    public void tearDown() {
-    	SecurityContextHolder.clearContext();
-    }
+	//@After
+    //public void tearDown() {
+    //	SecurityContextHolder.clearContext();
+    //}
     
 
     @Test
     public void testCustomersList() throws Exception {
-        List<Customer> expectedCustomers = Arrays.asList(new Customer());
-        when(mockCustomerService.findAll()).thenReturn(expectedCustomers);
-
-        System.out.println("--------------------------------------------------------->" + expectedCustomers);
+        when(customerService.findAll()).thenReturn(lc);
+        when(customerGroupService.findAll()).thenReturn(lcg);
         
         //mockMvc.perform(get("/customer").principal(SecurityContextHolder.getContext().getAuthentication()))
-        mockMvc.perform(
+        
+    	mockMvc.perform(
         	get("/customer")
-        		.sessionAttr("custGroups", mockCustomerGroupService.findAll())
+        		.sessionAttr("custGroups", lcg)
         		.sessionAttr("customer", new Customer()))
         	.andExpect(status().isOk())
-            .andExpect(model().attribute("customers", expectedCustomers))
+            .andExpect(model().attribute("customers", lc))
             .andExpect(view().name("/customer/customerslist"));
-    }
     
+    
+	    /*
+	    mockMvc.perform(post("/people")
+	            .contentType(MediaType.APPLICATION_JSON)
+	            .body("{\"firstName\":\"Tom\", \"lastName\":\"van Zummeren\"}".getBytes()))
+	            .andExpect(status().isCreated())
+	            .andExpect(jsonPath("$.identifier", equalTo("123")))
+	            .andExpect(jsonPath("$.allPeople[*].firstName", hasItem("Tom")));
+	
+	    verify(mockPeopleService).persistPerson(new Person("Tom", "van Zummeren"));
+	    */
+	    
+    }	
+	
+
     /*
-    mockMvc.perform(post("/people")
-            .contentType(MediaType.APPLICATION_JSON)
-            .body("{\"firstName\":\"Tom\", \"lastName\":\"van Zummeren\"}".getBytes()))
-            .andExpect(status().isCreated())
-            .andExpect(jsonPath("$.identifier", equalTo("123")))
-            .andExpect(jsonPath("$.allPeople[*].firstName", hasItem("Tom")));
-
-    verify(mockPeopleService).persistPerson(new Person("Tom", "van Zummeren"));
-    */
-    
-}	
-	
-	
-	
-	/*
-	private MockMvc mockMvc;
-	
-	@Autowired
-	RoleService roleService;
-	@Autowired
-	EmployeeService employeeService;
-	@Autowired
-    CustomerService customerService;
-	@Autowired
-	CustomerGroupService customerGroupService;
-	
-	//@Value("${local.server.port}")
-    //int port;
-	
-	Role a, u;
-	Employee e1, e2;
-	Customer c1, c2, c3;
-	CustomerGroup g1, g2;
-	
-	@Before
-    public void setUp() throws Exception {
-		
-		// cette fonction setUp est appelée pour chaque test. Donc vider la base en début de setUp !!!
-		employeeService.deleteAll();
-		roleService.deleteAll();
-		customerService.deleteAll();
-		customerGroupService.deleteAll();
-				
-		// customer groups
-		g1 = new CustomerGroup("G1", 10);
-		g2 = new CustomerGroup("G2", 5);
-		customerGroupService.save(g1);
-		customerGroupService.save(g2);
-		List<CustomerGroup> cgl1 = new ArrayList<CustomerGroup>();
-		cgl1.add(g1);
-		List<CustomerGroup> cgl2 = new ArrayList<CustomerGroup>();
-		cgl2.add(g1);
-		cgl2.add(g2);
-		
-		// customers
-		c1 = new Customer("FNC1", "LNC1", null);
-		c2 = new Customer("FNC2", "LNC2", cgl1);
-		c3 = new Customer("FNC3", "LNC3", cgl2);
-		customerService.save(c1);
-		customerService.save(c2);
-		customerService.save(c3);
-
-		// roles
-		Role a = new Role("ROLE_ADMIN", "Administrateur");
-		Role u = new Role("ROLE_USER", "Utilisateur");
-		roleService.save(a);
-		roleService.save(u);
-		
-		// employees
-		GregorianCalendar cal = new GregorianCalendar(1947, 02, 16);
-		e1 = new Employee("EFN1", "ELN1", "", "", "", "", new Date(cal.getTimeInMillis()), "admin", "admin", a);
-		e2 = new Employee("EFN2", "ELN2", "", "", "", "", new Date(cal.getTimeInMillis()), "user", "user", u);
-		
-		employeeService.save(e1);
-		cal = new GregorianCalendar(1987, 01, 31);
-		employeeService.save(e2);
-		
-		// instruct Rest Assured to use the correct port. It is an open source project that provides a Java DSL for testing restful services
-        //RestAssured.port = port;
-    }
-	
-	// test unique name
-	// droits
-    
 	@Test
 	public void formAuthenticationWithDefinedCsrfField() throws Exception {
 		
         mockMvc.perform(get("/customer"))
         	.andExpect(status().isOk());
 		
-		/*
-		RestAssured.
-			given().
-				//auth().form(e1.getLogin(), e1.getPassword(), FormAuthConfig.springSecurity()).
-				auth().form(e1.getLogin(), e1.getPassword(), new FormAuthConfig("/process-login", "login", "pwd").withCsrfFieldName("_csrf")).
-			expect().
-				statusCode(HttpStatus.SC_OK).
-				body(Matchers.equalTo("OK")).
-			when().
-				post("/process-login");
-		*/
 		
-		/*
-		// we're not authenticated, service returns "401 Unauthorized"
-		RestAssured.
-			expect().
-			    statusCode(401).
-			when().
-			  get("/customer");
-			 
-		// with authentication it is working
-		RestAssured.
-			expect().
-		    	statusCode(200).
-		    when().
-		    	with().
-		    		authentication().basic(e1.getLogin(), e1.getPassword()).
-		    			get("/customer");
-		*/
-
+	}*/
+}
 
 	/*
 	@Test
