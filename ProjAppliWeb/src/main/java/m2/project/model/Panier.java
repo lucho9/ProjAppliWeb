@@ -13,19 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 public class Panier {
 	private Map<Long, QuantiteCommande> productQuantities = new HashMap<Long, QuantiteCommande>();
-	
-	
 	private String moyenPaiement = "";
-	
-	
-	public String getMoyenPaiement() {
-		return moyenPaiement;
-	}
-	public void setMoyenPaiement(String moyenPaiement) {
-		this.moyenPaiement = moyenPaiement;
-	}
-	private Map<Long, Product> products = new HashMap<Long, Product>();
-	private Map<Long, Double> quantities = new HashMap<Long, Double>();
 	private Customer client;
 	
 	public Customer getClient() {
@@ -114,4 +102,12 @@ public class Panier {
 	public void setProductQuantities(Map<Long, QuantiteCommande> productQuantities) {
 		this.productQuantities = productQuantities;
 	}
+	
+	public String getMoyenPaiement() {
+		return moyenPaiement;
+	}
+	public void setMoyenPaiement(String moyenPaiement) {
+		this.moyenPaiement = moyenPaiement;
+	}
+
 }

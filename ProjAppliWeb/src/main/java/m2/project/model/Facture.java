@@ -100,6 +100,9 @@ public class Facture {
 	public String getCustomerName() {
 		return (c != null ? c.getCustomerName() : "");
 	}
+	public String getCustomerAddress() {
+		return (c != null ? c.getAddress() : "");
+	}
 	public void setC(Customer c) {
 		this.c = c;
 	}

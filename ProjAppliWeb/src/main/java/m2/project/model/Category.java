@@ -71,32 +71,12 @@ public class Category {
 		TVA = tVA;
 	}
 
-
-
-	public Category(String name, Collection<Product> products) {
-		super();
-		this.name = name;
-		this.products = products;
-	}
-
-
-
-	
-	public Category(String name, String img) {
-		super();
+	public Category(String name, String img, TVA tva) {
 		this.name = name;
 		this.img = img;
+		this.TVA = tva;
 	}
 
-
-
-/*	public Category(String laCategory, String color) {
-		this.name=laCategory;
-		this.color = color;
-	}*/
-	
-	
-	
 	@OneToMany(mappedBy="category")
 	private Collection<Product> products ;
 
