@@ -69,6 +69,7 @@
 					<th>
 						<h4>Qté</h4>
 					</th>
+					
 				</tr>
 			</thead>
 			<tbody>
@@ -79,6 +80,7 @@
 					<td th:text="${product.product.prix}"></td>
 					<td th:text="${product.product.category.TVA.tva}"></td>
 					<td th:text="${product.qte}"></td>
+					
 				</tr>
 			</tbody>
 		</table>
@@ -89,6 +91,7 @@
 						<div>Prix total HT</div>
 						<div>Prix total TTC</div>
 						<div th:text="@{'Discount (' + ${facture.getDiscountFormated()} + ')'}"></div>
+						<div>Moyen de paiement</div>
 					</strong>
 				</p>
 			</div>
@@ -98,6 +101,7 @@
 						<div th:text="${facture.getTotalHTFormated()}"></div>
 						<div th:text="${facture.getTotalTTCFormated()}"></div>
 						<div th:text="${facture.getTotalTTCDiscountFormated()}"></div>
+						<div th:text="${facture.getMoyenPaiement()}"></div>
 					</strong>
 				</p>
 			</div>
@@ -111,6 +115,7 @@
 					<div class="panel-body">
 						<p>Your Name</p>
 						<p>Bank Name</p>
+						
 						<p>SWIFT : --------</p>
 						<p>Account Number : --------</p>
 						<p>IBAN : --------</p>
