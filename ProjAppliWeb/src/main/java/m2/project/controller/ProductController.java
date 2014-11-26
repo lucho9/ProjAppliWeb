@@ -263,12 +263,12 @@ public class ProductController {
 		
 		String choix = id;
 		Panier p = getPanier(session);
-		if(choix == "espèces")
+		if(choix == "Espèces")
 		{
 			choix = id;
 		}
 		else
-		if(choix == "chéque")
+		if(choix == "Chèque")
 		{
 			choix = id;
 		}

@@ -131,7 +131,7 @@
 								<td>
 									<select id="changeCustomer" >
 										<option value="0">Client non enregistré</option>
-										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
+										<option th:each="cust : ${custs}"  th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
 									</select>
 									
 								</td>
@@ -141,13 +141,13 @@
 							<tr>
 								<td>Moyen de paiement</td>
 								<td>
-								<input type="radio" name="MP" value="Carte-bancaire"/>
+								<input type="radio" name="MP" value="Carte-bancaire" th:checked="@{${session.panier.moyenPaiement} == 'Carte-bancaire'}"/>
 								<img src="cb.gif"/>
 								<br />
-								<input type="radio" name="MP" value="chéque" />
+								<input type="radio" name="MP" value="Chèque" th:checked="@{${session.panier.moyenPaiement} == 'Chèque'}"/>
 								<img src="cheque.png"/>
 								<br/>
-								<input type="radio" name="MP" value="espèces"/>
+								<input type="radio" name="MP" value="Espèces" th:checked="@{${session.panier.moyenPaiement} == 'Espèces'}"/>
 								<img src="cash.png"/>
 								</td>
 									
