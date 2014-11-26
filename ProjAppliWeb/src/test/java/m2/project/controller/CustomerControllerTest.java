@@ -145,7 +145,7 @@ public class CustomerControllerTest {
 		*/
 		
 		// customers
-		c1 = new Customer("FNC1", "LNC1", null);
+		c1 = new Customer("FNC1", "LNC1", "", null);
 		//c2 = new Customer("FNC2", "LNC2", cgl1);
 		//c3 = new Customer("FNC3", "LNC3", cgl2);
 		mockCustomerService.save(c1);

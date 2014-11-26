@@ -3,7 +3,9 @@ package m2.project.model;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -41,22 +43,20 @@ public class Customer implements Serializable {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
-	@ManyToMany
+	private String address;
+	
+	@ManyToMany(fetch=FetchType.EAGER)
 	private List<CustomerGroup> customerGroups;
 	
 	public Customer() {
 	}
 
-	public Customer(String firstName, String lastName) {
-		this(firstName, lastName, null);
-	}
-
-	public Customer(String firstName, String lastName, List<CustomerGroup> customerGroups) {
+	public Customer(String firstName, String lastName, String address, List<CustomerGroup> customerGroups) {
 		this.firstName = firstName;
 		this.lastName = lastName;
+		this.address = address;
 		this.customerGroups = customerGroups;
 	}
-
 	
 	public long getId() {
 		return id;
@@ -76,6 +76,14 @@ public class Customer implements Serializable {
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
 	public List<CustomerGroup> getCustomerGroups() {
 		return customerGroups;
 	}

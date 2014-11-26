@@ -1,63 +1,65 @@
 package m2.project.model;
 
-import java.util.List;
-
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity
 public class QuantiteCommande {
 
 	@Id
 	@GeneratedValue
-	private Long Id;
+	private long id;
 	
-	private Integer qte;
+	private double qte;
 	
+	@OneToOne
+	private Product product;
 	
-	public Integer getQte() {
+	@ManyToOne
+	private Facture facture;
+	
+	public QuantiteCommande() {
+	}
+	public QuantiteCommande(Product p, double qte) {
+		this.qte = qte;
+		this.product = p;
+	}
+
+	public long getId() {
+		return id;
+	}
+	public void setId(long id) {
+		this.id = id;
+	}
+	
+	public double getQte() {
 		return qte;
 	}
-
-	public void setQte(Integer qte) {
+	public void setQte(double qte) {
 		this.qte = qte;
 	}
 
-	@ManyToMany(mappedBy="lq")
-	List<Facture> lf_qte;
-
-	public Long getId() {
-		return Id;
+	public Product getProduct() {
+		return product;
 	}
 
-	public void setId(Long id) {
-		Id = id;
+	public void setProduct(Product product) {
+		this.product = product;
 	}
 
-	public List<Facture> getLf_qte() {
-		return lf_qte;
+	public Facture getFacture() {
+		return facture;
 	}
 
-	public void setLf_qte(List<Facture> lf_qte) {
-		this.lf_qte = lf_qte;
+	public void setFacture(Facture facture) {
+		this.facture = facture;
 	}
-
-	public QuantiteCommande(Long id, Integer qte, List<Facture> lf_qte) {
-		super();
-		Id = id;
-		this.qte = qte;
-		this.lf_qte = lf_qte;
-	}
-
-	public QuantiteCommande() {
-		super();
-	}
-
 	
-	
-	
-	
-	
+	public String getInfos() {
+		return product.getName() + " " + qte;
+	}
 }

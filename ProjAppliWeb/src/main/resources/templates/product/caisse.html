@@ -95,12 +95,12 @@
 							</tr>
 						</thead>
 						<tbody>
-							<tr th:each="product : ${session.panier.products}">
-								<td th:text="${product.value.id}"></td>
-								<td th:text="${product.value.name}"></td>
-								<td th:text="${product.value.prix}"></td>
-								<td th:text="${product.value.category.TVA.tva}"></td>
-								<td th:text="${session.panier.quantities[product.value.id]}"></td>
+							<tr th:each="product : ${session.panier.productQuantities}">
+								<td th:text="${product.value.product.id}"></td>
+								<td th:text="${product.value.product.name}"></td>
+								<td th:text="${product.value.product.prix}"></td>
+								<td th:text="${product.value.product.category.TVA.tva}"></td>
+								<td th:text="${product.value.qte}"></td>
 
 								<td><a th:href="@{/deletePanier(id=${product.value.id})}"
 									class="btn btn-default btn-xs"> <span
@@ -115,29 +115,23 @@
 					<table class="table">
 						<tbody>
 							<tr>
-								<td>Discount</td>
-								<td><span th:text="${session.panier.prixGroupeDiscount}"></span></td>
+								<td>Prix total HT</td>
+								<td><span th:text="${session.panier.getTotalHTFormated()}"></span></td>
 							</tr>
-							<!--
-							<tr>
-								<td>Réduction groupe <span th:text="${session.panier.qteGroupeDiscount}"></td>
-								<td><span th:text="${session.panier.prixGroupeDiscount}"></span></td>
-							</tr>
-							 -->
 							<tr>
 								<td>Prix total TTC</td>
-								<td><span th:text="${session.panier.totalTTC}"></span></td>
+								<td><span th:text="${session.panier.getTotalTTCFormated()}"></span></td>
 							</tr>
 							<tr>
-								<td>Prix total HT</td>
-								<td><span th:text="${session.panier.total}"></span></td>
+								<td><span th:text="@{'Discount (' + ${session.panier.getDiscountFormated()} + ')'}"></span></td>
+								<td><span th:text="@{${session.panier.getTotalTTCDiscountFormated()}}"></span></td>
 							</tr>
 							<tr>
 								<td>Client</td>
 								<td>
-									<select id="changeCustomer">
+									<select id="changeCustomer" >
 										<option value="0">Client non enregistré</option>
-										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" />
+										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
 									</select>
 									
 								</td>
@@ -148,17 +142,13 @@
 				</div>
 				
 				<div class="panel panel-default">
-					<center>
-						<h4>
-							<b>Choisir un client</b><span class="glyphicon glyphicon-user" />
-						</h4>
-					</center>
-					<form action="#" th:action="@{/facture/validationCommande}" th:object="${facture}" method="post">
+					<form th:action="@{/facture/validationCommande}" method="post">
 						<center>
 							<h4>
 								<b>Valider la commande </b><span class="glyphicon glyphicon-credit-card" />
 							</h4>
-							<button  class="btn btn-green btn-lg glyphicon glyphicon-ok" type="submit" value="Submit" onclick="myFunction()" /> <button class="btn btn-green btn-lg glyphicon glyphicon-remove" type="reset" value="Reset" />
+							<button class="btn btn-green btn-lg glyphicon glyphicon-ok" type="submit" value="Submit"/>
+							<button class="btn btn-green btn-lg glyphicon glyphicon-remove" type="reset" value="Reset" />
 						</center>
 					</form>
 				</div>
@@ -167,18 +157,6 @@
 		<br />
 		<br />
 	</div>
-	<br />
-	<br />
-	<br />
-	<br />
-
-
-	<script>
-		function myFunction() {
-			alert("Commande terminée avec succés!");
-		}
-	</script>
-
 
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
 	<script th:replace="fragments/common :: [//script]"></script>

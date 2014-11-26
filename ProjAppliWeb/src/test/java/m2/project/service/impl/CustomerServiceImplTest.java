@@ -70,9 +70,9 @@ public class CustomerServiceImplTest {
 		//Mockito.when(mockCustomerGroupService.get(1L)).thenReturn(g1);
 		
 		// customers
-		c1 = new Customer("FNC1", "LNC1", null);
-		c2 = new Customer("FNC2", "LNC2", cgl1);
-		c3 = new Customer("FNC3", "LNC3", cgl2);
+		c1 = new Customer("FNC1", "LNC1", "", null);
+		c2 = new Customer("FNC2", "LNC2", "", cgl1);
+		c3 = new Customer("FNC3", "LNC3", "", cgl2);
 		customerService.save(c1);
 		customerService.save(c2);
 		customerService.save(c3);

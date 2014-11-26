@@ -1,15 +1,15 @@
 package m2.project.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.text.DecimalFormat;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,44 +19,30 @@ import javax.validation.constraints.Size;
 public class Product implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	private long id;
 	
 	@Column(unique=true)
 	@NotNull
 	@Size(min=2, max=20)
-	public
-	 String name;
+	public String name;
 	@NotNull
 	@Min(1)
-	private int prix;
+	private double prix;
 	@NotNull
 	@Min(1)
 	private int stock;
 
-	
-	
-	
-	
 	public String ref="";
-
-	@ManyToMany(mappedBy="lp")
-	List<Facture> lf;
-
-	
 	
 	@ManyToOne
-	private Category category ;
+	private Category category;
 
-
-
-
-
+	@OneToOne(mappedBy="product")
+	private QuantiteCommande qc;
+	
 	public String getRef() {
 		return ref;
 	}
-
-
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
@@ -89,7 +75,7 @@ public class Product implements Serializable {
 	}
 	
 	
-	public Product(String name, int prix,int stock) {
+	public Product(String name, int prix, int stock) {
 		
 		this.name = name;
 		this.prix = prix;
@@ -110,28 +96,33 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public int getPrix() {
+	public double getPrix() {
 		return prix;
 	}
-
-	public void setPrix(int prix) {
+	
+	public double getPrixTTC() {
+		return (prix + (prix * category.getTVA().getTva()));
+	}
+	
+	public String getPrixTTCFormated() {
+		DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(getPrixTTC());
+	}
+	
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
-	
 	public void setId(Long id) {
 		this.id = id;
 	}
-	
-	public List<Facture> getLf() {
-		return lf;
+	public QuantiteCommande getQc() {
+		return qc;
 	}
-
-	public void setLf(List<Facture> lf) {
-		this.lf = lf;
+	public void setQc(QuantiteCommande qc) {
+		this.qc = qc;
 	}
-
-	
-	
-	
+	public void setId(long id) {
+		this.id = id;
+	}
 }

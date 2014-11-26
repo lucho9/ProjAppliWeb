@@ -171,6 +171,7 @@ public class ProductController {
 		return res;
 	}
 	
+	
 	@RequestMapping(value = "/product/edit", method = RequestMethod.GET, produces={"application/json"})
 	public @ResponseBody Product ajaxEditCustomerForm(@RequestParam("id") Long id) {
 		return productService.findOne(id);
@@ -248,36 +249,9 @@ public class ProductController {
 	
 	@RequestMapping(value = "/custCaisse", method = RequestMethod.GET)
 	public String custChoise(@RequestParam("id") Long id, Model model, HttpSession session) {
-		
-		
 		Customer c = customerService.findOne(id);
 		Panier p = getPanier(session);
 		p.setClient(c);
-		
-		List<CustomerGroup> cg = c.getCustomerGroups();
-		
-		double disc = 0;
-		if(cg != null)
-		{
-			
-				if(cg.get(0) != null)
-				{
-						
-						disc = cg.get(0).getDiscount();
-						
-				}
-			
-		}
-		
-		p.setPrixGroupeDiscount(disc);
-		
-		double prixTotal = p.getTotal();
-		double prixTotalTTC = p.getTotalTTC();
-		prixTotal = prixTotal - (prixTotal*(disc*0.01));
-		prixTotalTTC = prixTotalTTC - (prixTotalTTC*(disc*0.01));
-		p.setTotal(prixTotal);
-		p.setTotalTTC(prixTotalTTC);
-		
 		session.setAttribute("panier", p);
 		
 		return "redirect:/caisse";
