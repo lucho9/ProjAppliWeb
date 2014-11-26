@@ -257,6 +257,34 @@ public class ProductController {
 		return "redirect:/caisse";
 	}
 
+	@RequestMapping(value = "/cbCaisse", method = RequestMethod.GET)
+	public String cbChoise(@RequestParam("id") String id, Model model, HttpSession session) {
+		
+		
+		String choix = id;
+		Panier p = getPanier(session);
+		if(choix == "Espèces")
+		{
+			choix = id;
+		}
+		else
+		if(choix == "Chèque")
+		{
+			choix = id;
+		}
+		else
+		if(choix == "Carte-bancaire")
+		{
+			choix = id;
+		}
+		
+		p.setMoyenPaiement(choix);		
+		session.setAttribute("panier", p);
+		
+		
+		return "redirect:/caisse";
+		
+	}
 	
 	
 	

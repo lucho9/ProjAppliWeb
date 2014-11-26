@@ -14,9 +14,13 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 //@Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
@@ -32,13 +36,28 @@ public class Product implements Serializable {
 	@Min(1)
 	private int stock;
 
-	public String ref="";
+	@OneToOne(mappedBy="product")
+	private QuantiteCommande qc;
 	
+	public String ref="";
+
 	@ManyToOne
 	private Category category;
 
-	@OneToOne(mappedBy="product")
-	private QuantiteCommande qc;
+	public Product() {
+	}
+
+	public Product(String name, int prix) {
+		this.name = name;
+		this.prix = prix;
+	}
+	
+	public Product(String name, double prix, int stock, Category category) {
+		this.name = name;
+		this.prix = prix;
+		this.stock = stock;
+		this.category = category;
+	}
 	
 	public String getRef() {
 		return ref;
@@ -54,7 +73,7 @@ public class Product implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+	@JsonIgnore
 	public Category getCategory() {
 		return category;
 	}
@@ -62,27 +81,6 @@ public class Product implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-	public Product() {
-
-	}
-
-	public Product(String name, int prix) {
-
-		this.name = name;
-		this.prix = prix;
-	
-	}
-	
-	
-	public Product(String name, int prix, int stock) {
-		
-		this.name = name;
-		this.prix = prix;
-		this.stock = stock;
-	
-	}
-	
 
 	public Long getId(){
 		return id;

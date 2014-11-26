@@ -33,7 +33,7 @@ public class Category {
 	public String name;
 
 	private String img;
-	private String color;
+	//private String color;
 	
 	public Category() {
 	
@@ -71,32 +71,12 @@ public class Category {
 		TVA = tVA;
 	}
 
-
-
-	public Category(String name, Collection<Product> products) {
-		super();
-		this.name = name;
-		this.products = products;
-	}
-
-
-
-	
-	public Category(String name, String img) {
-		super();
+	public Category(String name, String img, TVA tva) {
 		this.name = name;
 		this.img = img;
+		this.TVA = tva;
 	}
 
-
-
-/*	public Category(String laCategory, String color) {
-		this.name=laCategory;
-		this.color = color;
-	}*/
-	
-	
-	
 	@OneToMany(mappedBy="category")
 	private Collection<Product> products ;
 
@@ -117,6 +97,7 @@ public class Category {
 		this.name = name;
 	}
 	
+	@JsonIgnore
 	public Collection<Product> getProducts() {
 		return products;
 	}
@@ -124,7 +105,7 @@ public class Category {
 	public void setProducts(Collection<Product> products) {
 		this.products = products;
 	}
-	
+	/*
 	public String getColor() {
 		return color;
 	}
@@ -132,5 +113,5 @@ public class Category {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
+	}*/
 }

@@ -18,7 +18,7 @@ function clearCategoryFormInputs() {
 
 
 function editCategory(action, id) {
-	alert("erreur");
+	//alert("erreur");
 	$.ajax({
 	    url: action,
 	    type: 'GET',
@@ -28,7 +28,7 @@ function editCategory(action, id) {
 	    mimeType: 'application/json',
 	    success: function(data) {
 	    	
-	    	alert("erruer");
+	    	//alert("erruer");
 	    	clearCategoryFormInputs();
 	    	
 	    	

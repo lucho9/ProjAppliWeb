@@ -50,8 +50,8 @@
 									th:switch="${filtreCat}">
 										<!--  <button th:case="${cat.name}" id="caissecat" class="btn btn-default btn-lg active" th:text="${cat.name}" th:style="@{'background-color: ' + ${cat.color}}"></button>
 										<button th:case="*" id="caissecat" class="btn btn-default btn-lg" th:text="${cat.name}" th:style="@{'background-color: ' + ${cat.color}}"></button>-->
-										<button th:case="${cat.name}" id="caissecat" class="btn btn-default btn-lg active" th:text="${cat.name}" th:style="@{'background-image: url(\'' + ${cat.img} +'\')'}"></button>
-										<button th:case="*" id="caissecat" class="btn btn-default btn-lg" th:text="${cat.name}" th:style="@{'background-image: url(\'' + ${cat.img} +'\')'}"></button>
+										<button th:case="${cat.name}" id="caissecat" class="btn btn-default btn-lg active"  th:style="@{'background-image: url(\'' + ${cat.img} +'\')'}"><label id="labelcaisse" th:text="${cat.name}"></label></button>
+										<button th:case="*" id="caissecat" class="btn btn-default btn-lg" th:style="@{'background-image: url(\'' + ${cat.img} +'\')'}"><label id="labelcaisse" th:text="${cat.name}"></label></button>
 										
 								</a>
 							</span>
@@ -69,7 +69,7 @@
 					<td>
 						<span>
 							<a th:href="@{'/caissee?id=' + ${product.id}}" th:each="product : ${products}">
-								<button id="caisse" class="btn btn-default btn-lg" th:text="${product.name}" th:style="@{'background-image: url(\'' + ${product.category.img} +'\')'}"></button>
+								<button id="caisse" class="btn btn-default btn-lg"  th:style="@{'background-image: url(\'' + ${product.category.img} +'\')'}"><label id="labelcaisse" th:text="${product.name}"></label></button>
 							</a>
 						</span>
 					</td>
@@ -131,9 +131,24 @@
 								<td>
 									<select id="changeCustomer" >
 										<option value="0">Client non enregistré</option>
-										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
+										<option th:each="cust : ${custs}"  th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
 									</select>
 									
+								</td>
+									
+							</tr>
+							
+							<tr>
+								<td>Moyen de paiement</td>
+								<td>
+									<input type="radio" name="MP" value="Carte-bancaire" th:checked="@{${session.panier.moyenPaiement} == 'Carte-bancaire'}"/>
+									<img src="cb.gif"/>
+									<br />
+									<input type="radio" name="MP" value="Chèque" th:checked="@{${session.panier.moyenPaiement} == 'Chèque'}"/>
+									<img src="cheque.png"/>
+									<br/>
+									<input type="radio" name="MP" value="Espèces" th:checked="@{${session.panier.moyenPaiement} == 'Espèces'}"/>
+									<img src="cash.png"/>
 								</td>
 									
 							</tr>

@@ -49,7 +49,7 @@ public class Customer implements Serializable {
 	
 	public Customer() {
 	}
-
+	
 	public Customer(String firstName, String lastName, String address, List<CustomerGroup> customerGroups) {
 		this.firstName = firstName;
 		this.lastName = lastName;

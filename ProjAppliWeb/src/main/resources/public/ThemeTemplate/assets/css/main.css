@@ -234,18 +234,33 @@ hr {
 }
 
 #caisse {
+	border-radius: 10px;
+	 border-width:1px;
+ border-style:solid;
+ border-color:black;
     width:125px;
     height: 125px;
-    color:#FFFFFF;
+    color:#000000;
 }
 
 #caissecat {
+	border-radius: 10px;
+	 border-width:1px;
+ border-style:solid;
+ border-color:black;
     width:125px;
     height: 125px;
-    color:#FFFFFF;
+    color:#000000;
 
 }
+#labelcaisse {
+	border-radius: 10px;
+ border-width:1px;
+ border-style:solid;
+ border-color:black;
+    background-color:#FFFFFF;
 
+}
 
 #buttoncreateproduct {
     width: 40px;
