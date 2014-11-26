@@ -7,6 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class QuantiteCommande {
 
@@ -14,7 +16,7 @@ public class QuantiteCommande {
 	@GeneratedValue
 	private long id;
 	
-	private double qte;
+	private int qte;
 	
 	@OneToOne
 	private Product product;
@@ -24,7 +26,7 @@ public class QuantiteCommande {
 	
 	public QuantiteCommande() {
 	}
-	public QuantiteCommande(Product p, double qte) {
+	public QuantiteCommande(Product p, int qte) {
 		this.qte = qte;
 		this.product = p;
 	}
@@ -36,13 +38,13 @@ public class QuantiteCommande {
 		this.id = id;
 	}
 	
-	public double getQte() {
+	public int getQte() {
 		return qte;
 	}
-	public void setQte(double qte) {
+	public void setQte(int qte) {
 		this.qte = qte;
 	}
-
+	@JsonIgnore
 	public Product getProduct() {
 		return product;
 	}
@@ -50,7 +52,7 @@ public class QuantiteCommande {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-
+	
 	public Facture getFacture() {
 		return facture;
 	}

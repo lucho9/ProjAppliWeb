@@ -5,6 +5,7 @@ import java.util.Collection;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -14,10 +15,14 @@ import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import m2.project.model.serialization.CategorySerializer;
+import m2.project.model.serialization.CustomerSerializer;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 
-
+@JsonSerialize(using = CategorySerializer.class)
 @Entity
 public class Category {
 
@@ -44,7 +49,7 @@ public class Category {
 	//Différents taux de TVA sont possibles : 19,6% dans la plupart des cas, 5.5% pour les denrées alimentaires et les livres 
 	//et 2,1% pour les médicaments et les journaux.
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.EAGER)
 	private TVA TVA;
 	
 
@@ -82,6 +87,13 @@ public class Category {
 
 
 	
+	public Category(String name) {
+		super();
+		this.name = name;
+	}
+
+
+
 	public Category(String name, String img) {
 		super();
 		this.name = name;

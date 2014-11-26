@@ -1,13 +1,17 @@
 package m2.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import m2.project.model.Facture;
 import m2.project.model.Panier;
+import m2.project.model.Product;
+import m2.project.model.QuantiteCommande;
 import m2.project.service.FactureService;
 
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -27,7 +31,11 @@ public class FactureController {
 		Panier panier = (Panier)session.getAttribute("panier");
 		if (panier != null) {
 			factureService.save(panier.getFacture());
+		
+			
+		
 		}
+		panier.getquantiteFinale(panier.getProductQuantities());
 	    session.removeAttribute("panier");
 		return "redirect:/caisse";
 	}

@@ -33,7 +33,7 @@ function editProduct(action, id) {
 	    success: function(data) {
 	    	clearProductFormInputs();
 	    	
-	    	
+	    	$('#formproduct #id').val(data.id);
 	    	$('#formproduct #name').val(data.name);
 	    	$('#formproduct #stock').val(data.stock);
 	    	$('#formproduct #prix').val(data.prix);

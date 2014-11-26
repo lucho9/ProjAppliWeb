@@ -146,8 +146,8 @@ public class ProductController {
 		
 
 			if(!(productService.findOne(product.name).isEmpty()))
-			productService.save(product);
-			res.setStatus("SUCCESS");
+			//productService.save(product);
+			//res.setStatus("SUCCESS");
 
 			//if(productService.findOne(product.name)==null)
 			try {

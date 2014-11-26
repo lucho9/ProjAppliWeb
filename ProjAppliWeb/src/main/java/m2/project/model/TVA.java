@@ -40,7 +40,7 @@ public class TVA {
 		return tva;
 	}
 
-	public void setTva(int tva) {
+	public void setTva(double tva) {
 		this.tva = tva;
 	}
 
