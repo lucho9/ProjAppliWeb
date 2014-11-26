@@ -22,6 +22,13 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Autowired
 	CustomerRepository customerRepository;
+
+	/*
+	@Autowired
+    public CustomerServiceImpl(final CustomerRepository customerRepository) {
+        this.customerRepository = customerRepository;
+    }
+	 */
 	
 	public Customer findOne(long id) {
 		return customerRepository.findOne(id);
@@ -58,15 +65,13 @@ public class CustomerServiceImpl implements CustomerService {
 	public List<Customer> findByNames(String searchTerm1, String searchTerm2) {
 		return customerRepository.findByNames(searchTerm1, searchTerm2);
 	}
-
 	
 	public double totalDepense(Customer customer) {
 		double totalDepense=0;
 		List<Facture> lf=customer.getLf();
 		for(int i=0;i<lf.size();i++){
-			totalDepense=totalDepense+lf.get(i).getPrixTotal();
+			totalDepense=totalDepense+lf.get(i).getTotalTTCDiscount();
 		}
 		return totalDepense;
 	}
-
 }

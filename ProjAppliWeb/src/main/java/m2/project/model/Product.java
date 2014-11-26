@@ -1,6 +1,7 @@
 package m2.project.model;
 
 import java.io.Serializable;
+import java.text.DecimalFormat;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -10,9 +11,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 //@Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
@@ -29,19 +33,20 @@ public class Product implements Serializable {
 	 String name;
 	@NotNull
 	@Min(1)
-	private int prix;
+	private double prix;
 	@NotNull
 	@Min(1)
 	private int stock;
 
 	
+	@OneToOne(mappedBy="product")
+	private QuantiteCommande qc;
 	
 	
 	
 	public String ref="";
 
-	@ManyToMany(mappedBy="lp")
-	List<Facture> lf;
+	
 
 	
 	
@@ -68,7 +73,7 @@ public class Product implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	
+	@JsonIgnore
 	public Category getCategory() {
 		return category;
 	}
@@ -110,26 +115,35 @@ public class Product implements Serializable {
 		this.name = name;
 	}
 
-	public int getPrix() {
+	public double getPrix() {
 		return prix;
 	}
-
-	public void setPrix(int prix) {
+	
+	public double getPrixTTC() {
+		return (prix + (prix * category.getTVA().getTva()));
+	}
+	
+	public String getPrixTTCFormated() {
+		DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(getPrixTTC());
+	}
+	
+	public void setPrix(double prix) {
 		this.prix = prix;
 	}
 
 	
-	public void setId(Long id) {
+	public void setId(long id) {
 		this.id = id;
 	}
-	
-	public List<Facture> getLf() {
-		return lf;
+	public QuantiteCommande getQc() {
+		return qc;
+	}
+	public void setQc(QuantiteCommande qc) {
+		this.qc = qc;
 	}
 
-	public void setLf(List<Facture> lf) {
-		this.lf = lf;
-	}
+
 
 	
 	

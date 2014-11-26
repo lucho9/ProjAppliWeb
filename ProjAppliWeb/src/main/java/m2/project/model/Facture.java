@@ -2,23 +2,20 @@ package m2.project.model;
 
 
 import java.text.DateFormat;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
-
-import m2.project.model.serialization.EmployeeSerializer;
-
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @Entity
 public class Facture {
@@ -29,41 +26,45 @@ public class Facture {
 	@ManyToOne
 	private Customer c;
 	
-	@ManyToMany
-	private List<Product> lp;
-	
-	@ManyToMany
+	@OneToMany(mappedBy="facture", cascade=CascadeType.ALL)
 	private List<QuantiteCommande> lq;
 	
-	private double prixTotal;
-	private String ref="";
+	private double totalHT = 0;
+	private double totalTTC = 0;
+	private double totalTTCDiscount = 0;
+	private double discount = 0;
+	
+	private String ref = "";
 	
 	@NotNull
 	private Date dateFacture;
 
-	public Facture(Customer c, double prixTotal) {
-		super();
-		this.c = c;
-		this.prixTotal = prixTotal;
+
+	public Facture() {
 	}
 	
-	public Facture(long id, Customer c, List<Product> lp,
-			List<QuantiteCommande> lq) {
-		super();
-		this.id = id;
+	public Facture(Customer c, List<QuantiteCommande> lq) {
 		this.c = c;
-		this.lp = lp;
 		this.lq = lq;
 	}
-
-	public double getPrixTotal() {
-		return prixTotal;
-	}
-
-	public void setPrixTotal(double prixTotal) {
-		this.prixTotal = prixTotal;
-	}
 	
+	public Facture(Panier n) {
+		this.setC(n.getClient());
+		this.setDateFacture(new Date());
+		List<QuantiteCommande> lq = new ArrayList<QuantiteCommande>();
+		for (QuantiteCommande p : n.getProductQuantities().values()) {
+			p.setFacture(this);
+			lq.add(p);
+		}
+		this.setLq(lq);
+		this.setTotalHT(n.getTotalHT());
+		this.setTotalTTC(n.getTotalTTC());
+		this.setTotalTTCDiscount(n.getTotalTTCDiscount());
+		this.setDiscount(n.getDiscount());
+		DateFormat df = new SimpleDateFormat("yMd");
+		this.setRef("#FACT" + df.format(this.getDateFacture()));
+	}
+
 	public List<QuantiteCommande> getLq() {
 		return lq;
 	}
@@ -72,32 +73,18 @@ public class Facture {
 		this.lq = lq;
 	}
 	
-	public Facture(long id, Customer c, List<Product> lp) {
-		super();
-		this.id = id;
-		this.c = c;
-		this.lp = lp;
-	}
-
-	public Facture() {
-		super();
-	}
-	
 	public long getId() {
 		return id;
 	}
 	public void setId(long id) {
 		this.id = id;
 	}
-	public List<Product> getLp() {
-		return lp;
-	}
-	public void setLp(List<Product> lp) {
-		this.lp = lp;
-	}
 	
 	public Customer getC() {
 		return c;
+	}
+	public String getCustomerName() {
+		return (c != null ? c.getCustomerName() : "");
 	}
 	public void setC(Customer c) {
 		this.c = c;
@@ -124,4 +111,56 @@ public class Facture {
 		return df.format(dateFacture);
 	}
 
+	public double getTotalHT() {
+		return totalHT;
+	}
+
+	public void setTotalHT(double totalHT) {
+		this.totalHT = totalHT;
+	}
+
+	public double getTotalTTC() {
+		return totalTTC;
+	}
+
+	public void setTotalTTC(double totalTTC) {
+		this.totalTTC = totalTTC;
+	}
+
+	public double getDiscount() {
+		return discount;
+	}
+
+	public void setDiscount(double discount) {
+		this.discount = discount;
+	}
+
+	public double getTotalTTCDiscount() {
+		return totalTTCDiscount;
+	}
+
+	public void setTotalTTCDiscount(double totalTTCDiscount) {
+		this.totalTTCDiscount = totalTTCDiscount;
+	}
+
+	public String getTotalHTFormated() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(totalHT);
+	}
+	
+	public String getTotalTTCFormated() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(totalTTC);
+	}
+	
+	public String getDiscountFormated() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(discount) + " %";
+	}
+	
+	public String getTotalTTCDiscountFormated() {
+        DecimalFormat df = new DecimalFormat("#.##");
+        return df.format(totalTTCDiscount);
+	}
+	
 }

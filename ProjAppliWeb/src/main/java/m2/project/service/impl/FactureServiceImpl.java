@@ -21,20 +21,7 @@ public class FactureServiceImpl implements FactureService{
 	FactureRepository frep;
 	
 	public void save(Facture f) {
-		f.setRef(getRef(f));
-		f.setDateFacture(new Date());
 		frep.save(f);
-	}
-	
-	//créer une référence produit, voir comment la récupérer dans le .html
-	public String getRef(Facture f) {
-		StringBuilder s = new StringBuilder();
-		s.append("#FACT");
-		
-		String id=String.valueOf(f.getId());
-		s.append(id);
-		
-		return s.toString();
 	}
 	
 	public List<Facture> findByCustomerNames(String searchTerm1, String searchTerm2) {

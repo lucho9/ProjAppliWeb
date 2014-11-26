@@ -1,5 +1,6 @@
 package m2.project.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,6 +10,8 @@ import m2.project.model.JsonResponse;
 import m2.project.service.EmployeeService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -40,8 +43,7 @@ public class LoginController {
 		else {
 			res.setStatus("FAIL");
 			List<ErrorMessage> errorMesages = new ArrayList<ErrorMessage>();
-			errorMesages.add(new ErrorMessage("lastName", "Non inconnu"));
-			errorMesages.add(new ErrorMessage("firstName", "Prénom inconnu"));
+			errorMesages.add(new ErrorMessage("name", "Cet employé n'existe pas"));
 			res.setErrorMessageList(errorMesages);
 		}
 		
@@ -70,8 +72,14 @@ public class LoginController {
     		else if (loginType == 0) {
 	    		if (employee.getPassword() != null && employee.getPassword().length() > 0) {
 	    			if (pwd0 == null || pwd0.length() == 0) {
-						errorMesages.add(new ErrorMessage("pwd0", "Ancien mot de obligatoire"));
+						errorMesages.add(new ErrorMessage("pwd0", "Ancien mot de passe obligatoire"));
 					}
+	    			else  {
+	    				PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+	    				if (!passwordEncoder.matches(pwd0, employee.getPassword())) {
+	    					errorMesages.add(new ErrorMessage("pwd0", "Ancien mot de passe ne correspond pas"));
+	    				}
+	    			}
 	    		}
 	    		else if (pwd == null || pwd.length() == 0) {
 					errorMesages.add(new ErrorMessage("pwd", "Mot de passe obligatoire"));
@@ -107,7 +115,24 @@ public class LoginController {
 		}
 		
 		return res;
-    	
-    	
     }
+    
+    // for 403 access denied page
+ 	@RequestMapping(value = "/403", method = RequestMethod.GET)
+ 	public ModelAndView accesssDenied(Principal user) {
+  
+ 		ModelAndView model = new ModelAndView();
+  
+ 		if (user != null) {
+ 			model.addObject("msg", "Hi " + user.getName() 
+ 			+ ", you do not have permission to access this page!");
+ 		} else {
+ 			model.addObject("msg", 
+ 			"You do not have permission to access this page!");
+ 		}
+  
+ 		model.setViewName("/errors/403");
+ 		return model;
+  
+ 	}
 }

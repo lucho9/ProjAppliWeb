@@ -56,7 +56,7 @@
 								<th>#Ref</th>
 								<th>Client</th>
 								<th>Produits</th>
-								<th>Unitaire</th>
+								<th>Prix TTC</th>
 								<th>Qté</th>
 								<th>Total TTC</th>
 								<th>Date</th>
@@ -65,18 +65,17 @@
 						<tbody>
 							<tr th:each="factur : ${factures}">
 								<td  th:text="${factur.ref}"></td>
-								<td th:if="${factur.c == null}"></td>
-								<td th:if="${factur.c != null}" th:text="${factur.c.getCustomerName()}"></td>
+								<td th:text="${factur.getCustomerName()}"></td>
 								<td>
-									<div th:each="produit : ${factur.lp}" th:text="${produit.name}"></div>
+									<div th:each="produit : ${factur.lq}" th:text="${produit.product.name}"></div>
 								</td>
 								<td>
-									<div th:each="produit : ${factur.lp}" th:text="${produit.prix} + euro"></div>
+									<div th:each="produit : ${factur.lq}" th:text="@{${produit.product.getPrixTTCFormated()} + ' euros'}"></div>
 								</td>
 								<td>
-									<div th:each="quantite : ${factur.lq}" th:text="${quantite.qte}"></div>
+									<div th:each="produit : ${factur.lq}" th:text="${produit.qte}"></div>
 								</td>
-								<td th:text="${factur.prixTotal}"></td>
+								<td th:text="${factur.getTotalTTCFormated()}"></td>
 								<td th:text="${factur.getDateFactureFormated()}"></td>
 								<td>
 									<a type="button" th:href="@{/facture/display(id=${factur.id})}" class="btn btn-default btn-xs">

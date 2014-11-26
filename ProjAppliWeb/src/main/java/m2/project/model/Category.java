@@ -33,7 +33,7 @@ public class Category {
 	public String name;
 
 	private String img;
-	private String color;
+	//private String color;
 	
 	public Category() {
 	
@@ -117,6 +117,7 @@ public class Category {
 		this.name = name;
 	}
 	
+	@JsonIgnore
 	public Collection<Product> getProducts() {
 		return products;
 	}
@@ -124,7 +125,7 @@ public class Category {
 	public void setProducts(Collection<Product> products) {
 		this.products = products;
 	}
-	
+	/*
 	public String getColor() {
 		return color;
 	}
@@ -132,5 +133,5 @@ public class Category {
 
 	public void setColor(String color) {
 		this.color = color;
-	}
+	}*/
 }
