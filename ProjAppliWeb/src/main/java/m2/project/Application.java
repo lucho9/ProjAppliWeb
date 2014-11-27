@@ -59,13 +59,13 @@ public class Application {
 		customerGroupsList2.add(g2);
 		
 		// customers
-		Customer cust1 = new Customer("Jack", "Butter", "", null);
-		Customer cust2 = new Customer("Chloe", "O'Brian", "", customerGroupsList1);
-		Customer cust3 = new Customer("Kim", "Bauer", "", customerGroupsList2);
-		Customer cust4 = new Customer("David", "Palmer", "", customerGroupsList1);
-		Customer cust5 = new Customer("Michelle", "Dessler", "", customerGroupsList2);
-		Customer cust6 = new Customer("Johnny", "Cash", "", null);
-		Customer cust7 = new Customer("Pam", "Anderson", "Malibu", customerGroupsList1);
+		Customer cust1 = new Customer("Jack", "Butter", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", null);
+		Customer cust2 = new Customer("Chloe", "O'Brian", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", customerGroupsList1);
+		Customer cust3 = new Customer("Kim", "Bauer", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", customerGroupsList2);
+		Customer cust4 = new Customer("David", "Palmer", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", customerGroupsList1);
+		Customer cust5 = new Customer("Michelle", "Dessler", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", customerGroupsList2);
+		Customer cust6 = new Customer("Johnny", "Cash", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", null);
+		Customer cust7 = new Customer("Pam", "Anderson", "Malibu", "0033 6 00 00 00 01", "pam@hotmail.com", customerGroupsList1);
 		customerService.save(cust1);
 		customerService.save(cust2);
 		customerService.save(cust3);
@@ -84,14 +84,14 @@ public class Application {
 		GregorianCalendar cal = new GregorianCalendar(1947, 02, 16);
 		employeeService.save(new Employee("Clint", "Westwood", "", "0033 3 00 00 00 01", "0033 6 00 00 00 01", "clint@gmail.com", new Date(cal.getTimeInMillis()), "admin", "admin", a));
 		cal = new GregorianCalendar(1977, 5, 16);
-		employeeService.save(new Employee("Robert", "Martin", "", "0033 3 00 00 00 03", "0033 6 00 00 00 03", "robert.martin@gmail.com", new Date(cal.getTimeInMillis()), "gomygamez@gmail.com", "robert", a));
+		employeeService.save(new Employee("Robert", "Martin", "", "0033 3 00 00 00 03", "0033 6 00 00 00 03", "robert.martin@gmail.com", new Date(cal.getTimeInMillis()), "admin2", "admin2", a));
 
 		// employees user
 		cal = new GregorianCalendar(1987, 1, 31);
 		Employee emp1 = new Employee("Brad", "Pett", "", "0033 3 00 00 00 02", "0033 6 00 00 00 02", "brad@gmail.com", new Date(cal.getTimeInMillis()), "user", "user", u);
 		employeeService.save(emp1);
 		cal = new GregorianCalendar(1979, 8, 12);
-		Employee emp2 = new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "", new Date(cal.getTimeInMillis()), "", null, u);
+		Employee emp2 = new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "", new Date(cal.getTimeInMillis()), "gomygamez@gmail.com", null, u);
 		employeeService.save(emp2);
 
 		// TVA
@@ -205,5 +205,69 @@ public class Application {
 	    m6.put(p31.getId(), new QuantiteCommande(p31, 5));
 	    m6.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(null, m6, "Chèque", moins1, emp1);
+	    
+	    
+	    
+	    HashMap<Long, QuantiteCommande> m7 = new HashMap<Long, QuantiteCommande>();
+	    m7.put(p12.getId(), new QuantiteCommande(p12, 3));
+	    m7.put(p22.getId(), new QuantiteCommande(p22, 1));
+	    m7.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust7, m7, "Chèque", moins2, emp1);
+	    HashMap<Long, QuantiteCommande> m8 = new HashMap<Long, QuantiteCommande>();
+	    m8.put(p11.getId(), new QuantiteCommande(p11, 10));
+	    m8.put(p33.getId(), new QuantiteCommande(p33, 5));
+	    factureService.createFacture(cust7, m8, "Espèces", moins3, emp2);
+	    HashMap<Long, QuantiteCommande> m81 = new HashMap<Long, QuantiteCommande>();
+	    m81.put(p11.getId(), new QuantiteCommande(p11, 10));
+	    m81.put(p33.getId(), new QuantiteCommande(p33, 5));;
+	    HashMap<Long, QuantiteCommande> m82 = new HashMap<Long, QuantiteCommande>();
+	    m82.put(p11.getId(), new QuantiteCommande(p11, 10));
+	    m82.put(p33.getId(), new QuantiteCommande(p33, 5));
+	    HashMap<Long, QuantiteCommande> m83 = new HashMap<Long, QuantiteCommande>();
+	    m83.put(p11.getId(), new QuantiteCommande(p11, 10));
+	    m83.put(p33.getId(), new QuantiteCommande(p33, 5));
+	    factureService.createFacture(cust7, m81, "Espèces", moins4, emp1);
+	    factureService.createFacture(cust7, m82, "Carte-bancaire", moins4, emp2);
+	    factureService.createFacture(cust7, m83, "Chèque", moins2, emp1);
+	    HashMap<Long, QuantiteCommande> m9 = new HashMap<Long, QuantiteCommande>();
+	    m9.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m9.put(p21.getId(), new QuantiteCommande(p21, 1));
+	    m9.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust6, m9, "Espèces", moins3, emp1);
+	    HashMap<Long, QuantiteCommande> m10 = new HashMap<Long, QuantiteCommande>();
+	    m10.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m10.put(p31.getId(), new QuantiteCommande(p31, 15));
+	    m10.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust6, m10, "Chèque", moins4, emp1);
+	    HashMap<Long, QuantiteCommande> m101 = new HashMap<Long, QuantiteCommande>();
+	    m101.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m101.put(p31.getId(), new QuantiteCommande(p31, 15));
+	    m101.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust6, m101, "Carte-bancaire", moins1, emp1);
+	    HashMap<Long, QuantiteCommande> m102 = new HashMap<Long, QuantiteCommande>();
+	    m102.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m102.put(p31.getId(), new QuantiteCommande(p31, 15));
+	    m102.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust6, m102, "Chèque", moins2, emp2);
+	    HashMap<Long, QuantiteCommande> m103 = new HashMap<Long, QuantiteCommande>();
+	    m103.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m103.put(p31.getId(), new QuantiteCommande(p31, 15));
+	    m103.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust6, m103, "Carte-bancaire", moins3, emp1);
+	    HashMap<Long, QuantiteCommande> m104 = new HashMap<Long, QuantiteCommande>();
+	    m104.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m104.put(p31.getId(), new QuantiteCommande(p31, 15));
+	    m104.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(cust6, m104, "Espèces", moins4, emp2);
+	    HashMap<Long, QuantiteCommande> m11 = new HashMap<Long, QuantiteCommande>();
+	    m11.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m11.put(p31.getId(), new QuantiteCommande(p31, 1));
+	    m11.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(null, m11, "Chèque", moins1, emp2);
+	    HashMap<Long, QuantiteCommande> m12 = new HashMap<Long, QuantiteCommande>();
+	    m12.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m12.put(p31.getId(), new QuantiteCommande(p31, 5));
+	    m12.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    factureService.createFacture(null, m12, "Chèque", moins2, emp1);
     }
 }

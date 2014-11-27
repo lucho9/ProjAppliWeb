@@ -77,8 +77,21 @@ public class EmployeeController {
 	public JsonResponse ajaxSubmitEmployeeForm(@ModelAttribute(value = "employee") @Valid Employee employee, BindingResult result) {
 		JsonResponse res = new JsonResponse();
 		if (!result.hasErrors()) {
-			employee.hashPassword(employee.getPassword());
-			employeeService.save(employee);
+			//employee.hashPassword(employee.getPassword());
+			if (employee.getId() > 0) {
+				Employee updEmp = employeeService.findOne(employee.getId());
+				updEmp.setLastName(employee.getLastName());
+				updEmp.setFirstName(employee.getFirstName());
+				updEmp.setPhoneNumber(employee.getPhoneNumber());
+				updEmp.setMobileNumber(employee.getMobileNumber());
+				updEmp.setEmail(employee.getEmail());
+				updEmp.setAddress(employee.getAddress());
+				updEmp.setBirth(employee.getBirth());
+				updEmp.setRole(employee.getRole());
+				employeeService.save(updEmp);
+			}
+			else
+				employeeService.save(employee);
 			res.setStatus("SUCCESS");
 		}
 		else {

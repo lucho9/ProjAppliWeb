@@ -29,7 +29,7 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-5 col-xs-offset-2 text-right">
+			<div class="col-xs-5">
 				<div class="panel panel-default">
 					<div class="panel-heading">
 						<h4>
@@ -104,15 +104,12 @@
 			<div class="col-xs-5">
 				<div class="panel panel-info">
 					<div class="panel-heading">
-						<h4>Bank details</h4>
+						<h4>Informations Banque</h4>
 					</div>
 					<div class="panel-body">
-						<p>Your Name</p>
-						<p>Bank Name</p>
-						
-						<p>SWIFT : --------</p>
-						<p>Account Number : --------</p>
-						<p>IBAN : --------</p>
+						<p>Name</p>
+						<p>Banque</p>
+						<p>IBAN</p>
 					</div>
 				</div>
 			</div>
@@ -120,12 +117,12 @@
 				<div class="span7">
 					<div class="panel panel-info">
 						<div class="panel-heading">
-							<h4>Contact Details</h4>
+							<h4>Informations contact</h4>
 						</div>
 						<div class="panel-body">
 							<p>
-								<span>Email : you@example.com</span>
-								<span>Phone : you@example.com</span>
+								<div th:text="@{'E-mail : ' + ${facture.getCustomerEmail()}}"></div>
+								<div th:text="@{'Tél : ' + ${facture.getCustomerPhoneNr()}}"></div>
 							</p>
 
 						</div>

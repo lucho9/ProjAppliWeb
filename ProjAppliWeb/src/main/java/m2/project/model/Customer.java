@@ -42,6 +42,8 @@ public class Customer implements Serializable {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
+	private String phoneNr;
+	private String email;
 	private String address;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
@@ -50,10 +52,12 @@ public class Customer implements Serializable {
 	public Customer() {
 	}
 	
-	public Customer(String firstName, String lastName, String address, List<CustomerGroup> customerGroups) {
+	public Customer(String firstName, String lastName, String address, String phoneNr, String email, List<CustomerGroup> customerGroups) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.address = address;
+		this.phoneNr = phoneNr;
+		this.email = email;
 		this.customerGroups = customerGroups;
 	}
 	
@@ -105,5 +109,21 @@ public class Customer implements Serializable {
 	
 	public String getCustomerName() {
 		return String.format(lastName + " " + firstName);
+	}
+
+	public String getPhoneNr() {
+		return phoneNr;
+	}
+
+	public void setPhoneNr(String phoneNr) {
+		this.phoneNr = phoneNr;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 }
