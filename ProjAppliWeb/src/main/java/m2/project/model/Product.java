@@ -32,8 +32,7 @@ public class Product implements Serializable {
 	@NotNull
 	@Min(1)
 	private double prix;
-	@NotNull
-	@Min(1)
+	
 	private int stock;
 
 	@OneToOne(mappedBy="product")
@@ -73,7 +72,7 @@ public class Product implements Serializable {
 	public void setStock(int stock) {
 		this.stock = stock;
 	}
-	@JsonIgnore
+	
 	public Category getCategory() {
 		return category;
 	}

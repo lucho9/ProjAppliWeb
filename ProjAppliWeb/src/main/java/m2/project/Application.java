@@ -6,7 +6,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
-
 import m2.project.model.Category;
 import m2.project.model.Customer;
 import m2.project.model.CustomerGroup;
@@ -115,7 +114,7 @@ public class Application {
 	    Product p13 = new Product("Kiwi", 1.5, 700, c1);
 	    Product p21 = new Product("Samsung", 1000, 50, c2);
 	    Product p22 = new Product("Sony", 900, 20, c2);
-	    Product p23 = new Product("LG", 1400, 20, c2);
+	    Product p23 = new Product("LG", 1400, 0, c2);
 	    Product p31 = new Product("Coke", 1.5, 1000, c3);
 	    Product p32 = new Product("RedBull", 2.5, 800, c3);
 	    Product p33 = new Product("Tequila", 15, 200, c3);
@@ -128,7 +127,11 @@ public class Application {
 	    productService.save(p31);
 	    productService.save(p32);
 	    productService.save(p33);
+	    categoryService.save(c3);
 	    
+  
+	    
+       
 	    // factures
 	    cal = new GregorianCalendar();
 	    cal.add(Calendar.DATE, -1); 

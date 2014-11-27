@@ -1,7 +1,8 @@
 $(document).ready(function() {
 	
-	//var $caissecat = $('#caissecat');
-
+	//var $caisselistener = $('#caisselistener');
+	//if($(this).val())
+	
 	
 	$("#changeCustomer").bind('change',function(e) {
 		

@@ -1,7 +1,7 @@
 function clearCategoryFormInputs() {
 	$('#name').removeClass('error');
 	$('#err-name').html("");
-	$('#stock').removeClass('error');
+	$('#TVA').removeClass('error');
 	$('#err-TVA').html("");
 	
 	
@@ -13,12 +13,33 @@ function clearCategoryFormInputs() {
 
 
 
-
+function deleteCategory(action, id) {
+	alert(action);
+	//$.ajax({
+		$.get(action, {id:id}, function(data) {
+	   /* url: action,
+	    type: 'GET',
+	    dataType: 'json',
+	    data: { id: id },
+	    contentType: 'application/json; charset=utf-8',*/
+	    //mimeType: 'application/json',
+	   // success: function(data) {
+	    	
+	    	if (data.status == 'PASOK') {
+				alert(" impossible de détruire une catégorie qui contient des produits !!!")
+			} 
+			else {
+				window.location.href = "/category";
+			}
+	    
+}, 'json');
+	//});
+}
 
 
 
 function editCategory(action, id) {
-	//alert("erreur");
+	alert("erreur");
 	$.ajax({
 	    url: action,
 	    type: 'GET',
@@ -28,22 +49,20 @@ function editCategory(action, id) {
 	    mimeType: 'application/json',
 	    success: function(data) {
 	    	
-	    	//alert("erruer");
+	    	alert(data.name);
+	    	
 	    	clearCategoryFormInputs();
-	    	
-	    	
+	    	$('#formcategory #tvaid').val(data.tvaid);
+	    	$('#formcategory #id').val(data.id);
 	    	$('#formcategory #name').val(data.name);
-	    	$('#formcategory #TVA').val(data.TVA);
+	    	$('#formcategory #tva').val(data.tva);
 	    	
 	    	
 	    	$('#divformcategory .modal-title').html("Editer");
 	    	$('#divformcategory').modal('show');
 
 	    }
-	    /*,
-	    error: function(data, status, err) {
-	        alert("error: " + data + " status: " + status + " err:" + err);
-	    }*/
+	   
 	});
 }
 
@@ -67,10 +86,10 @@ $(document).ready(function() {
 	
 	$form.bind('submit', function(e) {
 		var data = $form.serialize();
-		alert(data);
+		//alert(data);
 		$.post($form.action, data, function(response) {
 			
-			alert(response.status);
+			//alert(response.status);
 			
 			if (response.status == 'FAIL') {
 				for (var i = 0; i < response.errorMessageList.length; i++) {

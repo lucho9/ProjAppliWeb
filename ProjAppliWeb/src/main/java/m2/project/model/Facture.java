@@ -16,6 +16,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Facture {
 	@Id
@@ -61,6 +63,9 @@ public class Facture {
 		this.setMoyenPaiement(n.getMoyenPaiement());
 	}
 
+	@JsonIgnore
+
+
 	public String getMoyenPaiement() {
 		return moyenPaiement;
 	}
@@ -69,6 +74,7 @@ public class Facture {
 		this.moyenPaiement = moyenPaiement;
 	}
 	
+
 	public List<QuantiteCommande> getLq() {
 		return lq;
 	}

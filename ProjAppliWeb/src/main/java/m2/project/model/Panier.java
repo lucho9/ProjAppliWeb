@@ -8,13 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 import m2.project.repository.QuantiteCommandeRepository;
+import m2.project.service.FactureService;
+import m2.project.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 
 public class Panier {
 	private Map<Long, QuantiteCommande> productQuantities = new HashMap<Long, QuantiteCommande>();
 	private String moyenPaiement = "";
 	private Customer client;
+	
+	@Autowired
+	private ProductService productService;
 	
 	public Customer getClient() {
 		return client;
@@ -28,12 +37,22 @@ public class Panier {
 
 	public void addProduct(Product product) {
 		if (!productQuantities.containsKey(product.getId())) {
-			productQuantities.put(product.getId(), new QuantiteCommande(product, 1.0));
+			if(product.getStock()!=0){
+				
+			
+			productQuantities.put(product.getId(), new QuantiteCommande(product,1));
+			
+			}
 		}
 		else {
+			
 			QuantiteCommande q = productQuantities.get(product.getId());
+			
+			if(product.getStock()-q.getQte()>0){
 			q.setQte(q.getQte() + 1);
 			productQuantities.put(product.getId(), q);
+			
+			}
 		}
 	}
 	
@@ -41,6 +60,32 @@ public class Panier {
 		if (productQuantities.containsKey(id)) {
 			productQuantities.remove(id);
 		}		
+	}
+	
+
+	
+	
+	public int getquantiteFinale(QuantiteCommande p) {
+
+		
+	//	for (QuantiteCommande p : pq.values()) {
+		//	if (pq.containsKey(p.getProduct().getId())) {	
+				
+				
+			int newstock=(p.getProduct().getStock())-p.getQte();
+			
+			return newstock;
+		
+			
+			
+		//	Product prod=productService.findOne(p.getProduct().getId());
+		//	prod.setStock(newstock);
+		//	productService.save(prod);
+			//}
+		//}
+		
+		
+	
 	}
 
 	public double getTotalHT() {

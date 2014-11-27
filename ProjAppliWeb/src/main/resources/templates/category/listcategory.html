@@ -85,10 +85,8 @@
                   <i class="glyphicon glyphicon-pencil"></i></button></td>
                   
            
-                <td><a type="button" th:href="@{/category/delete(id=${category.id})}" class="btn btn-default btn-xs">
- 				 <span class="glyphicon glyphicon-trash"></span>
-				</a>
-				</td>
+                <td><button  class="btn  btn-default btn-xs" th:onclick="@{'javascript:deleteCategory(\'/category/delete\', ' + ${category.id} + '); return false;'}" >
+ 				  <i class="glyphicon glyphicon-trash"></i></button></td>
                
             </tr>
            

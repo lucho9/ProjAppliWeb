@@ -192,12 +192,16 @@ public class ProductController {
 		}
 		temp = categorie;
 		
+		
 		session.setAttribute("panier", getPanier(session));
 		
+
+		
+		/*
 		if(cat != null) {
 			model.addAttribute("products", productService.findByCat(cat));
 			model.addAttribute("filtreCat", cat);
-		}
+		}*/
 		if(categorie != null) {
 			model.addAttribute("products", productService.findByCat(categorie));
 			model.addAttribute("filtreCat", categorie);
@@ -231,8 +235,11 @@ public class ProductController {
 		product = productService.findOne(id);
 		
 		Panier p = getPanier(session);
+
+		
 		p.addProduct(product);
 		session.setAttribute("panier", p);
+		
 
 		return "redirect:/caisse";
 	}

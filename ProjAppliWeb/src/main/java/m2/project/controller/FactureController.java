@@ -1,13 +1,18 @@
 package m2.project.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
 import m2.project.model.Facture;
 import m2.project.model.Panier;
+import m2.project.model.Product;
+import m2.project.model.QuantiteCommande;
 import m2.project.service.FactureService;
+import m2.project.service.ProductService;
 
+import org.hibernate.mapping.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
@@ -20,17 +25,61 @@ import org.springframework.web.bind.annotation.RequestParam;
 public class FactureController {
 
 	@Autowired
+	private ProductService productService;
+	
+	@Autowired
 	private FactureService factureService;
+	
+/*	
+public void MAJStock(Map<Long, QuantiteCommande> pq) {
+
+		
+		for (QuantiteCommande p : pq.values()) {
+			if (pq.containsKey(p.getProduct().getId())) {	
+				
+				
+			int newstock=(p.getProduct().getStock())-p.getQte();
+		//	MAJStock.put(i, newstock);
+			
+			
+			Product prod=productService.findOne(p.getProduct().getId());
+			prod.setStock(newstock);
+			productService.save(prod);
+			}
+		}
+		
+		
+	
+	}*/
+	
+	
 	
 	@RequestMapping(value = "/facture/validationCommande", method = RequestMethod.POST)
 	public String validationPanier(HttpSession session) {
 		Panier panier = (Panier)session.getAttribute("panier");
 		if (panier != null) {
 			factureService.save(panier.getFacture());
+		
+		
 		}
+		
+		int newstock;
+		for (QuantiteCommande p : panier.getProductQuantities().values()) {
+			if (panier.getProductQuantities().containsKey(p.getProduct().getId())) {	
+				
+				newstock=panier.getquantiteFinale(p);
+				Product prod=productService.findOne(p.getProduct().getId());
+				prod.setStock(newstock);
+				productService.save(prod);
+				
+			}
+		}
+		
 	    session.removeAttribute("panier");
 		return "redirect:/caisse";
 	}
+	
+	
 	
 	@RequestMapping(value = "/facture/delete", method = RequestMethod.GET)
 	public String deleteFacture(@RequestParam("id") Long id, Model model) {
