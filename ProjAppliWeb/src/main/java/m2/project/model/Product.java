@@ -16,6 +16,8 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import org.junit.experimental.categories.Categories;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
@@ -29,39 +31,24 @@ public class Product implements Serializable {
 	@Column(unique=true)
 	@NotNull
 	@Size(min=2, max=20)
-	public
-	 String name;
+	public String name;
 	@NotNull
 	@Min(1)
 	private double prix;
-	@NotNull
-	@Min(1)
+	
 	private int stock;
 
-	
 	@OneToOne(mappedBy="product")
 	private QuantiteCommande qc;
 	
-	
-	
 	public String ref="";
 
-	
-
-	
-	
 	@ManyToOne
 	private Category category ;
-
-
-
-
 
 	public String getRef() {
 		return ref;
 	}
-
-
 	public void setRef(String ref) {
 		this.ref = ref;
 	}
@@ -86,20 +73,11 @@ public class Product implements Serializable {
 
 	}
 
-	public Product(String name, int prix) {
-
-		this.name = name;
-		this.prix = prix;
-	
-	}
-	
-	
-	public Product(String name, int prix,int stock) {
-		
+	public Product(String name, double prix, int stock, Category category) {
 		this.name = name;
 		this.prix = prix;
 		this.stock = stock;
-	
+		this.category = category;
 	}
 	
 

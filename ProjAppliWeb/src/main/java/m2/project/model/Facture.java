@@ -37,6 +37,11 @@ public class Facture {
 	private double discount = 0;
 	
 	private String ref = "";
+	private double prixTotal;
+	
+	private String moyenPaiement;
+
+	
 	
 	@NotNull
 	private Date dateFacture;
@@ -63,10 +68,23 @@ public class Facture {
 		this.setTotalTTC(n.getTotalTTC());
 		this.setTotalTTCDiscount(n.getTotalTTCDiscount());
 		this.setDiscount(n.getDiscount());
+		this.setMoyenPaiement(n.getMoyenPaiement());
 		DateFormat df = new SimpleDateFormat("yMd");
 		this.setRef("#FACT" + df.format(this.getDateFacture()));
 	}
+
 	@JsonIgnore
+
+
+	public String getMoyenPaiement() {
+		return moyenPaiement;
+	}
+
+	public void setMoyenPaiement(String moyenPaiement) {
+		this.moyenPaiement = moyenPaiement;
+	}
+	
+
 	public List<QuantiteCommande> getLq() {
 		return lq;
 	}
@@ -87,6 +105,9 @@ public class Facture {
 	}
 	public String getCustomerName() {
 		return (c != null ? c.getCustomerName() : "");
+	}
+	public String getCustomerAddress() {
+		return (c != null ? c.getAddress() : "");
 	}
 	public void setC(Customer c) {
 		this.c = c;

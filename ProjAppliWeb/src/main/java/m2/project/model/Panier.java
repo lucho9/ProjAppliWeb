@@ -12,9 +12,14 @@ import m2.project.service.FactureService;
 import m2.project.service.ProductService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
+import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
+
 
 public class Panier {
 	private Map<Long, QuantiteCommande> productQuantities = new HashMap<Long, QuantiteCommande>();
+	private String moyenPaiement = "";
 	private Customer client;
 	
 	@Autowired
@@ -32,8 +37,12 @@ public class Panier {
 
 	public void addProduct(Product product) {
 		if (!productQuantities.containsKey(product.getId())) {
+			if(product.getStock()!=0){
+				
 			
 			productQuantities.put(product.getId(), new QuantiteCommande(product,1));
+			
+			}
 		}
 		else {
 			
@@ -42,6 +51,7 @@ public class Panier {
 			if(product.getStock()-q.getQte()>0){
 			q.setQte(q.getQte() + 1);
 			productQuantities.put(product.getId(), q);
+			
 			}
 		}
 	}
@@ -52,35 +62,27 @@ public class Panier {
 		}		
 	}
 	
-/*	public void MAJStock(Map<Long, Integer> map) {
-	
-		
-		for (int p : map.values()) {
-			
-		}
-		
-		
-	}*/
-	
-	
-	
-	public void getquantiteFinale(Map<Long, QuantiteCommande> pq) {
 
+	
+	
+	public int getquantiteFinale(QuantiteCommande p) {
 
 		
-		for (QuantiteCommande p : pq.values()) {
-			/*for (int i=0;i<productQuantities.size();i++) {
-				if(!productQuantities.isEmpty()){
-					productQuantities.get(i).getProduct().setStock(productQuantities.get(i).getProduct().getStock()-productQuantities.get(i).getQte());
-					productService.save(productQuantities.get(i).getProduct());	
-				}*/
+	//	for (QuantiteCommande p : pq.values()) {
+		//	if (pq.containsKey(p.getProduct().getId())) {	
 				
 				
+			int newstock=(p.getProduct().getStock())-p.getQte();
 			
-			p.getProduct().setStock((p.getProduct().getStock())-p.getQte());
-			productService.save(p.getProduct());
+			return newstock;
+		
 			
-		}
+			
+		//	Product prod=productService.findOne(p.getProduct().getId());
+		//	prod.setStock(newstock);
+		//	productService.save(prod);
+			//}
+		//}
 		
 		
 	
@@ -145,4 +147,12 @@ public class Panier {
 	public void setProductQuantities(Map<Long, QuantiteCommande> productQuantities) {
 		this.productQuantities = productQuantities;
 	}
+	
+	public String getMoyenPaiement() {
+		return moyenPaiement;
+	}
+	public void setMoyenPaiement(String moyenPaiement) {
+		this.moyenPaiement = moyenPaiement;
+	}
+
 }

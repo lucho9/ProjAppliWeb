@@ -68,8 +68,21 @@
 					</center>
 					<td>
 						<span>
-							<a th:href="@{'/caissee?id=' + ${product.id}}" th:each="product : ${products}">
-								<button id="caisse" class="btn btn-default btn-lg"  th:style="@{'background-image: url(\'' + ${product.category.img} +'\')'}"><label id="labelcaisse" th:text="${product.name}"></label></button>
+							<a id="caisselistener" th:href="@{'/caissee?id=' + ${product.id}}" th:each="product : ${products}">
+							
+							<!-- <div th:switch="${product.stock}"> 
+ 							 <p th:case="0"><button id="caisse" class="btn btn-default btn-lg" disabled="true" th:style="@{'background-image: url(\'' + ${product.category.img} +'\')'}"><label id="labelcaisse" th:text="${product.name}"></label></button>
+							</p>
+ 							 <p th:case="*"><button id="caisse" class="btn btn-default btn-lg" disabled="false" th:style="@{'background-image: url(\'' + ${product.category.img} +'\')'}"><label id="labelcaisse" th:text="${product.name}"></label></button>
+							</p>   -->
+						
+							<button id="caisse" class="btn btn-default btn-lg" th:disabled="@{${product.stock}==0}" th:style="@{'background-image: url(\'' + ${product.category.img} +'\')'}"><label id="labelcaisse" th:text="${product.name}"></label></button>
+							
+							
+							
+								
+								<!-- </div> -->
+							
 							</a>
 						</span>
 					</td>
@@ -102,7 +115,7 @@
 								<td th:text="${product.value.product.category.TVA.tva}"></td>
 								<td th:text="${product.value.qte}"></td>
 
-								<td><a th:href="@{/deletePanier(id=${product.value.id})}"
+								<td><a th:href="@{/deletePanier(id=${product.value.product.id})}"
 									class="btn btn-default btn-xs"> <span
 										class="glyphicon glyphicon-remove"></span>
 								</a></td>
@@ -131,12 +144,29 @@
 								<td>
 									<select id="changeCustomer" >
 										<option value="0">Client non enregistré</option>
-										<option th:each="cust : ${custs}" th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
+										<option th:each="cust : ${custs}"  th:value="${cust.id}" th:text="@{${cust.lastName} + ' ' + ${cust.firstName}}" th:selected="@{${session.panier.getClientId()} == ${cust.id}}" />
 									</select>
 									
 								</td>
 									
 							</tr>
+							
+							<tr>
+								<td>Moyen de paiement</td>
+								<td>
+								<input type="radio" name="MP" value="Carte-bancaire" th:checked="@{${session.panier.moyenPaiement} == 'Carte-bancaire'}"/>
+								<img src="cb.gif"/>
+								<br />
+								<input type="radio" name="MP" value="Chèque" th:checked="@{${session.panier.moyenPaiement} == 'Chèque'}"/>
+								<img src="cheque.png"/>
+								<br/>
+								<input type="radio" name="MP" value="Espèces" th:checked="@{${session.panier.moyenPaiement} == 'Espèces'}"/>
+								<img src="cash.png"/>
+								</td>
+									
+							</tr>
+							
+					
 						</tbody>
 					</table>
 				</div>

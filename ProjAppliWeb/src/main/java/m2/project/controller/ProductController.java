@@ -146,8 +146,8 @@ public class ProductController {
 		
 
 			if(!(productService.findOne(product.name).isEmpty()))
-			//productService.save(product);
-			//res.setStatus("SUCCESS");
+			productService.save(product);
+			res.setStatus("SUCCESS");
 
 			//if(productService.findOne(product.name)==null)
 			try {
@@ -192,12 +192,16 @@ public class ProductController {
 		}
 		temp = categorie;
 		
+		
 		session.setAttribute("panier", getPanier(session));
 		
+
+		
+		/*
 		if(cat != null) {
 			model.addAttribute("products", productService.findByCat(cat));
 			model.addAttribute("filtreCat", cat);
-		}
+		}*/
 		if(categorie != null) {
 			model.addAttribute("products", productService.findByCat(categorie));
 			model.addAttribute("filtreCat", categorie);
@@ -231,8 +235,11 @@ public class ProductController {
 		product = productService.findOne(id);
 		
 		Panier p = getPanier(session);
+
+		
 		p.addProduct(product);
 		session.setAttribute("panier", p);
+		
 
 		return "redirect:/caisse";
 	}
@@ -257,6 +264,34 @@ public class ProductController {
 		return "redirect:/caisse";
 	}
 
+	@RequestMapping(value = "/cbCaisse", method = RequestMethod.GET)
+	public String cbChoise(@RequestParam("id") String id, Model model, HttpSession session) {
+		
+		
+		String choix = id;
+		Panier p = getPanier(session);
+		if(choix == "Espèces")
+		{
+			choix = id;
+		}
+		else
+		if(choix == "Chèque")
+		{
+			choix = id;
+		}
+		else
+		if(choix == "Carte-bancaire")
+		{
+			choix = id;
+		}
+		
+		p.setMoyenPaiement(choix);		
+		session.setAttribute("panier", p);
+		
+		
+		return "redirect:/caisse";
+		
+	}
 	
 	
 	
