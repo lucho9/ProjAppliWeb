@@ -30,7 +30,7 @@ public class LoginController {
     public ModelAndView showLoginPage() {
         return new ModelAndView("login");
     }
-    
+
     @RequestMapping(value={"/callConfig"}, method=RequestMethod.POST, produces={"application/json"})
     public @ResponseBody JsonResponse callConfig(@RequestParam(value="lastName", required = false) String lastName, @RequestParam(value="firstName", required = false) String firstName) {
     	JsonResponse res = new JsonResponse();

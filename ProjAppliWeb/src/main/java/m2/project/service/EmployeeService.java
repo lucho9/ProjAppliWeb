@@ -21,4 +21,5 @@ public interface EmployeeService {
 	public Employee findByEmailAndLastNameAndFirstNameAllIgnoreCase(String email, String lastName, String firstName);
 	public Employee findByLastNameAndFirstNameAllIgnoreCase(String lastName, String firstName);
 	public List<Employee> findByNames(String searchTerm1, String searchTerm2);
+	public Employee getLoggedEmployee();
 }

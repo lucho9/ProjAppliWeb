@@ -1,6 +1,5 @@
 package m2.project.model;
 
-
 import java.text.DateFormat;
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
@@ -36,23 +35,16 @@ public class Facture {
 	private double totalTTCDiscount = 0;
 	private double discount = 0;
 	
-	private String ref = "";
-	private double prixTotal;
-	
 	private String moyenPaiement;
-
-	
 	
 	@NotNull
 	private Date dateFacture;
 
-
-	public Facture() {
-	}
+	@NotNull
+	@ManyToOne
+	private Employee employee;
 	
-	public Facture(Customer c, List<QuantiteCommande> lq) {
-		this.c = c;
-		this.lq = lq;
+	public Facture() {
 	}
 	
 	public Facture(Panier n) {
@@ -69,8 +61,6 @@ public class Facture {
 		this.setTotalTTCDiscount(n.getTotalTTCDiscount());
 		this.setDiscount(n.getDiscount());
 		this.setMoyenPaiement(n.getMoyenPaiement());
-		DateFormat df = new SimpleDateFormat("yMd");
-		this.setRef("#FACT" + df.format(this.getDateFacture()));
 	}
 
 	@JsonIgnore
@@ -111,14 +101,6 @@ public class Facture {
 	}
 	public void setC(Customer c) {
 		this.c = c;
-	}
-
-	public String getRef() {
-		return ref;
-	}
-
-	public void setRef(String ref) {
-		this.ref = ref;
 	}
 
 	public Date getDateFacture() {
@@ -184,6 +166,18 @@ public class Facture {
 	public String getTotalTTCDiscountFormated() {
         DecimalFormat df = new DecimalFormat("#.##");
         return df.format(totalTTCDiscount);
+	}
+
+	public String getEmployeeName() {
+		return (employee != null ? (employee.getLastName() + "" + employee.getFirstName()) : "");
+	}
+	
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
 	}
 	
 }

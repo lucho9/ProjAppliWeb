@@ -12,6 +12,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -72,5 +74,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	public Employee findByLastNameAndFirstNameAllIgnoreCase(String lastName, String firstName) {
 		return employeeRepository.findByLastNameAndFirstNameAllIgnoreCase(lastName, firstName);
+	}
+	
+	public Employee getLoggedEmployee() {
+		try {
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+	    	String login = authentication.getName();
+	    	if (login != null && !login.isEmpty()) {
+	    		Employee e = findByLogin(login);
+	    		if (e != null)
+	    			return e;
+	    	}
+		}
+		catch(Exception e) {
+		}
+    	return null;
 	}
 }

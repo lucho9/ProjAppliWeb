@@ -49,7 +49,7 @@
 			<thead>
 				<tr>
 					<th>
-						<h4>ID</h4>
+						<h4>#Ref</h4>
 					</th>
 					<th>
 						<h4>Nom</h4>
@@ -69,7 +69,7 @@
 			<tbody>
 			
 				<tr th:each="product : ${facture.lq}">
-					<td th:text="${product.product.id}"></td>
+					<td th:text="@{'#' + ${product.product.id}}"></td>
 					<td th:text="${product.product.name}"></td>
 					<td th:text="${product.product.prix}"></td>
 					<td th:text="${product.product.category.TVA.tva}"></td>

@@ -2,30 +2,27 @@ package m2.project.model;
 
 import java.io.Serializable;
 import java.text.DecimalFormat;
-import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-import org.junit.experimental.categories.Categories;
-
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 //@Table(uniqueConstraints={@UniqueConstraint(columnNames={"name"})})
 public class Product implements Serializable {
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	
 	private long id;
 	
 	@Column(unique=true)
@@ -44,8 +41,23 @@ public class Product implements Serializable {
 	public String ref="";
 
 	@ManyToOne
-	private Category category ;
+	private Category category;
 
+	public Product() {
+	}
+
+	public Product(String name, int prix) {
+		this.name = name;
+		this.prix = prix;
+	}
+	
+	public Product(String name, double prix, int stock, Category category) {
+		this.name = name;
+		this.prix = prix;
+		this.stock = stock;
+		this.category = category;
+	}
+	
 	public String getRef() {
 		return ref;
 	}
@@ -68,18 +80,6 @@ public class Product implements Serializable {
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-	public Product() {
-
-	}
-
-	public Product(String name, double prix, int stock, Category category) {
-		this.name = name;
-		this.prix = prix;
-		this.stock = stock;
-		this.category = category;
-	}
-	
 
 	public Long getId(){
 		return id;
@@ -110,8 +110,7 @@ public class Product implements Serializable {
 		this.prix = prix;
 	}
 
-	
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	public QuantiteCommande getQc() {
@@ -120,10 +119,7 @@ public class Product implements Serializable {
 	public void setQc(QuantiteCommande qc) {
 		this.qc = qc;
 	}
-
-
-
-	
-	
-	
+	public void setId(long id) {
+		this.id = id;
+	}
 }

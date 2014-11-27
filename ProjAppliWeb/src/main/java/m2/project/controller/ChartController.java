@@ -58,7 +58,7 @@ public class ChartController {
 	public void drawBarChart(HttpServletResponse response){
 		response.setContentType("image/png");
 		CategoryDataset pdSet2=createDataset2();
-		JFreeChart barChart = ChartFactory.createBarChart(" Grapphe test  ", "Category", "Score", pdSet2,PlotOrientation.VERTICAL, false, false, false);
+		JFreeChart barChart = ChartFactory.createBarChart("  ", "Category", "Score", pdSet2,PlotOrientation.VERTICAL, false, false, false);
 		
 		try{
 			ChartUtilities.writeChartAsPNG(response.getOutputStream(),barChart,750,400);

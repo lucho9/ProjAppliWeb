@@ -42,7 +42,6 @@ public class Customer implements Serializable {
 	@Size(min = 2, max = 30)
 	private String lastName;
 
-
 	private String address;
 	
 	@ManyToMany(fetch=FetchType.EAGER)
@@ -57,17 +56,6 @@ public class Customer implements Serializable {
 		this.address = address;
 		this.customerGroups = customerGroups;
 	}
-
-	public Customer(String firstName, String lastName) {
-		this(firstName, lastName, null);
-	}
-
-	public Customer(String firstName, String lastName, List<CustomerGroup> customerGroups) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.customerGroups = customerGroups;
-	}
-
 	
 	public long getId() {
 		return id;

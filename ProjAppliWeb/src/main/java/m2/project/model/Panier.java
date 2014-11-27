@@ -147,12 +147,10 @@ public class Panier {
 	public void setProductQuantities(Map<Long, QuantiteCommande> productQuantities) {
 		this.productQuantities = productQuantities;
 	}
-	
 	public String getMoyenPaiement() {
 		return moyenPaiement;
 	}
 	public void setMoyenPaiement(String moyenPaiement) {
 		this.moyenPaiement = moyenPaiement;
 	}
-
 }
