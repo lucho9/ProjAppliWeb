@@ -68,8 +68,8 @@ public class CustomerServiceImplTest {
 		//cgl.add(g);
 		
 		// customers
-		c1 = new Customer("FNC1", "LNC1", "", null);
-		c2 = new Customer("FNC2", "LNC2", "", null);
+		c1 = new Customer("FNC1", "LNC1", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", null);
+		c2 = new Customer("FNC2", "LNC2", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", null);
 		//c2 = new Customer("FNC2", "LNC2", cgl);
 		customerService.save(c1);
 		customerService.save(c2);
@@ -145,7 +145,7 @@ public class CustomerServiceImplTest {
 	 */
 	@Test
 	public void testSave() {
-		Customer c3 = new Customer("FNC3", "LNC3", "", null);
+		Customer c3 = new Customer("FNC3", "LNC3", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", null);
 		customerService.save(c3);
 		//Customer c4 = new Customer("FNC4", "LNC4", cgl);
 		//customerService.save(c4);

@@ -11,6 +11,9 @@ function editCustomer(action, id) {
 	    	$('#formcustomer #id').val(data.id);
 	    	$('#formcustomer #lastName').val(data.lastName);
 	    	$('#formcustomer #firstName').val(data.firstName);
+	    	$('#formcustomer #phoneNr').val(data.phoneNr);
+	    	$('#formcustomer #address').val(data.address);
+	    	$('#formcustomer #email').val(data.email);
 	    	$.each(data.customerGroups, function(i, id) {
 	    		$('#formcustomer #customerGroups option[value="' + id + '"]').prop('selected', true);
 	    	});
@@ -164,7 +167,9 @@ $(document).ready(function() {
 		// this is no longer required, if theme is set
 		// ,uitheme : "bootstrap"
 
-		}
+		},
+		
+		sortList : [[0,0],[1,0]]
 	}).tablesorterPager({
 		// target the pager markup - see the HTML block below
 		container : $(".ts-pager"),
@@ -191,8 +196,7 @@ $(document).ready(function() {
 	});
 	
 	// sort col 0 asc and col 1 asc
-	var sorting = [[0,0],[1,0]]; 
-    $("table").trigger("sorton", [sorting]); 
-    
-    $("table").trigger("update");
+	//var sorting = [[0,0],[1,0]]; 
+    //$("table").trigger("sorton", [sorting]); 
+    //$("table").trigger("update");
 });

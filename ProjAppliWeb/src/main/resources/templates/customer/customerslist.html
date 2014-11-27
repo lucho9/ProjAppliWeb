@@ -50,7 +50,7 @@
 					</h4>
 					<div class="text-center">
 						<form id="formfilter" th:action="@{/customer}" method="get">
-							<input id="filtername" name="filtername" type="text" class="form-control" placeholder="Recherche par nom et/ou prénom" th:value="${filtername}"/>
+							<input id="filtername" name="filtername" type="text" class="form-control" placeholder="Nom et/ou prénom" th:value="${filtername}"/>
 							<button class="btn btn-green btn-lg glyphicon glyphicon-search" type="submit"></button>
 							<button class="btn btn-green btn-lg glyphicon glyphicon-refresh" type="button" onclick="initFilter(); return false;"></button>
 						</form>

@@ -17,7 +17,9 @@ public class CustomerSerializer extends JsonSerializer<Customer> {
         jgen.writeNumberField("id", value.getId());
         jgen.writeStringField("firstName", value.getFirstName());
         jgen.writeStringField("lastName", value.getLastName());
-        
+        jgen.writeStringField("phoneNr", value.getPhoneNr());
+        jgen.writeStringField("email", value.getEmail());
+        jgen.writeStringField("address", value.getAddress());
         jgen.writeArrayFieldStart("customerGroups");
         for (CustomerGroup group : value.getCustomerGroups()) {
         	jgen.writeNumber(group.getId());
