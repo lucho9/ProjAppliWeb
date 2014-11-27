@@ -87,7 +87,7 @@
 					<table class="table">
 						<thead>
 							<tr>
-								<th>ID</th>
+								<th>#Ref</th>
 								<th>Nom</th>
 								<th>Prix</th>
 								<th>TVA</th>
@@ -96,7 +96,7 @@
 						</thead>
 						<tbody>
 							<tr th:each="product : ${session.panier.productQuantities}">
-								<td th:text="${product.value.product.id}"></td>
+								<td th:text="@{'#' + ${product.value.product.id}}"></td>
 								<td th:text="${product.value.product.name}"></td>
 								<td th:text="${product.value.product.prix}"></td>
 								<td th:text="${product.value.product.category.TVA.tva}"></td>
@@ -141,14 +141,18 @@
 							<tr>
 								<td>Moyen de paiement</td>
 								<td>
-									<input type="radio" name="MP" value="Carte-bancaire" th:checked="@{${session.panier.moyenPaiement} == 'Carte-bancaire'}"/>
-									<img src="cb.gif"/>
-									<br />
-									<input type="radio" name="MP" value="Chèque" th:checked="@{${session.panier.moyenPaiement} == 'Chèque'}"/>
-									<img src="cheque.png"/>
-									<br/>
-									<input type="radio" name="MP" value="Espèces" th:checked="@{${session.panier.moyenPaiement} == 'Espèces'}"/>
-									<img src="cash.png"/>
+									<div>
+										<input type="radio" name="MP" value="Carte-bancaire" th:checked="@{${session.panier.moyenPaiement} == 'Carte-bancaire'}"/>
+										<img src="cb.gif"/>
+									</div>
+									<div>
+										<input type="radio" name="MP" value="Chèque" th:checked="@{${session.panier.moyenPaiement} == 'Chèque'}"/>
+										<img src="cheque.png"/>
+									</div>
+									<div>
+										<input type="radio" name="MP" value="Espèces" th:checked="@{${session.panier.moyenPaiement} == 'Espèces'}"/>
+										<img src="cash.png"/>
+									</div>
 								</td>
 									
 							</tr>

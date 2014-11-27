@@ -58,25 +58,27 @@
 								<th>Produits</th>
 								<th>Prix TTC</th>
 								<th>Qté</th>
-								<th>Total TTC</th>
+								<th>Tot TTC</th>
 								<th>Date</th>
+								<th>Employee</th>
 							</tr>
 						</thead>
 						<tbody>
 							<tr th:each="factur : ${factures}">
-								<td  th:text="${factur.ref}"></td>
+								<td  th:text="@{'#' + ${factur.id}}"></td>
 								<td th:text="${factur.getCustomerName()}"></td>
 								<td>
 									<div th:each="produit : ${factur.lq}" th:text="${produit.product.name}"></div>
 								</td>
 								<td>
-									<div th:each="produit : ${factur.lq}" th:text="@{${produit.product.getPrixTTCFormated()} + ' euros'}"></div>
+									<div th:each="produit : ${factur.lq}" th:text="${produit.product.getPrixTTCFormated()}"></div>
 								</td>
 								<td>
 									<div th:each="produit : ${factur.lq}" th:text="${produit.qte}"></div>
 								</td>
 								<td th:text="${factur.getTotalTTCFormated()}"></td>
 								<td th:text="${factur.getDateFactureFormated()}"></td>
+								<td th:text="${factur.getEmployeeName()}"></td>
 								<td>
 									<a type="button" th:href="@{/facture/display(id=${factur.id})}" class="btn btn-default btn-xs">
 				 						<span class="glyphicon glyphicon-print"></span>
