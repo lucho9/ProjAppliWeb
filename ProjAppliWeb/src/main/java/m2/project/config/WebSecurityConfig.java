@@ -1,5 +1,6 @@
 package m2.project.config;
 
+import m2.project.security.MyAccessDeniedHandler;
 import m2.project.security.SecurityUserDetailsService;
 
 import org.apache.tomcat.jdbc.pool.DataSource;
@@ -47,44 +48,52 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public void configure(WebSecurity web) throws Exception {
         web.ignoring()
-        	.antMatchers("/errors/**", "/templates/fragments/**", "/theme/**", "/js/**", "/ThemeTemplate/**", "/index/**", "/callconfig/**", "/config/**");
+        	.antMatchers("/errors/**", "/fragments/**", "/theme/**", "/js/**", "/ThemeTemplate/**", "/index**", "/callconfig/**", "/config/**");
     }
-
+    
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth.userDetailsService(userDetailsService).passwordEncoder(new BCryptPasswordEncoder());
     }
-    
-	@Override
+
+    @Override
 	protected void configure(HttpSecurity http) throws Exception {
 	
 		//http.authorizeRequests().antMatchers("/**").permitAll();
 		//http.csrf().disable();
 		
-		//http.authorizeRequests().antMatchers("/", ).permitAll();
 		http.authorizeRequests().antMatchers("/customer/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/customer/delete/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/customer/grouppopover/**").access("hasRole('ROLE_ADMIN')");
+
 		http.authorizeRequests().antMatchers("/product/**").access("hasRole('ROLE_ADMIN')");
+		
 		http.authorizeRequests().antMatchers("/category/**").access("hasRole('ROLE_ADMIN')");
+		
 		http.authorizeRequests().antMatchers("/employee/**").access("hasRole('ROLE_ADMIN')");
-		http.authorizeRequests().antMatchers("/caisse/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
-		http.authorizeRequests().antMatchers("/caissee/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
-		http.authorizeRequests().antMatchers("/stock/**").access("hasRole('ROLE_ADMIN')");
+		
+		http.authorizeRequests().antMatchers("/caisse**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		
+		http.authorizeRequests().antMatchers("/facture/display").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/facture/delete").access("hasRole('ROLE_ADMIN')");
 		http.authorizeRequests().antMatchers("/factures/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
-		http.authorizeRequests().antMatchers("/facture/**").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
-		http.authorizeRequests().antMatchers("/help/**").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/facture/validationCommande").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/delete").access("hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/deletePanier").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/custCaisse").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
+		http.authorizeRequests().antMatchers("/cbCaisse").access("hasRole('ROLE_USER') or hasRole('ROLE_ADMIN')");
 		
 		http.formLogin()
 			.loginPage("/login")
-			//.defaultSuccessUrl("/success-login", true)
-            //.failureUrl("/error-login")
             .loginProcessingUrl("/process-login")
 			.usernameParameter("login").passwordParameter("pwd") // redéfinition des input names de login.html
 			.permitAll();
-			
-			//and().logout().logoutUrl("/logout").logoutSuccessUrl("/").permitAll();
 		
 		// avec l'instruction logoutUrl, la requête est en post -> logoutRequestMatcher fait du get
 		http.logout().logoutRequestMatcher(new AntPathRequestMatcher("/logout")).logoutSuccessUrl("/").permitAll();
+		
+		http.exceptionHandling().accessDeniedHandler(new MyAccessDeniedHandler("/errors/403"));
+		//http.exceptionHandling().accessDeniedPage("");
 		
 		// marche pas
 		//http.rememberMe()
@@ -93,7 +102,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		
 		http.openidLogin()
 	        .loginPage("/login")
-	        //.permitAll()
 	        .authenticationUserDetailsService(userDetailsService)
 	        .attributeExchange("https://www.google.com/.*")
 	            .attribute("email")

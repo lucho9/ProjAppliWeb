@@ -1,6 +1,27 @@
-<html>
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.springframework.org/security/tag">
+
+<head th:include="fragments/common :: [//head]">
+</head>
+
 <body>
-	<h1>HTTP Status 403 - Access is denied</h1>
-	<h2>${msg}</h2>
+	<div class="container">
+		<div class="page-header">
+			<h1>
+				Action impossible <small>Vous n'avez pas les droits</small>
+			</h1>
+		</div>
+
+		<div class="page-body">
+			<div class="col-sm-offset-2 col-sm-10">
+				<a th:href="@{/}" class="btn btn-default">Retour</a>
+			</div>
+		</div>
+	</div>
+
+	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
+	<script th:replace="fragments/common :: [//script]"></script>
+	<script type="text/javascript" th:src="@{/js/common.js}"></script>
 </body>
 </html>
