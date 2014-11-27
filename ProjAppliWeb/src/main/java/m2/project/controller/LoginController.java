@@ -74,12 +74,12 @@ public class LoginController {
     		else if (loginType == 0) {
 	    		if (employee.getPassword() != null && employee.getPassword().length() > 0) {
 	    			if (pwd0 == null || pwd0.length() == 0) {
-						errorMesages.add(new ErrorMessage("pwd0", "Ancien mot de passe obligatoire"));
+						errorMesages.add(new ErrorMessage("pwd0", "Mot de passe obligatoire"));
 					}
 	    			else  {
 	    				PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 	    				if (!passwordEncoder.matches(pwd0, employee.getPassword())) {
-	    					errorMesages.add(new ErrorMessage("pwd0", "Ancien mot de passe ne correspond pas"));
+	    					errorMesages.add(new ErrorMessage("pwd0", "Mot de passe ne correspond pas"));
 	    				}
 	    			}
 	    		}
@@ -104,7 +104,8 @@ public class LoginController {
 			employee.setFirstName(firstName);
 			employee.setLoginType(loginType);
 			employee.setLogin(login);
-			employee.hashPassword(pwd);
+			if (pwd != null && !pwd.isEmpty())
+				employee.hashPassword(pwd);
 			employeeService.save(employee);
 			res.setStatus("SUCCESS");
 		}

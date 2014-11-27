@@ -130,8 +130,8 @@ public class CustomerControllerTest {
         lcg.add(g2);
         
 		//customerService.deleteAll();
-		c1 = new Customer("FNC1", "LNC1", "", null);
-		c2 = new Customer("FNC2", "LNC2", "", lcg);
+		c1 = new Customer("FNC1", "LNC1", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", null);
+		c2 = new Customer("FNC2", "LNC2", "Mulhouse", "0033 6 00 00 00 01", "email@emails.com", lcg);
 		//customerService.save(c1);
 		//customerService.save(c2);
 		//c1ID = c1.getId();

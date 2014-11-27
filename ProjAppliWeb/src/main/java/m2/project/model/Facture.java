@@ -115,6 +115,13 @@ public class Facture {
 		DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
 		return df.format(dateFacture);
 	}
+	
+	public String getCustomerEmail() {
+		return (c != null ? c.getEmail() : "");
+	}
+	public String getCustomerPhoneNr() {
+		return (c != null ? c.getPhoneNr() : "");
+	}
 
 	public double getTotalHT() {
 		return totalHT;
