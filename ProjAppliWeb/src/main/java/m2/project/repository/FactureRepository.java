@@ -2,6 +2,7 @@ package m2.project.repository;
 
 import java.util.List;
 
+import m2.project.model.Category;
 import m2.project.model.Facture;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,4 +19,14 @@ public interface FactureRepository extends JpaRepository<Facture, Long>{
 			+ " OR (LOWER(cust.firstName) LIKE %:searchTerm2%)"
 	)
 	public List<Facture> findByCustomerNames(@Param("searchTerm1") String searchTerm1, @Param("searchTerm2") String searchTerm2);
+	
+	
+	@Query("SELECT COUNT(f) as total,f.dateFacture as totalFacture FROM Facture f GROUP BY (f.dateFacture) ORDER BY (f.dateFacture)"
+			
+	)
+	public List getTotalFacture();
+	
+	
+	
+	
 }
