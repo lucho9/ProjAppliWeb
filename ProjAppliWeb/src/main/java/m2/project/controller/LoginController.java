@@ -4,6 +4,8 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import m2.project.model.Employee;
 import m2.project.model.ErrorMessage;
 import m2.project.model.JsonResponse;
@@ -119,18 +121,17 @@ public class LoginController {
     
     // for 403 access denied page
  	@RequestMapping(value = "/errors/403", method = RequestMethod.GET)
- 	public ModelAndView accesssDenied(Principal user) {
+ 	public ModelAndView accesssDenied(HttpServletRequest req, Principal user) {
   
  		ModelAndView model = new ModelAndView();
   
- 		if (user != null) {
- 			model.addObject("msg", "Hi " + user.getName() 
- 			+ ", you do not have permission to access this page!");
- 		} else {
- 			model.addObject("msg", 
- 			"You do not have permission to access this page!");
- 		}
-  
+ 		if (user != null)
+ 			model.addObject("message", user.getName() + ", vous n'avez pas les droits");
+ 		else
+ 			model.addObject("message", "Vous n'avez pas les droits");
+ 		
+ 		model.addObject("retUrl", req.getHeader("referer"));
+ 		
  		model.setViewName("/errors/403");
  		return model;
  	}

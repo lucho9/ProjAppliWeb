@@ -26,8 +26,6 @@ public class MyAccessDeniedHandler implements AccessDeniedHandler {
 			ServletException {
 
 		response.sendRedirect(accessDeniedUrl);
-		request.getSession().setAttribute("message", "Sorry user_dineshonjava You don't have privileges to view this page!!!");
-
 	}
 
 	public String getAccessDeniedUrl() {

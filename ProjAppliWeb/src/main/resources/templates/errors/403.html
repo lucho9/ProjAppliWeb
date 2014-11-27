@@ -9,11 +9,14 @@
 	<div class="container">
 		<div class="page-header">
 			<h1>
-				Action impossible <small>Vous n'avez pas les droits</small>
+				Action impossible <small th:text="${message}"></small>
 			</h1>
 		</div>
 
 		<div class="page-body">
+		</div>
+
+		<div class="page-footer">
 			<div class="col-sm-offset-2 col-sm-10">
 				<a th:href="@{/}" class="btn btn-default">Retour</a>
 			</div>

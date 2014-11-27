@@ -3,6 +3,8 @@ package m2.project.controller;
 import java.sql.SQLException;
 import java.util.Date;
 
+import javassist.expr.Instanceof;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
@@ -21,7 +23,39 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @ControllerAdvice
 public class GlobalExceptionHandling {
-/*
+	@ExceptionHandler({SQLException.class, DataAccessException.class})
+	public ModelAndView databaseError(HttpServletRequest req, Exception exception) throws Exception {
+		ModelAndView mav = new ModelAndView();
+		//mav.addObject("exception", exception);
+		mav.addObject("url", req.getRequestURL());
+		mav.addObject("retUrl", req.getHeader("referer"));
+		mav.addObject("timestamp", new Date().toString());
+		if (exception instanceof DataIntegrityViolationException) {
+			mav.addObject("message", "Cet élément ne peut pas être supprimé, car il est en lien avec d'autres");
+		}
+		else {
+			mav.addObject("message", "Problème avec la base de données");
+		}
+		mav.addObject("status", 500);
+		mav.setViewName("/errors/error");
+		return mav;
+	}
+
+	@ExceptionHandler(Exception.class)
+	public ModelAndView handleError(HttpServletRequest req, Exception exception) throws Exception {
+		if (AnnotationUtils.findAnnotation(exception.getClass(), ResponseStatus.class) != null)
+			throw exception;
+		ModelAndView mav = new ModelAndView();
+		mav.addObject("exception", exception);
+		mav.addObject("url", req.getRequestURL());
+		mav.addObject("retUrl", req.getHeader("referer"));
+		mav.addObject("timestamp", new Date().toString());
+		mav.addObject("status", 500);
+		mav.setViewName("/errors/error");
+		return mav;
+	}
+	
+	/*
 	// 409
 	@ResponseStatus(value = HttpStatus.CONFLICT, reason = "Data integrity violation")
 	@ExceptionHandler(DataIntegrityViolationException.class)
@@ -35,24 +69,7 @@ public class GlobalExceptionHandling {
 	public void accessDenied() {
 		System.out.println();
 	}
-
-	@ExceptionHandler({SQLException.class, DataAccessException.class})
-	public String databaseError(Exception exception) {
-		return "databaseError";
-	}
-*/
-	@ExceptionHandler(Exception.class)
-	public ModelAndView handleError(HttpServletRequest req, Exception exception) throws Exception {
-		if (AnnotationUtils.findAnnotation(exception.getClass(), ResponseStatus.class) != null)
-			throw exception;
-		ModelAndView mav = new ModelAndView();
-		mav.addObject("exception", exception);
-		mav.addObject("url", req.getRequestURL());
-		mav.addObject("timestamp", new Date().toString());
-		mav.addObject("status", 500);
-		mav.setViewName("/errors/error");
-		return mav;
-	}
+	 */
 	
 	/*
 	@ExceptionHandler(EmployeeNotFoundException.class)
