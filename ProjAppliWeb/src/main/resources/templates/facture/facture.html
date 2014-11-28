@@ -7,11 +7,7 @@
 </head>
 
 <body>
-	<div role="navigation"
-		th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
-
-
-
+	<div role="navigation" th:substituteby="fragments/menu :: [//nav[@class='menu']]"></div>
 
 	<!-- MAIN IMAGE SECTION -->
 	<div id="serviceswrap">
@@ -21,7 +17,6 @@
 					<h2>Facture</h2>
 				</div>
 			</div>
-			<!-- row -->
 		</div>
 		<!-- /container -->
 	</div>
@@ -29,108 +24,119 @@
 
 	<div class="container">
 		<div class="row">
-			<div class="col-xs-5">
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						<h4>
-							Client : <a href="#" th:text="${facture.getCustomerName()}"></a>
-						</h4>
-					</div>
-					<div class="panel-body">
-						<p>
-							<span th:text="${facture.getCustomerAddress()}"></span>
-						</p>
-					</div>
-				</div>
+			<div class="col-lg-1">
+				<button type="button" class="btn btn-default" onclick="print()">
+					<i class="icon-arrow-left glyphicon glyphicon-print"></i>
+				</button>
 			</div>
 		</div>
-		<!-- / end client details section -->
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>
-						<h4>#Ref</h4>
-					</th>
-					<th>
-						<h4>Nom</h4>
-					</th>
-					<th>
-						<h4>Prix</h4>
-					</th>
-					<th>
-						<h4>TVA</h4>
-					</th>
-					<th>
-						<h4>Qté</h4>
-					</th>
-					
-				</tr>
-			</thead>
-			<tbody>
-			
-				<tr th:each="product : ${facture.lq}">
-					<td th:text="@{'#' + ${product.product.id}}"></td>
-					<td th:text="${product.product.name}"></td>
-					<td th:text="${product.product.prix}"></td>
-					<td th:text="${product.product.category.TVA.tva}"></td>
-					<td th:text="${product.qte}"></td>
-					
-				</tr>
-			</tbody>
-		</table>
-		<div class="row text-right">
-			<div class="col-xs-2 col-xs-offset-8">
-				<p>
-					<strong>
-						<div>Prix total HT</div>
-						<div>Prix total TTC</div>
-						<div th:text="@{'Discount (' + ${facture.getDiscountFormated()} + ')'}"></div>
-						<div>Moyen de paiement</div>
-					</strong>
-				</p>
-			</div>
-			<div class="col-xs-2">
-				<p>
-					<strong>
-						<div th:text="${facture.getTotalHTFormated()}"></div>
-						<div th:text="${facture.getTotalTTCFormated()}"></div>
-						<div th:text="${facture.getTotalTTCDiscountFormated()}"></div>
-						<div th:text="${facture.getMoyenPaiement()}"></div>
-					</strong>
-				</p>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-5">
-				<div class="panel panel-info">
-					<div class="panel-heading">
-						<h4>Informations Banque</h4>
-					</div>
-					<div class="panel-body">
-						<p>Name</p>
-						<p>Banque</p>
-						<p>IBAN</p>
-					</div>
-				</div>
-			</div>
-			<div class="col-xs-7">
-				<div class="span7">
-					<div class="panel panel-info">
+	</div>
+
+	<div id="printdiv">
+		<div class="container">
+			<div class="row">
+				<div class="col-xs-5">
+					<div class="panel panel-default">
 						<div class="panel-heading">
-							<h4>Informations Contact</h4>
+							<h4>
+								Client : <a href="#" th:text="${facture.getCustomerName()}"></a>
+							</h4>
 						</div>
 						<div class="panel-body">
 							<p>
-								<div th:text="@{'E-mail : ' + ${facture.getCustomerEmail()}}"></div>
-								<div th:text="@{'Tél : ' + ${facture.getCustomerPhoneNr()}}"></div>
+								<span th:text="${facture.getCustomerAddress()}"></span>
 							</p>
-
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- / end client details section -->
+			<table class="table table-bordered">
+				<thead>
+					<tr>
+						<th>
+							<h4>#Ref</h4>
+						</th>
+						<th>
+							<h4>Nom</h4>
+						</th>
+						<th>
+							<h4>Prix</h4>
+						</th>
+						<th>
+							<h4>TVA</h4>
+						</th>
+						<th>
+							<h4>Qté</h4>
+						</th>
+						
+					</tr>
+				</thead>
+				<tbody>
+				
+					<tr th:each="product : ${facture.lq}">
+						<td th:text="@{'#' + ${product.product.id}}"></td>
+						<td th:text="${product.product.name}"></td>
+						<td th:text="${product.product.prix}"></td>
+						<td th:text="${product.product.category.TVA.tva}"></td>
+						<td th:text="${product.qte}"></td>
+						
+					</tr>
+				</tbody>
+			</table>
+			<div class="row text-right">
+				<div class="col-xs-2 col-xs-offset-8">
+					<p>
+						<strong>
+							<div>Prix total HT</div>
+							<div>Prix total TTC</div>
+							<div th:text="@{'Discount (' + ${facture.getDiscountFormated()} + ')'}"></div>
+							<div>Moyen de paiement</div>
+						</strong>
+					</p>
+				</div>
+				<div class="col-xs-2">
+					<p>
+						<strong>
+							<div th:text="${facture.getTotalHTFormated()}"></div>
+							<div th:text="${facture.getTotalTTCFormated()}"></div>
+							<div th:text="${facture.getTotalTTCDiscountFormated()}"></div>
+							<div th:text="${facture.getMoyenPaiement()}"></div>
+						</strong>
+					</p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-5">
+					<div class="panel panel-info">
+						<div class="panel-heading">
+							<h4>Informations Banque</h4>
+						</div>
+						<div class="panel-body">
+							<p>Name</p>
+							<p>Banque</p>
+							<p>IBAN</p>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-7">
+					<div class="span7">
+						<div class="panel panel-info">
+							<div class="panel-heading">
+								<h4>Informations Contact</h4>
+							</div>
+							<div class="panel-body">
+								<p>
+									<div th:text="@{'E-mail : ' + ${facture.getCustomerEmail()}}"></div>
+									<div th:text="@{'Tél : ' + ${facture.getCustomerPhoneNr()}}"></div>
+								</p>
+	
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
 	</div>
 
 	<div th:substituteby="fragments/common :: [//div[@class='footer']]"></div>
