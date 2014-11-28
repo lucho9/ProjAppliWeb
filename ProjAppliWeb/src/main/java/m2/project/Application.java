@@ -101,37 +101,51 @@ public class Application {
 	    tvaRepository.save(t2);
 	    
 		// catégories de produits
-	    Category c1 = new Category("Fruit", "/ThemeTemplate/assets/img/fruit.jpg", t1);
-	    Category c2 = new Category("TV", "/ThemeTemplate/assets/img/TV.png", t2);
 	    Category c3 = new Category("Boisson", "/ThemeTemplate/assets/img/boisson3.jpg", t1);
+	    Category c1 = new Category("Fruit", "/ThemeTemplate/assets/img/fruit.jpg", t1);
+	    Category c4 = new Category("Meuble", "/ThemeTemplate/assets/img/meuble.jpg", t1);
+	    Category c5 = new Category("Plante", "/ThemeTemplate/assets/img/plante.jpg", t2);
+	    Category c2 = new Category("TV", "/ThemeTemplate/assets/img/TV.png", t2);
 	    categoryService.save(c1);
 	    categoryService.save(c2);
 	    categoryService.save(c3);
+	    categoryService.save(c4);
+	    categoryService.save(c5);
 	    
         //création des produits
 	    Product p11 = new Product("Citron", 1.05, 1000, c1);
 	    Product p12 = new Product("Papaye", 2.3, 1000, c1);
-	    Product p13 = new Product("Kiwi", 1.5, 700, c1);
+	    Product p13 = new Product("Kiwi", 1.05, 1000, c1);
+	    Product p14 = new Product("Banane", 1.0, 1000, c1);
 	    Product p21 = new Product("Samsung", 1000, 50, c2);
 	    Product p22 = new Product("Sony", 900, 20, c2);
 	    Product p23 = new Product("LG", 1400, 0, c2);
 	    Product p31 = new Product("Coke", 1.5, 1000, c3);
 	    Product p32 = new Product("Oasis", 2.5, 800, c3);
 	    Product p33 = new Product("Tequila", 15, 200, c3);
+	    Product p41 = new Product("TV", 500, 500, c4);
+	    Product p42 = new Product("Salon", 100, 100, c4);
+	    Product p43 = new Product("Canapé", 1000, 200, c4);
+	    Product p51 = new Product("Bonzaï", 100, 5, c5);
+	    Product p52 = new Product("Palmier", 200, 5, c5);
+	    Product p53 = new Product("Ficus", 50, 5, c5);
 	    productService.save(p11);
 	    productService.save(p12);
 	    productService.save(p13);
+	    productService.save(p14);
 	    productService.save(p21);
 	    productService.save(p22);
 	    productService.save(p23);
 	    productService.save(p31);
 	    productService.save(p32);
 	    productService.save(p33);
-	    categoryService.save(c3);
+	    productService.save(p41);
+	    productService.save(p42);
+	    productService.save(p43);
+	    productService.save(p51);
+	    productService.save(p52);
+	    productService.save(p53);
 	    
-  
-	    
-       
 	    // factures
 	    cal = new GregorianCalendar();
 	    cal.add(Calendar.DATE, -1); 
@@ -146,7 +160,7 @@ public class Application {
 	    
 	    HashMap<Long, QuantiteCommande> m1 = new HashMap<Long, QuantiteCommande>();
 	    m1.put(p12.getId(), new QuantiteCommande(p12, 3));
-	    m1.put(p22.getId(), new QuantiteCommande(p22, 1));
+	    m1.put(p22.getId(), new QuantiteCommande(p41, 1));
 	    m1.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(cust7, m1, "Chèque", moins1, emp1);
 	    HashMap<Long, QuantiteCommande> m2 = new HashMap<Long, QuantiteCommande>();
@@ -161,7 +175,7 @@ public class Application {
 	    m22.put(p33.getId(), new QuantiteCommande(p33, 5));
 	    HashMap<Long, QuantiteCommande> m23 = new HashMap<Long, QuantiteCommande>();
 	    m23.put(p11.getId(), new QuantiteCommande(p11, 10));
-	    m23.put(p33.getId(), new QuantiteCommande(p33, 5));
+	    m23.put(p33.getId(), new QuantiteCommande(p42, 1));
 	    factureService.createFacture(cust7, m21, "Espèces", moins3, emp1);
 	    factureService.createFacture(cust7, m22, "Carte-bancaire", moins4, emp2);
 	    factureService.createFacture(cust7, m23, "Chèque", moins1, emp1);
@@ -171,7 +185,7 @@ public class Application {
 	    m3.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(cust6, m3, "Espèces", moins2, emp1);
 	    HashMap<Long, QuantiteCommande> m4 = new HashMap<Long, QuantiteCommande>();
-	    m4.put(p13.getId(), new QuantiteCommande(p13, 3));
+	    m4.put(p13.getId(), new QuantiteCommande(p14, 3));
 	    m4.put(p31.getId(), new QuantiteCommande(p31, 15));
 	    m4.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(cust6, m4, "Chèque", moins3, emp1);
@@ -193,11 +207,11 @@ public class Application {
 	    HashMap<Long, QuantiteCommande> m44 = new HashMap<Long, QuantiteCommande>();
 	    m44.put(p13.getId(), new QuantiteCommande(p13, 3));
 	    m44.put(p31.getId(), new QuantiteCommande(p31, 15));
-	    m44.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    m44.put(p32.getId(), new QuantiteCommande(p53, 1));
 	    factureService.createFacture(cust6, m44, "Espèces", moins3, emp2);
 	    HashMap<Long, QuantiteCommande> m5 = new HashMap<Long, QuantiteCommande>();
-	    m5.put(p13.getId(), new QuantiteCommande(p13, 3));
-	    m5.put(p31.getId(), new QuantiteCommande(p31, 1));
+	    m5.put(p13.getId(), new QuantiteCommande(p14, 3));
+	    m5.put(p31.getId(), new QuantiteCommande(p43, 1));
 	    m5.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(null, m5, "Chèque", moins4, emp2);
 	    HashMap<Long, QuantiteCommande> m6 = new HashMap<Long, QuantiteCommande>();
@@ -236,8 +250,8 @@ public class Application {
 	    factureService.createFacture(cust6, m9, "Espèces", moins3, emp1);
 	    HashMap<Long, QuantiteCommande> m10 = new HashMap<Long, QuantiteCommande>();
 	    m10.put(p13.getId(), new QuantiteCommande(p13, 3));
-	    m10.put(p31.getId(), new QuantiteCommande(p31, 15));
-	    m10.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    m10.put(p31.getId(), new QuantiteCommande(p51, 1));
+	    m10.put(p32.getId(), new QuantiteCommande(p41, 1));
 	    factureService.createFacture(cust6, m10, "Chèque", moins4, emp1);
 	    HashMap<Long, QuantiteCommande> m101 = new HashMap<Long, QuantiteCommande>();
 	    m101.put(p13.getId(), new QuantiteCommande(p13, 3));
@@ -256,18 +270,18 @@ public class Application {
 	    factureService.createFacture(cust6, m103, "Carte-bancaire", moins3, emp1);
 	    HashMap<Long, QuantiteCommande> m104 = new HashMap<Long, QuantiteCommande>();
 	    m104.put(p13.getId(), new QuantiteCommande(p13, 3));
-	    m104.put(p31.getId(), new QuantiteCommande(p31, 15));
+	    m104.put(p31.getId(), new QuantiteCommande(p52, 1));
 	    m104.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(cust6, m104, "Espèces", moins4, emp2);
 	    HashMap<Long, QuantiteCommande> m11 = new HashMap<Long, QuantiteCommande>();
 	    m11.put(p13.getId(), new QuantiteCommande(p13, 3));
-	    m11.put(p31.getId(), new QuantiteCommande(p31, 1));
+	    m11.put(p31.getId(), new QuantiteCommande(p42, 1));
 	    m11.put(p32.getId(), new QuantiteCommande(p32, 5));
 	    factureService.createFacture(null, m11, "Chèque", moins1, emp2);
 	    HashMap<Long, QuantiteCommande> m12 = new HashMap<Long, QuantiteCommande>();
 	    m12.put(p13.getId(), new QuantiteCommande(p13, 3));
 	    m12.put(p31.getId(), new QuantiteCommande(p31, 5));
-	    m12.put(p32.getId(), new QuantiteCommande(p32, 5));
+	    m12.put(p32.getId(), new QuantiteCommande(p43, 1));
 	    factureService.createFacture(cust4, m12, "Chèque", moins2, emp1);
     }
 }

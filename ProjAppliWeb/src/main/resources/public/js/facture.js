@@ -1,5 +1,5 @@
 function print() {
-	var win = window.open("", "popup", "width=1000,height=600,scrollbars=yes,resizable=yes,toolbar=no,directories=no,location=no,menubar=no,status=no,left=0,top=0");
+	var win = window.open("", "popup", "width=1000,height=600,scrollbars=yes,resizable=yes,toolbar=yes,directories=yes,location=no,menubar=yes,status=yes,left=0,top=0");
 	var doc = win.document;
 	doc.open();
 	doc.write("<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">");
