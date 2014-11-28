@@ -11,6 +11,7 @@ import java.util.List;
 import m2.project.Application;
 import m2.project.model.CustomerGroup;
 import m2.project.service.CustomerGroupService;
+import m2.project.service.CustomerService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,12 +28,16 @@ public class CustomerGroupServiceImplTest {
 
 	@Autowired
 	private CustomerGroupService customerGroupService;
+
+	@Autowired
+	private CustomerService customerService;
 	
 	private long g1ID, g2ID;
 	private CustomerGroup g1, g2;
 	
 	@Before
 	public void setUp() throws Exception {
+		customerService.deleteAll();
 		customerGroupService.deleteAll();
 		g1 = new CustomerGroup("G1", 10.0);
 		g2 = new CustomerGroup("G2", 5.0);
