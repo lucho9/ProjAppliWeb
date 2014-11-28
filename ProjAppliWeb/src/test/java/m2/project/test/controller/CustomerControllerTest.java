@@ -1,4 +1,4 @@
-package m2.project.controller;
+package m2.project.test.controller;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Locale;
 
 import m2.project.Application;
+import m2.project.controller.CustomerController;
 import m2.project.model.Customer;
 import m2.project.model.CustomerGroup;
 import m2.project.model.Employee;
@@ -34,6 +35,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.IntegrationTest;
 import org.springframework.boot.test.SpringApplicationConfiguration;
+import org.springframework.context.ApplicationContext;
 import org.springframework.data.web.PageableHandlerMethodArgumentResolver;
 import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -49,6 +51,7 @@ import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.servlet.View;
 
@@ -66,20 +69,25 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-//@RunWith(SpringJUnit4ClassRunner.class)
-@RunWith(MockitoJUnitRunner.class)
-@ContextConfiguration(classes = {Application.class})
+@RunWith(SpringJUnit4ClassRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
+//@ContextConfiguration(classes = {Application.class})
+@ContextConfiguration(classes = {WebApplicationContext.class})
 @WebAppConfiguration
 public class CustomerControllerTest {
 	private MockMvc mockMvc;
 	 
-    //@Autowired
-    @Mock
+    @Autowired
+    //@Mock
 	private CustomerService customerService;
 
-    //@Autowired
-    @Mock
+    @Autowired
+    //@Mock
     private CustomerGroupService customerGroupService;
+    
+    
+    @Autowired
+    private WebApplicationContext webApplicationContext;
     
 	//private long g1ID, g2ID;
 	private CustomerGroup g1, g2;
@@ -90,11 +98,25 @@ public class CustomerControllerTest {
 	
     @Before
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
+        //MockitoAnnotations.initMocks(this);
  
+    	
+    	mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
+    	/*
+        mockMvc = MockMvcBuilders.standaloneSetup(new CustomerController(customerService, customerGroupService))
+        		.setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
+        		.setValidator(new LocalValidatorFactoryBean())
+        		.setViewResolvers(new ViewResolver() {
+                    @Override
+                    public View resolveViewName(String viewName, Locale locale) throws Exception {
+                        return new MappingJackson2JsonView();
+                    }
+                })
+                .build();
+        */
         // Setup Spring test in standalone mode
         //this.mockMvc = MockMvcBuilders.standaloneSetup(new CustomerController()).build();
-    	
+    	/*
     	this.mockMvc = MockMvcBuilders.standaloneSetup(new CustomerController())
                 .setCustomArgumentResolvers(new PageableHandlerMethodArgumentResolver())
                 .setViewResolvers(new ViewResolver() {
@@ -104,12 +126,14 @@ public class CustomerControllerTest {
                     }
                 })
                 .build();
-    	
+    	 */
+        
+    	/*
         final Authentication authentication = new TestingAuthenticationToken("celine.gilet", "netapsys");
         final SecurityContext securityContext = new SecurityContextImpl();
         securityContext.setAuthentication(authentication);
         SecurityContextHolder.setContext(securityContext);
-        
+        */
         /*
         GrantedAuthority[] ga = new GrantedAuthority[] {new GrantedAuthorityImpl("ROLE_ADMIN")};
         TestingAuthenticationToken token = new TestingAuthenticationToken("admin", "password", ga);
@@ -146,11 +170,10 @@ public class CustomerControllerTest {
     //	SecurityContextHolder.clearContext();
     //}
     
-
     @Test
     public void testCustomersList() throws Exception {
-        when(customerService.findAll()).thenReturn(lc);
-        when(customerGroupService.findAll()).thenReturn(lcg);
+        //when(customerService.findAll()).thenReturn(lc);
+        //when(customerGroupService.findAll()).thenReturn(lcg);
         
         //mockMvc.perform(get("/customer").principal(SecurityContextHolder.getContext().getAuthentication()))
         
