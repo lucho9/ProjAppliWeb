@@ -30,27 +30,7 @@ public class FactureController {
 	@Autowired
 	private FactureService factureService;
 	
-/*	
-public void MAJStock(Map<Long, QuantiteCommande> pq) {
 
-		
-		for (QuantiteCommande p : pq.values()) {
-			if (pq.containsKey(p.getProduct().getId())) {	
-				
-				
-			int newstock=(p.getProduct().getStock())-p.getQte();
-		//	MAJStock.put(i, newstock);
-			
-			
-			Product prod=productService.findOne(p.getProduct().getId());
-			prod.setStock(newstock);
-			productService.save(prod);
-			}
-		}
-		
-		
-	
-	}*/
 	
 	
 	

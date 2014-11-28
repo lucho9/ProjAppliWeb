@@ -52,7 +52,7 @@ public class QuantiteCommande {
 	public void setProduct(Product product) {
 		this.product = product;
 	}
-	
+	@JsonIgnore
 	public Facture getFacture() {
 		return facture;
 	}
