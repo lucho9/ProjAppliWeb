@@ -6,8 +6,6 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
-
-
     @Override
     public void addViewControllers(ViewControllerRegistry registry) {
         registry.addViewController("/").setViewName("index");
@@ -15,13 +13,4 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     	registry.addViewController("/help").setViewName("help");
     
     }
-
-
-	/*
-	 * @Override public void
-	 * addArgumentResolvers(List<HandlerMethodArgumentResolver>
-	 * argumentResolvers) { PageableHandlerMethodArgumentResolver resolver = new
-	 * PageableHandlerMethodArgumentResolver(); resolver.setFallbackPageable(new
-	 * PageRequest(0, 3)); argumentResolvers.add(resolver); }
-	 */
 }

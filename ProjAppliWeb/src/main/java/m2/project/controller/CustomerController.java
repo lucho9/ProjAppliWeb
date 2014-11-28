@@ -26,11 +26,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class CustomerController {
-	@Autowired
+	//@Autowired
 	private CustomerService customerService;
-	@Autowired
+	//@Autowired
 	private CustomerGroupService customerGroupService;
-
+	
+    @Autowired
+    public CustomerController(CustomerService customerService, CustomerGroupService customerGroupService) {
+        this.customerService = customerService;
+        this.customerGroupService = customerGroupService;
+    }
+	
 	// Customers list / Create customer form - not Ajax
 	@RequestMapping(value = "/customer", method = RequestMethod.GET)
 	public String customersList(Model model, Pageable pageable, @RequestParam(value="filtername", required = false) String filterName) {

@@ -1,4 +1,4 @@
-package m2.project.service.impl;
+package m2.project.test.service.impl;
 
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.hasProperty;

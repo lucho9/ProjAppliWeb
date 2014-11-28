@@ -21,8 +21,10 @@ public class CustomerSerializer extends JsonSerializer<Customer> {
         jgen.writeStringField("email", value.getEmail());
         jgen.writeStringField("address", value.getAddress());
         jgen.writeArrayFieldStart("customerGroups");
-        for (CustomerGroup group : value.getCustomerGroups()) {
-        	jgen.writeNumber(group.getId());
+        if (value.getCustomerGroups() != null) {   
+        	for (CustomerGroup group : value.getCustomerGroups()) {
+        		jgen.writeNumber(group.getId());
+        	}
         }
         jgen.writeEndArray();
         //jgen.writeNumberField("customerGroups", 1);
