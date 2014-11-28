@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import m2.project.model.Category;
 import m2.project.model.Customer;
 import m2.project.model.Employee;
 import m2.project.model.Facture;
@@ -16,6 +17,7 @@ import m2.project.security.SecurityUserDetailsService;
 import m2.project.service.EmployeeService;
 import m2.project.service.FactureService;
 
+import org.jfree.data.category.DefaultCategoryDataset;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
@@ -67,4 +69,8 @@ public class FactureServiceImpl implements FactureService{
 	    	f.setEmployee(employee);
 	    frep.save(f);
     }
+
+	public List getTotalFacture(){
+		return frep.getTotalFacture();
+	}
 }
