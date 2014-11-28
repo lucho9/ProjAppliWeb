@@ -103,7 +103,7 @@ public class Application {
 		// catégories de produits
 	    Category c1 = new Category("Fruit", "/ThemeTemplate/assets/img/fruit.jpg", t1);
 	    Category c2 = new Category("TV", "/ThemeTemplate/assets/img/TV.png", t2);
-	    Category c3 = new Category("Boisson", "/ThemeTemplate/assets/img/boisson.jpg", t1);
+	    Category c3 = new Category("Boisson", "/ThemeTemplate/assets/img/boisson3.jpg", t1);
 	    categoryService.save(c1);
 	    categoryService.save(c2);
 	    categoryService.save(c3);
@@ -116,7 +116,7 @@ public class Application {
 	    Product p22 = new Product("Sony", 900, 20, c2);
 	    Product p23 = new Product("LG", 1400, 0, c2);
 	    Product p31 = new Product("Coke", 1.5, 1000, c3);
-	    Product p32 = new Product("RedBull", 2.5, 800, c3);
+	    Product p32 = new Product("Oasis", 2.5, 800, c3);
 	    Product p33 = new Product("Tequila", 15, 200, c3);
 	    productService.save(p11);
 	    productService.save(p12);
@@ -228,7 +228,7 @@ public class Application {
 	    m83.put(p33.getId(), new QuantiteCommande(p33, 5));
 	    factureService.createFacture(cust7, m81, "Espèces", moins4, emp1);
 	    factureService.createFacture(cust7, m82, "Carte-bancaire", moins4, emp2);
-	    factureService.createFacture(cust7, m83, "Chèque", moins2, emp1);
+	    factureService.createFacture(cust4, m83, "Chèque", moins2, emp1);
 	    HashMap<Long, QuantiteCommande> m9 = new HashMap<Long, QuantiteCommande>();
 	    m9.put(p13.getId(), new QuantiteCommande(p13, 3));
 	    m9.put(p21.getId(), new QuantiteCommande(p21, 1));
@@ -248,7 +248,7 @@ public class Application {
 	    m102.put(p13.getId(), new QuantiteCommande(p13, 3));
 	    m102.put(p31.getId(), new QuantiteCommande(p31, 15));
 	    m102.put(p32.getId(), new QuantiteCommande(p32, 5));
-	    factureService.createFacture(cust6, m102, "Chèque", moins2, emp2);
+	    factureService.createFacture(cust4, m102, "Chèque", moins2, emp2);
 	    HashMap<Long, QuantiteCommande> m103 = new HashMap<Long, QuantiteCommande>();
 	    m103.put(p13.getId(), new QuantiteCommande(p13, 3));
 	    m103.put(p31.getId(), new QuantiteCommande(p31, 15));
@@ -268,6 +268,6 @@ public class Application {
 	    m12.put(p13.getId(), new QuantiteCommande(p13, 3));
 	    m12.put(p31.getId(), new QuantiteCommande(p31, 5));
 	    m12.put(p32.getId(), new QuantiteCommande(p32, 5));
-	    factureService.createFacture(null, m12, "Chèque", moins2, emp1);
+	    factureService.createFacture(cust4, m12, "Chèque", moins2, emp1);
     }
 }

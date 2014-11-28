@@ -13,54 +13,56 @@
 				Compte <small>Veuillez vous connecter</small>
 			</h1>
 		</div>
-
-		<div th:if="${param.error}">Compte ou mot de passe non valide.</div>
-		<div th:if="${param.logout}">Vous avez été déconnecté</div>
-	
-		<form th:action="@{/process-login}" method="post">
-			<div class="form-group">
-				<label for="login" class="col-sm-2 control-label">Compte</label>
-				<div class="col-sm-10">
-					<input type="text" name="login" autofocus="autofocus" />
+		<div class="page-body">
+			<div th:if="${param.error}">Compte ou mot de passe non valide.</div>
+			<div th:if="${param.logout}">Vous avez été déconnecté</div>
+		
+			<form th:action="@{/process-login}" method="post">
+				<div class="form-group">
+					<label for="login" class="col-sm-2 control-label">Compte</label>
+					<div class="col-sm-10">
+						<input type="text" name="login" autofocus="autofocus" />
+					</div>
 				</div>
-			</div>
-			<div class="form-group">
-				<label for="pwd" class="col-sm-2 control-label">Mot de passe</label>
-				<div class="col-sm-10">
-					<input type="password" name="pwd" />
+				<div class="form-group">
+					<label for="pwd" class="col-sm-2 control-label">Mot de passe</label>
+					<div class="col-sm-10">
+						<input type="password" name="pwd" />
+					</div>
 				</div>
-			</div>
-			
-			<!--
-			<div class="form-group">
-				<label for="rememberme" class="col-sm-2 control-label">Se souvenir de moi</label>
-				<div class="col-sm-10">
-					<input type="checkbox" name="rememberme" value="Se souvenir de moi" />
+				
+				<!--
+				<div class="form-group">
+					<label for="rememberme" class="col-sm-2 control-label">Se souvenir de moi</label>
+					<div class="col-sm-10">
+						<input type="checkbox" name="rememberme" value="Se souvenir de moi" />
+					</div>
 				</div>
-			</div>
-			-->
-			
-			<div class="form-group">
-				<div class="col-sm-offset-2 col-sm-10">
-					<button type="submit" class="btn btn-success">
-						<span class="glyphicon glyphicon-ok"></span> Valider
-					</button>
-					<a th:href="@{/}" class="btn btn-default">
-						Fermer
-					</a>
+				-->
+				
+				<div class="form-group">
+					<div class="col-sm-offset-2 col-sm-10">
+						<button type="submit" class="btn btn-success">
+							<span class="glyphicon glyphicon-ok"></span> Valider
+						</button>
+						<a th:href="@{/}" class="btn btn-default">
+							Fermer
+						</a>
+					</div>
 				</div>
-			</div>
-		</form>
-		<form th:action="@{/login/openid}" method="post">
-		    <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>
-		    <input name="openid.ns.pape" type="hidden" value="http://specs.openid.net/extensions/pape/1.0"/>
-		    <input name="openid.pape.max_auth_age" type="hidden" value="0"/>
-			<button type="submit" class="btn btn-google-plus">
-				<i class="fa fa-google-plus"></i> | Connect with Google
-			</button>
-			<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
-		</form>
-
+			</form>
+		</div>
+		<div class="page-footer">
+			<form th:action="@{/login/openid}" method="post">
+			    <input name="openid_identifier" type="hidden" value="https://www.google.com/accounts/o8/id"/>
+			    <input name="openid.ns.pape" type="hidden" value="http://specs.openid.net/extensions/pape/1.0"/>
+			    <input name="openid.pape.max_auth_age" type="hidden" value="0"/>
+				<button type="submit" class="btn btn-google-plus">
+					<i class="fa fa-google-plus"></i> | Connect with Google
+				</button>
+				<!--<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />-->
+			</form>
+		</div>
 	</div>
 	<!-- End page content -->
 
