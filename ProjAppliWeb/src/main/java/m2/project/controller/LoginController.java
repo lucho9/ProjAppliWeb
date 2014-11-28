@@ -104,8 +104,10 @@ public class LoginController {
 			employee.setFirstName(firstName);
 			employee.setLoginType(loginType);
 			employee.setLogin(login);
-			if (pwd != null && !pwd.isEmpty())
+			if (loginType == 0 && pwd != null && !pwd.isEmpty())
 				employee.hashPassword(pwd);
+			else if (loginType == 1)
+				employee.setPassword(null);
 			employeeService.save(employee);
 			res.setStatus("SUCCESS");
 		}
