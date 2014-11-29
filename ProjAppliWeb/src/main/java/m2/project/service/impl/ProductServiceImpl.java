@@ -78,7 +78,7 @@ public class ProductServiceImpl implements ProductService{
 	}
 
 
-	public List<Product> findByPrix(String searchTerm, int Min, int Max) {
+	public List<Product> findByPrix(String searchTerm, double Min, double Max) {
 	
 		return prep.findByPrix(searchTerm, Min, Max);
 	}

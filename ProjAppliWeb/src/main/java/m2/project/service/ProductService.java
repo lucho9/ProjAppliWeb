@@ -29,7 +29,7 @@ public interface ProductService {
 	public void delete(long id);
 	public void delete(Product product);
 	public Product findOne(long id);
-	public List<Product> findByPrix(String searchTerm, int Min, int Max);
+	public List<Product> findByPrix(String searchTerm, double Min, double Max);
 	public String getRef(Product p);
 
 }

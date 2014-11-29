@@ -85,10 +85,10 @@ public class ProductController {
 				else{
 					if(rch.equals("case4")){
 						String searchTerm=product.getName();
-						int Mini, Maxi;
+						double Mini, Maxi;
 					    try {
-							Mini=Integer.parseInt(Min); 
-							Maxi=Integer.parseInt(Max); 
+							Mini=Double.parseDouble(Min); 
+							Maxi=Double.parseDouble(Max); 
 					    } catch (NumberFormatException e) {
 					    	Mini=0; 
 							Maxi=1; 

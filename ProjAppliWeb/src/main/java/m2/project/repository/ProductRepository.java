@@ -31,7 +31,7 @@ public interface ProductRepository  extends JpaRepository<Product, Long>{//, Que
 
 	
 	@Query("SELECT p FROM Product p WHERE (p.name) LIKE (%:searchTerm%) AND (p.prix) BETWEEN (:Min) AND (:Max) ")
-	public List<Product> findByPrix(@Param ("searchTerm")String searchTerm,@Param ("Min")int Min,@Param ("Max")int Max);
+	public List<Product> findByPrix(@Param ("searchTerm")String searchTerm,@Param ("Min")double Min,@Param ("Max")double Max);
 
 	//public List<Product> find(String searchTerm);
     public Page<Product> findAll(Pageable page);	
