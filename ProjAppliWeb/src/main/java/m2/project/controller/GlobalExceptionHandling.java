@@ -26,7 +26,7 @@ public class GlobalExceptionHandling {
 	@ExceptionHandler({SQLException.class, DataAccessException.class})
 	public ModelAndView databaseError(HttpServletRequest req, Exception exception) throws Exception {
 		ModelAndView mav = new ModelAndView();
-		mav.addObject("exception", exception);
+		//mav.addObject("exception", exception);
 		//mav.addObject("url", req.getRequestURL());
 		mav.addObject("retUrl", req.getHeader("referer"));
 		//mav.addObject("timestamp", new Date().toString());
