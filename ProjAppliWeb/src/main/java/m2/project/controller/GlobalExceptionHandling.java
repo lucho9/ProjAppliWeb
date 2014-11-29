@@ -27,16 +27,16 @@ public class GlobalExceptionHandling {
 	public ModelAndView databaseError(HttpServletRequest req, Exception exception) throws Exception {
 		ModelAndView mav = new ModelAndView();
 		//mav.addObject("exception", exception);
-		mav.addObject("url", req.getRequestURL());
+		//mav.addObject("url", req.getRequestURL());
 		mav.addObject("retUrl", req.getHeader("referer"));
-		mav.addObject("timestamp", new Date().toString());
+		//mav.addObject("timestamp", new Date().toString());
 		if (exception instanceof DataIntegrityViolationException) {
 			mav.addObject("message", "Cet élément ne peut pas être supprimé, car il est en lien avec d'autres");
 		}
 		else {
 			mav.addObject("message", "Problème avec la base de données");
 		}
-		mav.addObject("status", 500);
+		//mav.addObject("status", 500);
 		mav.setViewName("/errors/error");
 		return mav;
 	}

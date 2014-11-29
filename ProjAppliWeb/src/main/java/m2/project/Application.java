@@ -91,7 +91,7 @@ public class Application {
 		Employee emp1 = new Employee("Brad", "Pett", "", "0033 3 00 00 00 02", "0033 6 00 00 00 02", "brad@gmail.com", new Date(cal.getTimeInMillis()), "user", "user", u);
 		employeeService.save(emp1);
 		cal = new GregorianCalendar(1979, 8, 12);
-		Employee emp2 = new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "", new Date(cal.getTimeInMillis()), "gomygamez@gmail.com", null, u);
+		Employee emp2 = new Employee("Julie", "Robert", "", "0033 3 00 00 00 04", "0033 6 00 00 00 04", "julie@gmail.com", new Date(cal.getTimeInMillis()), "gomygamez@gmail.com", null, u);
 		employeeService.save(emp2);
 
 		// TVA
@@ -104,13 +104,11 @@ public class Application {
 	    Category c3 = new Category("Boisson", "/ThemeTemplate/assets/img/boisson3.jpg", t1);
 	    Category c1 = new Category("Fruit", "/ThemeTemplate/assets/img/fruit.jpg", t1);
 	    Category c4 = new Category("Meuble", "/ThemeTemplate/assets/img/meuble.jpg", t1);
-	    Category c5 = new Category("Plante", "/ThemeTemplate/assets/img/plante.jpg", t2);
 	    Category c2 = new Category("TV", "/ThemeTemplate/assets/img/TV.png", t2);
 	    categoryService.save(c1);
 	    categoryService.save(c2);
 	    categoryService.save(c3);
 	    categoryService.save(c4);
-	    categoryService.save(c5);
 	    
         //création des produits
 	    Product p11 = new Product("Citron", 1.05, 1000, c1);
@@ -123,27 +121,27 @@ public class Application {
 	    Product p31 = new Product("Coke", 1.5, 1000, c3);
 	    Product p32 = new Product("Oasis", 2.5, 800, c3);
 	    Product p33 = new Product("Tequila", 15, 200, c3);
-	    Product p41 = new Product("TV", 500, 500, c4);
+	    Product p41 = new Product("Meuble TV", 500, 500, c4);
 	    Product p42 = new Product("Salon", 100, 100, c4);
 	    Product p43 = new Product("Canapé", 1000, 200, c4);
-	    Product p51 = new Product("Bonzaï", 100, 5, c5);
-	    Product p52 = new Product("Palmier", 200, 5, c5);
-	    Product p53 = new Product("Ficus", 50, 5, c5);
+	    Product p51 = new Product("Pamplemousse", 1.6, 200, c1);
+	    Product p52 = new Product("Sirop", 3.4, 50, c3);
+	    Product p53 = new Product("Lampe", 50, 5, c4);
 	    productService.save(p11);
 	    productService.save(p12);
 	    productService.save(p13);
 	    productService.save(p14);
+	    productService.save(p51);
 	    productService.save(p21);
 	    productService.save(p22);
 	    productService.save(p23);
 	    productService.save(p31);
 	    productService.save(p32);
 	    productService.save(p33);
+	    productService.save(p52);
 	    productService.save(p41);
 	    productService.save(p42);
 	    productService.save(p43);
-	    productService.save(p51);
-	    productService.save(p52);
 	    productService.save(p53);
 	    
 	    // factures
@@ -250,7 +248,7 @@ public class Application {
 	    factureService.createFacture(cust6, m9, "Espèces", moins3, emp1);
 	    HashMap<Long, QuantiteCommande> m10 = new HashMap<Long, QuantiteCommande>();
 	    m10.put(p13.getId(), new QuantiteCommande(p13, 3));
-	    m10.put(p31.getId(), new QuantiteCommande(p51, 1));
+	    m10.put(p31.getId(), new QuantiteCommande(p51, 2));
 	    m10.put(p32.getId(), new QuantiteCommande(p41, 1));
 	    factureService.createFacture(cust6, m10, "Chèque", moins4, emp1);
 	    HashMap<Long, QuantiteCommande> m101 = new HashMap<Long, QuantiteCommande>();
