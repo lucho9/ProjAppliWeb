@@ -1,5 +1,6 @@
 package m2.project.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -12,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 @Entity
-public class TVA {
+public class TVA implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	

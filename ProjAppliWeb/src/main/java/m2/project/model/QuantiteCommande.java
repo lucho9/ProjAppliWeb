@@ -1,5 +1,7 @@
 package m2.project.model;
 
+import java.io.Serializable;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,7 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class QuantiteCommande {
+public class QuantiteCommande implements Serializable {
 
 	@Id
 	@GeneratedValue

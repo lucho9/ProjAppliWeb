@@ -1,8 +1,9 @@
 package m2.project.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class JsonResponse {
+public class JsonResponse implements Serializable {
 	private String status;
 	private List<ErrorMessage> errorMessageList;
 	private Object obj;

@@ -1,10 +1,13 @@
 package m2.project.controller;
 
+import java.net.HttpCookie;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 
 import m2.project.model.Employee;
 import m2.project.model.ErrorMessage;
@@ -29,7 +32,13 @@ public class LoginController {
 	EmployeeService employeeService;
 	
     @RequestMapping(value={"/login"}, method=RequestMethod.GET)
-    public ModelAndView showLoginPage() {
+    public ModelAndView showLoginPage(HttpServletResponse resp) {
+    	
+    	Cookie c = new Cookie("User", "Steff");
+    	c.setMaxAge(60 * 24 * 3600);
+    	c.setPath("/");
+    	resp.addCookie(c);
+    	
         return new ModelAndView("login");
     }
 

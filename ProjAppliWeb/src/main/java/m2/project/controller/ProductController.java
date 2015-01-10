@@ -1,11 +1,18 @@
 package m2.project.controller;
 
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -16,12 +23,14 @@ import m2.project.model.Facture;
 import m2.project.model.JsonResponse;
 import m2.project.model.Panier;
 import m2.project.model.Product;
+import m2.project.model.QuantiteCommande;
 import m2.project.repository.CategoryRepository;
 import m2.project.repository.CustomerRepository;
 import m2.project.service.CustomerService;
 import m2.project.service.ProductService;
 import m2.project.utils.PageWrapper;
 
+import org.apache.commons.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,6 +40,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -184,7 +194,28 @@ public class ProductController {
 	}
 	
 	@RequestMapping(value = "/caisse", method = RequestMethod.GET)
-	public String listProducts(Model model, HttpSession session,  Pageable pageable,@RequestParam(value="filtreCat",required=false) String cat) {
+	public String listProducts(Model model, HttpSession session,  Pageable pageable,@RequestParam(value="filtreCat",required=false) String cat, @CookieValue(value = "panier", defaultValue = "") String panierCookie) {
+		
+		try {
+			if (panierCookie != null && !panierCookie.isEmpty()) {
+				
+				byte[] panierCookie2 = Base64.decodeBase64(panierCookie.getBytes());
+				
+				ByteArrayInputStream bais = new ByteArrayInputStream(panierCookie2);
+				ObjectInputStream ois = new ObjectInputStream(bais);
+				
+				Panier panier = (Panier)ois.readObject();
+			}
+		}
+		catch(Exception e) {
+			System.out.println();
+		}
+		
+		
+		
+		
+		
+		///////////////////////
 		categorie = cat;
 		
 		if(categorie == null) {
@@ -194,14 +225,8 @@ public class ProductController {
 		
 		
 		session.setAttribute("panier", getPanier(session));
-		
+				
 
-		
-		/*
-		if(cat != null) {
-			model.addAttribute("products", productService.findByCat(cat));
-			model.addAttribute("filtreCat", cat);
-		}*/
 		if(categorie != null) {
 			model.addAttribute("products", productService.findByCat(categorie));
 			model.addAttribute("filtreCat", categorie);
@@ -230,7 +255,7 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/caissee", method = RequestMethod.GET)
-	public String submitCaisse(@RequestParam("id") Long id, Model model, HttpSession session) {
+	public String submitCaisse(@RequestParam("id") Long id, Model model, HttpSession session, HttpServletResponse resp) {
 		Product product;
 		product = productService.findOne(id);
 		
@@ -239,6 +264,26 @@ public class ProductController {
 		
 		p.addProduct(product);
 		session.setAttribute("panier", p);
+		
+		
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ObjectOutputStream oos = new ObjectOutputStream(baos);
+			oos.writeObject(p);
+			
+			Cookie c = new Cookie("panier", Base64.encodeBase64(baos.toByteArray()).toString());
+	    	c.setMaxAge(60 * 24 * 3600);
+	    	resp.addCookie(c);
+	    	
+	    	oos.close();
+	    	baos.close();
+		}
+		catch(Exception e) {
+			System.out.println();
+		}
+		
+
+		
 		
 
 		return "redirect:/caisse";

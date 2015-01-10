@@ -1,9 +1,11 @@
 package m2.project.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
 
 import java.util.List;
+
 
 //import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -30,7 +32,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 	uniqueConstraints={@UniqueConstraint(columnNames={"login"}), @UniqueConstraint(columnNames={"firstName", "lastName"})}
 )
 @JsonSerialize(using = EmployeeSerializer.class)
-public class Employee {
+public class Employee implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;

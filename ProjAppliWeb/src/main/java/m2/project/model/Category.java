@@ -1,6 +1,7 @@
 package m2.project.model;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Column;
@@ -24,7 +25,7 @@ import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
 @JsonSerialize(using = CategorySerializer.class)
 @Entity
-public class Category {
+public class Category implements Serializable {
 
 
 	@Id

@@ -1,5 +1,6 @@
 package m2.project.model;
 
+import java.io.Serializable;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -17,7 +18,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 
-public class Panier {
+public class Panier implements Serializable  {
 	private Map<Long, QuantiteCommande> productQuantities = new HashMap<Long, QuantiteCommande>();
 	private String moyenPaiement = "";
 	private Customer client;

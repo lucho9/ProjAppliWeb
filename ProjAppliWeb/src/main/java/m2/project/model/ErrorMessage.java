@@ -1,6 +1,8 @@
 package m2.project.model;
 
-public class ErrorMessage {
+import java.io.Serializable;
+
+public class ErrorMessage implements Serializable {
 	private String fieldName;
 	private String message;
 
