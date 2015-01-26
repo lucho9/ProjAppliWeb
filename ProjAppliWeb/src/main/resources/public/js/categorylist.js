@@ -14,7 +14,7 @@ function clearCategoryFormInputs() {
 
 
 function deleteCategory(action, id) {
-	alert(action);
+	
 	//$.ajax({
 		$.get(action, {id:id}, function(data) {
 	   /* url: action,
